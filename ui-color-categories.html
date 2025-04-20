@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI组件颜色分类</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4f46e5;
+            padding-left: 0.5rem;
+        }
+        .component-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .color-block {
+            height: 80px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-end;
+            padding: 8px;
+            color: white;
+            margin-bottom: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .color-info {
+            background-color: white;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+        .color-box {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 0.5rem;
+            transition: transform 0.2s;
+        }
+        .color-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-12 mt-24">
+        <h1 class="text-3xl font-bold mb-8 text-center">UI组件颜色分类</h1>
+        
+        <!-- 导言 -->
+        <div class="mb-10 bg-white p-6 rounded-lg shadow-md">
+            <p class="text-lg text-gray-700">
+                颜色是用户界面设计中最重要的视觉元素之一，它不仅能够传达品牌形象，还能指导用户行为、强调重要信息，并提升整体用户体验。
+                一个优秀的UI设计系统都有一套精心设计的颜色系统，下面我们将探索各类UI颜色的分类及其应用场景。
+            </p>
+        </div>
+
+        <!-- 1. 基础色彩 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">1. 基础色彩</h2>
+            <p class="description">
+                基础色彩是UI设计中最基本的颜色组合，一般包括品牌色、功能色和中性色。这些颜色定义了整个界面的基调和风格。
+            </p>
+            
+            <!-- 品牌色 -->
+            <h3 class="component-title">品牌色（Primary Color）</h3>
+            <p class="description">
+                品牌色是最能代表产品或公司视觉形象的颜色，通常用于主要界面元素和操作按钮，帮助建立品牌识别度。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- 一些知名产品的品牌色展示 -->
+                <div>
+                    <div class="color-block" style="background-color: #1677ff; color: white;">
+                        Ant Design 蓝
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">RGB: 22, 119, 255</div>
+                        <div class="text-gray-700">HEX: #1677ff</div>
+                        <div class="mt-1 text-gray-600">
+                            Ant Design 的主色调，传达专业、科技感
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="color-block" style="background-color: #409eff; color: white;">
+                        Element UI 蓝
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">RGB: 64, 158, 255</div>
+                        <div class="text-gray-700">HEX: #409eff</div>
+                        <div class="mt-1 text-gray-600">
+                            Element UI 的主色调，明亮活泼
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="color-block" style="background-color: #6200ee; color: white;">
+                        Material Design 紫
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">RGB: 98, 0, 238</div>
+                        <div class="text-gray-700">HEX: #6200ee</div>
+                        <div class="mt-1 text-gray-600">
+                            Material Design 的主色调，创新感
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border p-4 rounded-md bg-gray-50 mb-6">
+                <h4 class="font-bold mb-2">品牌色的应用实例</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">主要按钮</div>
+                        <button class="w-full px-4 py-2 bg-blue-600 text-white rounded-md">确认操作</button>
+                        <p class="mt-2 text-sm text-gray-600">主按钮使用品牌色，作为页面的视觉焦点</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">导航条</div>
+                        <div class="w-full h-12 bg-blue-600 rounded-md flex items-center px-4">
+                            <div class="text-white font-bold">Logo</div>
+                            <div class="ml-4 text-white">首页</div>
+                            <div class="ml-4 text-white">关于</div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-600">导航栏常使用品牌色增强识别度</p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">链接文本</div>
+                        <p class="text-gray-700">这是一段普通文本，<a href="#" class="text-blue-600 hover:underline">这是链接文本</a>使用了品牌色。</p>
+                        <p class="mt-2 text-sm text-gray-600">链接通常使用品牌色，突出可点击元素</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border p-4 rounded-md bg-blue-50 mb-8">
+                <h4 class="font-bold mb-2">品牌色选择技巧</h4>
+                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                    <li>选择能体现品牌个性和价值观的颜色</li>
+                    <li>考虑品牌色在明暗两种主题下的表现</li>
+                    <li>确保品牌色符合无障碍标准，有足够的对比度</li>
+                    <li>品牌色应当有5-9个色阶变化，以适应不同使用场景</li>
+                </ul>
+            </div>
+            
+            <!-- 功能色 -->
+            <h3 class="component-title">功能色（Functional Color）</h3>
+            <p class="description">
+                功能色用于表达不同状态和反馈信息，如成功、警告、错误等，帮助用户理解界面状态。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div>
+                    <div class="color-block" style="background-color: #52c41a; color: white;">
+                        成功色
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">HEX: #52c41a</div>
+                        <div class="mt-1 text-gray-600">
+                            表示操作成功或正常状态
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="color-block" style="background-color: #faad14; color: white;">
+                        警告色
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">HEX: #faad14</div>
+                        <div class="mt-1 text-gray-600">
+                            表示警告或需要注意
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="color-block" style="background-color: #f5222d; color: white;">
+                        错误色
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">HEX: #f5222d</div>
+                        <div class="mt-1 text-gray-600">
+                            表示错误或危险操作
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="color-block" style="background-color: #1890ff; color: white;">
+                        信息色
+                    </div>
+                    <div class="color-info">
+                        <div class="text-gray-700">HEX: #1890ff</div>
+                        <div class="mt-1 text-gray-600">
+                            表示普通信息提示
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border p-4 rounded-md bg-gray-50 mb-6">
+                <h4 class="font-bold mb-2">功能色的应用实例</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">成功提示</div>
+                        <div class="flex items-center p-3 bg-green-100 text-green-800 rounded-md">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            操作成功
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">警告提示</div>
+                        <div class="flex items-center p-3 bg-yellow-100 text-yellow-800 rounded-md">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            请注意
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">错误提示</div>
+                        <div class="flex items-center p-3 bg-red-100 text-red-800 rounded-md">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            操作失败
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="mb-2 font-bold text-gray-800">信息提示</div>
+                        <div class="flex items-center p-3 bg-blue-100 text-blue-800 rounded-md">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            提示信息
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中性色 -->
+            <h3 class="component-title">中性色（Neutral Color）</h3>
+            <p class="description">
+                中性色是指黑、白、灰等不带感情色彩的颜色，用于文本、背景、边框等基础界面元素，营造层次感和结构感。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 灰度梯度 -->
+                <div>
+                    <h4 class="font-bold mb-4">灰度梯度</h4>
+                    <div class="flex flex-col space-y-2">
+                        <div class="h-10 bg-gray-900 text-white px-3 flex items-center rounded-t-md">灰度 900 (#111827)</div>
+                        <div class="h-10 bg-gray-800 text-white px-3 flex items-center">灰度 800 (#1f2937)</div>
+                        <div class="h-10 bg-gray-700 text-white px-3 flex items-center">灰度 700 (#374151)</div>
+                        <div class="h-10 bg-gray-600 text-white px-3 flex items-center">灰度 600 (#4b5563)</div>
+                        <div class="h-10 bg-gray-500 text-white px-3 flex items-center">灰度 500 (#6b7280)</div>
+                        <div class="h-10 bg-gray-400 text-gray-900 px-3 flex items-center">灰度 400 (#9ca3af)</div>
+                        <div class="h-10 bg-gray-300 text-gray-900 px-3 flex items-center">灰度 300 (#d1d5db)</div>
+                        <div class="h-10 bg-gray-200 text-gray-900 px-3 flex items-center">灰度 200 (#e5e7eb)</div>
+                        <div class="h-10 bg-gray-100 text-gray-900 px-3 flex items-center">灰度 100 (#f3f4f6)</div>
+                        <div class="h-10 bg-gray-50 text-gray-900 px-3 flex items-center rounded-b-md">灰度 50 (#f9fafb)</div>
+                    </div>
+                </div>
+                
+                <!-- 中性色应用场景 -->
+                <div>
+                    <h4 class="font-bold mb-4">中性色应用场景</h4>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-md border border-gray-200">
+                            <h5 class="text-gray-900 font-medium mb-2">文本层级</h5>
+                            <div class="space-y-2">
+                                <p class="text-gray-900 font-medium">主要文本 - 灰度900</p>
+                                <p class="text-gray-700">次要文本 - 灰度700</p>
+                                <p class="text-gray-500">辅助文本 - 灰度500</p>
+                                <p class="text-gray-400">禁用文本 - 灰度400</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md border border-gray-200">
+                            <h5 class="text-gray-900 font-medium mb-2">边框与分割线</h5>
+                            <div class="space-y-3">
+                                <div class="border-2 border-gray-900 p-2 rounded">深色边框 - 灰度900</div>
+                                <div class="border-2 border-gray-400 p-2 rounded">常规边框 - 灰度400</div>
+                                <div class="border-2 border-gray-200 p-2 rounded">浅色边框 - 灰度200</div>
+                                <hr class="border-gray-300 my-2">
+                                <div class="text-sm text-gray-500">分割线通常使用灰度200-300</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md border border-gray-200">
+                            <h5 class="text-gray-900 font-medium mb-2">背景色</h5>
+                            <div class="space-y-2">
+                                <div class="bg-white p-2 border border-gray-200 rounded">主要背景 - 白色</div>
+                                <div class="bg-gray-50 p-2 border border-gray-200 rounded">次要背景 - 灰度50</div>
+                                <div class="bg-gray-100 p-2 border border-gray-200 rounded">深色背景 - 灰度100</div>
+                                <div class="bg-gray-200 p-2 border border-gray-200 rounded">禁用背景 - 灰度200</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 色彩应用 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">2. 色彩应用</h2>
+            <p class="description">
+                色彩应用指的是如何在UI界面的不同元素上使用颜色，包括文字颜色、背景颜色、边框颜色、阴影颜色等。
+            </p>
+            
+            <!-- 文字颜色 -->
+            <h3 class="component-title">文字颜色（Text Color）</h3>
+            <p class="description">
+                文字颜色影响内容的可读性、层次感和重要性，一般分为标题色、正文色、次要文字色等。
+            </p>
+            
+            <div class="bg-white border rounded-md p-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 文字颜色示例 -->
+                    <div>
+                        <h4 class="font-bold mb-4">文字颜色层级</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="text-2xl text-gray-900 font-bold">一级标题</h5>
+                                <div class="mt-1 text-gray-500">颜色值：#111827 (灰度900)</div>
+                                <div class="mt-1 text-gray-500">用途：最重要的内容，如页面主标题</div>
+                            </div>
+                            
+                            <div>
+                                <h5 class="text-xl text-gray-800 font-semibold">二级标题</h5>
+                                <div class="mt-1 text-gray-500">颜色值：#1f2937 (灰度800)</div>
+                                <div class="mt-1 text-gray-500">用途：次级标题，如章节标题</div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-base text-gray-700">正文文本</p>
+                                <div class="mt-1 text-gray-500">颜色值：#374151 (灰度700)</div>
+                                <div class="mt-1 text-gray-500">用途：主要内容文字</div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-base text-gray-500">次要文本</p>
+                                <div class="mt-1 text-gray-500">颜色值：#6b7280 (灰度500)</div>
+                                <div class="mt-1 text-gray-500">用途：描述性文字、辅助说明</div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-base text-gray-400">禁用文本</p>
+                                <div class="mt-1 text-gray-500">颜色值：#9ca3af (灰度400)</div>
+                                <div class="mt-1 text-gray-500">用途：禁用状态的文字</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 实际应用示例 -->
+                    <div>
+                        <h4 class="font-bold mb-4">实际应用示例</h4>
+                        <div class="p-6 border rounded-md">
+                            <h5 class="text-xl text-gray-900 font-bold mb-3">产品详情</h5>
+                            <h6 class="text-lg text-gray-800 font-semibold mb-3">智能手机 Pro Max</h6>
+                            <p class="text-gray-700 mb-3">这是一款性能强劲的智能手机，搭载最新处理器，提供卓越的用户体验。大屏幕设计让视觉享受更加震撼。</p>
+                            <div class="flex justify-between mb-3">
+                                <span class="text-gray-500">发布日期：2023年10月</span>
+                                <span class="text-gray-500">库存：有限</span>
+                            </div>
+                            <div class="mt-4 flex space-x-3">
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-md">立即购买</button>
+                                <button class="px-4 py-2 bg-gray-200 text-gray-400 rounded-md" disabled>加入对比</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-blue-50 p-4 rounded-md">
+                    <h4 class="font-semibold mb-2">文字颜色设计原则</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                        <li>确保文字与背景有足够的对比度，满足WCAG 2.0 AA标准（对比度至少4.5:1）</li>
+                        <li>层级清晰，重要内容使用较深颜色，次要内容使用较浅颜色</li>
+                        <li>保持一致性，同类信息使用相同文字颜色</li>
+                        <li>品牌色通常用于链接或需要强调的文字</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 背景颜色 -->
+            <h3 class="component-title">背景颜色（Background Color）</h3>
+            <p class="description">
+                背景颜色用于区分不同区域、层级和状态，影响整体视觉效果和内容可读性。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 常见背景色 -->
+                <div>
+                    <h4 class="font-bold mb-4">常见背景色分类</h4>
+                    <div class="space-y-3">
+                        <div class="p-4 bg-white border border-gray-200 rounded-md">
+                            <div class="font-medium">主要背景 - 白色 (#ffffff)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于卡片、弹窗等主要内容区域</div>
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 border border-gray-200 rounded-md">
+                            <div class="font-medium">次要背景 - 浅灰 (#f9fafb)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于页面整体背景、分组区域</div>
+                        </div>
+                        
+                        <div class="p-4 bg-gray-100 border border-gray-200 rounded-md">
+                            <div class="font-medium">强调背景 - 中灰 (#f3f4f6)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于突出某些模块或区域</div>
+                        </div>
+                        
+                        <div class="p-4 bg-blue-50 border border-gray-200 rounded-md">
+                            <div class="font-medium">品牌色浅色背景 (#eff6ff)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于强调与品牌相关的内容区域</div>
+                        </div>
+                        
+                        <div class="p-4 bg-green-50 border border-gray-200 rounded-md">
+                            <div class="font-medium">功能色背景 - 成功 (#f0fdf4)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于成功状态提示区域</div>
+                        </div>
+                        
+                        <div class="p-4 bg-red-50 border border-gray-200 rounded-md">
+                            <div class="font-medium">功能色背景 - 错误 (#fef2f2)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于错误状态提示区域</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 实际应用示例 -->
+                <div>
+                    <h4 class="font-bold mb-4">背景色应用示例</h4>
+                    
+                    <div class="bg-gray-50 p-6 rounded-md border border-gray-200 mb-4">
+                        <!-- 模拟整个页面 -->
+                        <div class="flex flex-col space-y-4">
+                            <!-- 顶部导航 -->
+                            <div class="bg-white p-3 rounded-md shadow-sm flex justify-between items-center">
+                                <div class="font-bold text-blue-600">Logo</div>
+                                <div class="flex space-x-4">
+                                    <span class="text-gray-700">首页</span>
+                                    <span class="text-gray-700">产品</span>
+                                    <span class="text-gray-700">关于</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 内容区域 -->
+                            <div class="grid grid-cols-3 gap-4">
+                                <!-- 侧边栏 -->
+                                <div class="bg-white p-3 rounded-md shadow-sm">
+                                    <div class="font-medium mb-2">分类</div>
+                                    <div class="text-gray-700 mb-1">电子产品</div>
+                                    <div class="text-gray-700 mb-1">家居用品</div>
+                                    <div class="bg-blue-50 p-1 rounded text-blue-700 mb-1">服装鞋帽</div>
+                                    <div class="text-gray-700">美妆护理</div>
+                                </div>
+                                
+                                <!-- 主内容 -->
+                                <div class="col-span-2">
+                                    <!-- 状态提示 -->
+                                    <div class="bg-green-50 p-2 rounded-md text-green-700 mb-3 flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        促销活动进行中
+                                    </div>
+                                    
+                                    <!-- 内容卡片 -->
+                                    <div class="bg-white p-3 rounded-md shadow-sm">
+                                        <div class="font-medium mb-2">商品推荐</div>
+                                        <div class="flex space-x-2">
+                                            <div class="flex-1 bg-gray-100 p-2 rounded text-center">商品1</div>
+                                            <div class="flex-1 bg-gray-100 p-2 rounded text-center">商品2</div>
+                                            <div class="flex-1 bg-gray-100 p-2 rounded text-center">商品3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-blue-50 p-4 rounded-md">
+                        <h5 class="font-semibold mb-2">背景色使用原则</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>层次分明，主要内容区域通常使用白色或浅色背景</li>
+                            <li>确保背景色与前景色（文字、图标）有足够对比度</li>
+                            <li>功能区域可使用与功能相对应的浅色背景（如警告区域用黄色背景）</li>
+                            <li>过多不同的背景色会造成视觉混乱，应适度使用</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 边框颜色 -->
+            <h3 class="component-title">边框颜色（Border Color）</h3>
+            <p class="description">
+                边框颜色用于区分元素边界、强调元素状态，增强UI的层次感和结构感。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 边框颜色分类 -->
+                <div>
+                    <h4 class="font-bold mb-4">常见边框颜色</h4>
+                    <div class="space-y-4">
+                        <div class="p-4 border-2 border-gray-200 rounded-md">
+                            <div class="font-medium">默认边框 - 浅灰色 (#e5e7eb)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于大多数UI元素的常规状态</div>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-gray-300 rounded-md">
+                            <div class="font-medium">深色边框 - 中灰色 (#d1d5db)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于需要更强对比度的元素</div>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-blue-500 rounded-md">
+                            <div class="font-medium">焦点边框 - 品牌色 (#3b82f6)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于表单元素聚焦状态</div>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-green-500 rounded-md">
+                            <div class="font-medium">成功边框 - 绿色 (#22c55e)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于表示验证成功的表单元素</div>
+                        </div>
+                        
+                        <div class="p-4 border-2 border-red-500 rounded-md">
+                            <div class="font-medium">错误边框 - 红色 (#ef4444)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于表示验证失败的表单元素</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 边框颜色应用实例 -->
+                <div>
+                    <h4 class="font-bold mb-4">边框颜色应用实例</h4>
+                    
+                    <div class="bg-white p-6 rounded-md border border-gray-200">
+                        <h5 class="font-medium mb-4">表单验证示例</h5>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">用户名</label>
+                                <input type="text" class="w-full p-2 border-2 border-gray-200 rounded-md" placeholder="请输入用户名">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">电子邮箱</label>
+                                <input type="email" class="w-full p-2 border-2 border-blue-500 rounded-md focus:outline-none" placeholder="请输入电子邮箱" value="user@example.com">
+                                <div class="text-sm text-blue-600 mt-1">当前输入框处于焦点状态</div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">密码</label>
+                                <input type="password" class="w-full p-2 border-2 border-red-500 rounded-md" placeholder="请输入密码" value="123">
+                                <div class="text-sm text-red-600 mt-1">密码长度不足，至少需要6位字符</div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">确认密码</label>
+                                <input type="password" class="w-full p-2 border-2 border-green-500 rounded-md" placeholder="请再次输入密码" value="password123">
+                                <div class="text-sm text-green-600 mt-1">密码格式正确</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-blue-50 p-4 rounded-md">
+                        <h5 class="font-semibold mb-2">边框颜色使用原则</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>边框颜色应与内容有一定对比度，但不宜过强</li>
+                            <li>使用一致的边框颜色系统，相同状态的元素使用相同的边框颜色</li>
+                            <li>功能性边框颜色（如错误、成功）应具有明确的语义</li>
+                            <li>边框颜色可与背景颜色搭配使用，增强状态表达</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 阴影颜色 -->
+            <h3 class="component-title">阴影颜色（Shadow Color）</h3>
+            <p class="description">
+                阴影用于表达元素的层级关系和空间感，合理使用阴影能提升UI的质感和立体感。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 阴影等级 -->
+                <div>
+                    <h4 class="font-bold mb-4">常见阴影等级</h4>
+                    <div class="space-y-6 p-6 bg-gray-50 rounded-md">
+                        <div class="bg-white p-4 rounded-md shadow-sm">
+                            <div class="font-medium">小阴影 (shadow-sm)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于轻微提升元素，如卡片、按钮</div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md shadow">
+                            <div class="font-medium">中阴影 (shadow)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于常规组件，如下拉菜单、工具提示</div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md shadow-md">
+                            <div class="font-medium">中大阴影 (shadow-md)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于需要更多关注的元素，如悬浮卡片</div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md shadow-lg">
+                            <div class="font-medium">大阴影 (shadow-lg)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于模态框、对话框等重要浮层</div>
+                        </div>
+                        
+                        <div class="bg-white p-4 rounded-md shadow-xl">
+                            <div class="font-medium">特大阴影 (shadow-xl)</div>
+                            <div class="text-sm text-gray-600 mt-1">用于需要最高层级的元素</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阴影应用示例 -->
+                <div>
+                    <h4 class="font-bold mb-4">阴影应用实例</h4>
+                    
+                    <div class="relative p-10 bg-gray-50 rounded-md border border-gray-200 h-96">
+                        <!-- 背景层 -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-30">
+                            <div class="text-xl text-gray-400">页面内容背景</div>
+                        </div>
+                        
+                        <!-- 卡片 -->
+                        <div class="relative bg-white p-4 rounded-md shadow-md mb-6 z-10">
+                            <div class="font-medium mb-2">内容卡片</div>
+                            <p class="text-gray-600 text-sm">使用中等阴影(shadow-md)表示内容区域</p>
+                        </div>
+                        
+                        <!-- 悬浮按钮 -->
+                        <div class="relative flex justify-end mb-6 z-20">
+                            <button class="bg-blue-500 text-white p-3 rounded-full shadow-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- 模态框 -->
+                        <div class="relative bg-white p-6 rounded-md shadow-xl mx-auto max-w-sm z-30">
+                            <div class="font-medium mb-3">确认对话框</div>
+                            <p class="text-gray-600 mb-4">使用特大阴影(shadow-xl)表示最高层级</p>
+                            <div class="flex justify-end space-x-2">
+                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md">取消</button>
+                                <button class="px-4 py-2 bg-blue-500 text-white rounded-md">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-blue-50 p-4 rounded-md">
+                        <h5 class="font-semibold mb-2">阴影使用原则</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>阴影大小与元素的层级相对应，层级越高阴影越大</li>
+                            <li>阴影颜色应柔和自然，通常是半透明的黑色或深灰色</li>
+                            <li>避免过度使用阴影，特别是大阴影，以免视觉混乱</li>
+                            <li>阴影应有层次感，不同层级的阴影大小、模糊度应有明显区别</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 状态色彩 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">3. 状态色彩</h2>
+            <p class="description">
+                状态色彩用于表示交互元素的不同状态，如链接颜色、按钮颜色等，帮助用户理解界面的交互可能性。
+            </p>
+            
+            <!-- 链接颜色 -->
+            <h3 class="component-title">链接颜色（Link Color）</h3>
+            <p class="description">
+                链接颜色用于表示可点击的文本元素，不同状态的链接颜色变化能提供更好的用户反馈。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 链接状态颜色 -->
+                <div>
+                    <h4 class="font-bold mb-4">链接状态色彩</h4>
+                    <div class="space-y-4 p-6 bg-white rounded-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="w-24 font-medium">常规状态</div>
+                            <a href="#" class="text-blue-600">这是一个链接</a>
+                            <div class="ml-4 text-gray-500">通常使用品牌色</div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-24 font-medium">悬停状态</div>
+                            <a href="#" class="text-blue-800 underline">这是一个链接</a>
+                            <div class="ml-4 text-gray-500">通常使用加深的品牌色</div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-24 font-medium">点击状态</div>
+                            <a href="#" class="text-blue-900">这是一个链接</a>
+                            <div class="ml-4 text-gray-500">通常使用更深的品牌色</div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-24 font-medium">已访问</div>
+                            <a href="#" class="text-purple-700">这是一个链接</a>
+                            <div class="ml-4 text-gray-500">可使用紫色系来区分</div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-24 font-medium">禁用状态</div>
+                            <a href="#" class="text-gray-400 cursor-not-allowed">这是一个链接</a>
+                            <div class="ml-4 text-gray-500">通常使用浅灰色</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-yellow-50 p-4 rounded-md">
+                        <h5 class="font-semibold mb-2">链接颜色注意事项</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>链接颜色应与周围的文本有明显区别</li>
+                            <li>所有链接应保持一致的颜色系统</li>
+                            <li>不要仅依靠颜色区分链接，推荐添加下划线等视觉提示</li>
+                            <li>链接颜色应满足无障碍设计标准，与背景有足够对比度</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 实际应用案例 -->
+                <div>
+                    <h4 class="font-bold mb-4">实际应用案例</h4>
+                    
+                    <div class="bg-white p-6 rounded-md border border-gray-200">
+                        <h5 class="text-xl font-bold text-gray-900 mb-4">文章内容</h5>
+                        
+                        <p class="text-gray-700 mb-3">
+                            欢迎访问我们的网站。您可以查看我们的<a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">产品列表</a>或了解更多<a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">公司信息</a>。
+                        </p>
+                        
+                        <p class="text-gray-700 mb-3">
+                            如果您已经注册，请<a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">登录</a>。新用户可以<a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">创建账号</a>。
+                        </p>
+                        
+                        <p class="text-gray-700 mb-3">
+                            您曾经访问过的页面：<a href="#" class="text-purple-700 hover:text-purple-900 hover:underline">帮助中心</a>、<a href="#" class="text-purple-700 hover:text-purple-900 hover:underline">用户协议</a>
+                        </p>
+                        
+                        <p class="text-gray-700 mb-3">
+                            目前不可用的功能：<a href="#" class="text-gray-400 cursor-not-allowed">高级会员专区</a>、<a href="#" class="text-gray-400 cursor-not-allowed">企业解决方案</a>
+                        </p>
+                        
+                        <div class="mt-6 p-4 bg-gray-50 rounded-md">
+                            <h6 class="font-medium mb-2">常见问题</h6>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">如何重置密码？</a></li>
+                                <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">账号如何注销？</a></li>
+                                <li><a href="#" class="text-blue-600 hover:text-blue-800 hover:underline">联系客服</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 交互颜色 -->
+            <h3 class="component-title">交互颜色（Interactive Color）</h3>
+            <p class="description">
+                交互颜色用于表示按钮、表单等交互元素的不同状态，帮助用户理解元素的可用性和当前状态。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- 按钮状态颜色 -->
+                <div>
+                    <h4 class="font-bold mb-4">按钮状态色彩</h4>
+                    <div class="space-y-6 p-6 bg-white rounded-md border border-gray-200">
+                        <!-- 主按钮 -->
+                        <div>
+                            <div class="font-medium mb-3">主要按钮</div>
+                            <div class="flex flex-wrap gap-4">
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-md">常规状态</button>
+                                <button class="px-4 py-2 bg-blue-700 text-white rounded-md">悬停状态</button>
+                                <button class="px-4 py-2 bg-blue-800 text-white rounded-md">点击状态</button>
+                                <button class="px-4 py-2 bg-blue-300 text-white rounded-md cursor-not-allowed" disabled>禁用状态</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 次要按钮 -->
+                        <div>
+                            <div class="font-medium mb-3">次要按钮</div>
+                            <div class="flex flex-wrap gap-4">
+                                <button class="px-4 py-2 bg-white border border-blue-600 text-blue-600 rounded-md">常规状态</button>
+                                <button class="px-4 py-2 bg-blue-50 border border-blue-700 text-blue-700 rounded-md">悬停状态</button>
+                                <button class="px-4 py-2 bg-blue-100 border border-blue-800 text-blue-800 rounded-md">点击状态</button>
+                                <button class="px-4 py-2 bg-white border border-gray-300 text-gray-400 rounded-md cursor-not-allowed" disabled>禁用状态</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 危险按钮 -->
+                        <div>
+                            <div class="font-medium mb-3">危险按钮</div>
+                            <div class="flex flex-wrap gap-4">
+                                <button class="px-4 py-2 bg-red-600 text-white rounded-md">常规状态</button>
+                                <button class="px-4 py-2 bg-red-700 text-white rounded-md">悬停状态</button>
+                                <button class="px-4 py-2 bg-red-800 text-white rounded-md">点击状态</button>
+                                <button class="px-4 py-2 bg-red-300 text-white rounded-md cursor-not-allowed" disabled>禁用状态</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 表单元素状态 -->
+                <div>
+                    <h4 class="font-bold mb-4">表单元素状态色彩</h4>
+                    <div class="space-y-6 p-6 bg-white rounded-md border border-gray-200">
+                        <!-- 输入框 -->
+                        <div>
+                            <div class="font-medium mb-3">输入框</div>
+                            <div class="space-y-3">
+                                <div>
+                                    <input type="text" placeholder="常规状态" class="w-full p-2 border border-gray-300 rounded-md">
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="聚焦状态" class="w-full p-2 border-2 border-blue-500 rounded-md outline-none">
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="错误状态" value="错误输入" class="w-full p-2 border-2 border-red-500 rounded-md">
+                                    <div class="text-red-600 text-sm mt-1">输入内容有误</div>
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="成功状态" value="正确输入" class="w-full p-2 border-2 border-green-500 rounded-md">
+                                    <div class="text-green-600 text-sm mt-1">输入内容正确</div>
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="禁用状态" disabled class="w-full p-2 bg-gray-100 border border-gray-300 rounded-md text-gray-400 cursor-not-allowed">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 复选框 -->
+                        <div>
+                            <div class="font-medium mb-3">复选框</div>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="cb1" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                    <label for="cb1" class="text-gray-700">未选中状态</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="cb2" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded" checked>
+                                    <label for="cb2" class="text-gray-700">选中状态</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="cb3" class="mr-2 h-4 w-4 text-gray-400 border-gray-300 rounded bg-gray-100 cursor-not-allowed" disabled>
+                                    <label for="cb3" class="text-gray-400">禁用未选中</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="cb4" class="mr-2 h-4 w-4 text-gray-400 border-gray-300 rounded bg-gray-100 cursor-not-allowed" disabled checked>
+                                    <label for="cb4" class="text-gray-400">禁用已选中</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-blue-50 p-4 rounded-md">
+                        <h5 class="font-semibold mb-2">交互颜色设计原则</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>状态变化要明显，特别是悬停和激活状态</li>
+                            <li>禁用状态应明确表示不可交互</li>
+                            <li>错误和成功状态应具有明确的语义，并保持一致</li>
+                            <li>主要行动按钮应使用更明显的颜色，次要按钮可以使用弱化的颜色</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 总结 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">颜色设计最佳实践</h2>
+            <p class="mb-6 text-gray-700">
+                设计一个完善的UI颜色系统需要遵循一定的原则和最佳实践，以下是一些关键建议：
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">保持一致性</div>
+                    <p class="text-gray-700">
+                        整个产品中使用一致的颜色系统，确保相同功能和状态使用相同的颜色。建立颜色设计规范，包括主色、辅助色和功能色，并在产品中统一应用。
+                    </p>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">考虑无障碍设计</div>
+                    <p class="text-gray-700">
+                        确保文字和背景之间有足够的对比度，至少达到WCAG 2.0 AA标准（4.5:1）。不要仅仅依靠颜色传达信息，可以结合形状、文本或图标等其他元素，照顾色盲用户的需求。
+                    </p>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">明确层次关系</div>
+                    <p class="text-gray-700">
+                        使用颜色建立清晰的视觉层次，主要内容和行动点应当使用更突出的颜色。背景、容器、内容等不同层级的元素应有明确的颜色区分，创建有组织的界面。
+                    </p>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">限制颜色数量</div>
+                    <p class="text-gray-700">
+                        避免使用过多颜色，这会导致视觉混乱。一般而言，除了中性色外，主要颜色应该限制在3-5种，每种颜色可以有多个色阶变化。过多的颜色会降低每种颜色的重要性。
+                    </p>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">考虑颜色心理学</div>
+                    <p class="text-gray-700">
+                        了解颜色的心理影响和文化含义。例如，蓝色通常传达信任和专业，绿色代表自然和健康，红色表示警告或错误。在不同文化背景下，颜色可能有不同含义，需要谨慎使用。
+                    </p>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <div class="text-xl font-bold text-blue-600 mb-3">支持多主题</div>
+                    <p class="text-gray-700">
+                        设计颜色系统时，考虑支持亮色和暗色两种主题。确保颜色系统在不同主题下都有良好表现，可能需要为每种主题定义不同的色阶，以确保足够的对比度和可读性。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 参考资源 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">参考资源</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <h3 class="font-bold text-lg mb-3">知名设计系统</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://ant.design/docs/spec/colors-cn" class="text-blue-600 hover:underline" target="_blank">Ant Design 色彩系统</a>
+                            <p class="text-gray-600 text-sm">蚂蚁金服设计团队推出的企业级设计系统</p>
+                        </li>
+                        <li>
+                            <a href="https://material.io/design/color/the-color-system.html" class="text-blue-600 hover:underline" target="_blank">Material Design 色彩系统</a>
+                            <p class="text-gray-600 text-sm">谷歌推出的设计语言</p>
+                        </li>
+                        <li>
+                            <a href="https://element.eleme.cn/#/zh-CN/component/color" class="text-blue-600 hover:underline" target="_blank">Element UI 色彩系统</a>
+                            <p class="text-gray-600 text-sm">饿了么前端团队推出的桌面端组件库</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="p-5 border border-gray-200 rounded-md">
+                    <h3 class="font-bold text-lg mb-3">色彩工具</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://color.adobe.com/zh/create/color-wheel" class="text-blue-600 hover:underline" target="_blank">Adobe Color</a>
+                            <p class="text-gray-600 text-sm">创建配色方案的专业工具</p>
+                        </li>
+                        <li>
+                            <a href="https://coolors.co/" class="text-blue-600 hover:underline" target="_blank">Coolors</a>
+                            <p class="text-gray-600 text-sm">快速生成配色方案</p>
+                        </li>
+                        <li>
+                            <a href="https://webaim.org/resources/contrastchecker/" class="text-blue-600 hover:underline" target="_blank">WebAIM 对比度检查器</a>
+                            <p class="text-gray-600 text-sm">检查颜色对比度是否符合无障碍标准</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

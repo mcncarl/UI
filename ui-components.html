@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI组件</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-12 mt-24">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">UI组件</h1>
+        
+        <!-- 组件类型容器 -->
+        <div class="grid grid-cols-1 gap-8 mb-12">
+            <!-- 原有内容从这里开始，但需要删除"UI基础设计"和"UI组件"标题 -->
+            
+            <!-- 基础组件部分 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-medium text-gray-600 mb-4">1. 基础组件</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- 按钮组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex flex-wrap gap-2 justify-center">
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">主按钮</button>
+                                <button class="bg-white text-blue-500 px-4 py-2 rounded-md border border-blue-500 hover:bg-blue-50">次按钮</button>
+                                <button class="text-blue-500 px-4 py-2 hover:bg-blue-50 rounded-md">文本按钮</button>
+                            </div>
+                            <p class="text-gray-700 font-medium">按钮 (Button)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 图标组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex gap-4 text-2xl text-gray-700">
+                                <!-- 使用简单的HTML/CSS绘制图标 -->
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </div>
+                                <div class="w-8 h-8 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">图标 (Icon)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 排版组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <h4 class="text-lg font-bold mb-1">标题文本</h4>
+                                <p class="text-sm mb-2">正文段落示例，展示排版效果。</p>
+                                <blockquote class="pl-3 border-l-4 border-gray-300 italic text-gray-600 text-sm">这是一个引用文本示例</blockquote>
+                            </div>
+                            <p class="text-gray-700 font-medium">排版 (Typography)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 布局组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="grid grid-cols-4 gap-1 mb-2">
+                                    <div class="bg-blue-100 h-6 rounded"></div>
+                                    <div class="bg-blue-200 h-6 rounded"></div>
+                                    <div class="bg-blue-300 h-6 rounded"></div>
+                                    <div class="bg-blue-400 h-6 rounded"></div>
+                                </div>
+                                <div class="flex gap-1">
+                                    <div class="bg-gray-200 h-8 w-1/3 rounded"></div>
+                                    <div class="bg-gray-300 h-8 w-2/3 rounded"></div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">布局 (Layout)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 分割线组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full space-y-3">
+                                <hr class="border-t border-gray-300">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gray-100 rounded"></div>
+                                    <div class="h-10 border-l border-gray-300 mx-3"></div>
+                                    <div class="w-12 h-12 bg-gray-100 rounded"></div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">分割线 (Divider)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 表单组件部分 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-medium text-gray-600 mb-4">2. 表单组件</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- 输入框组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="文本输入框">
+                                <div class="mt-2 flex gap-2">
+                                    <input type="password" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" placeholder="密码">
+                                    <input type="number" class="flex-1 px-3 py-2 border border-gray-300 rounded-md" placeholder="数字">
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">输入框 (Input)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 选择器组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option selected disabled>请选择选项</option>
+                                    <option>选项一</option>
+                                    <option>选项二</option>
+                                    <option>选项三</option>
+                                </select>
+                            </div>
+                            <p class="text-gray-700 font-medium">选择器 (Select)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 单选框组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="flex items-center mb-2">
+                                    <input id="radio1" type="radio" name="radio-group" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="radio1" class="ml-2 text-sm text-gray-700">选项一</label>
+                                </div>
+                                <div class="flex items-center mb-2">
+                                    <input id="radio2" type="radio" name="radio-group" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="radio2" class="ml-2 text-sm text-gray-700">选项二</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="radio3" type="radio" name="radio-group" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="radio3" class="ml-2 text-sm text-gray-700">选项三</label>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">单选框 (Radio)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 复选框组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="flex items-center mb-2">
+                                    <input id="checkbox1" type="checkbox" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="checkbox1" class="ml-2 text-sm text-gray-700">选项一</label>
+                                </div>
+                                <div class="flex items-center mb-2">
+                                    <input id="checkbox2" type="checkbox" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="checkbox2" class="ml-2 text-sm text-gray-700">选项二</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="checkbox3" type="checkbox" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                    <label for="checkbox3" class="ml-2 text-sm text-gray-700">选项三</label>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">复选框 (Checkbox)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 开关组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3">
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <span class="relative">
+                                        <span class="block w-10 h-6 bg-gray-200 rounded-full shadow-inner"></span>
+                                        <span class="absolute block w-4 h-4 mt-1 ml-1 bg-white rounded-full shadow inset-y-0 left-0 focus-within:shadow-outline transition-transform duration-300 ease-in-out">
+                                            <input type="checkbox" class="absolute opacity-0 w-0 h-0" />
+                                        </span>
+                                    </span>
+                                    <span class="ml-2 text-sm text-gray-700">切换状态</span>
+                                </label>
+                            </div>
+                            <p class="text-gray-700 font-medium">开关 (Switch)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 滑块组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full px-2">
+                                <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            <p class="text-gray-700 font-medium">滑块 (Slider)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 日期选择器组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative">
+                                    <input type="text" placeholder="选择日期" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" value="2023-10-15" />
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="mt-1 border border-gray-200 rounded-md shadow-sm p-2 hidden">
+                                    <div class="text-xs font-medium text-center mb-2">2023年10月</div>
+                                    <div class="grid grid-cols-7 gap-1">
+                                        <div class="text-center text-xs text-gray-500">日</div>
+                                        <div class="text-center text-xs text-gray-500">一</div>
+                                        <div class="text-center text-xs text-gray-500">二</div>
+                                        <div class="text-center text-xs text-gray-500">三</div>
+                                        <div class="text-center text-xs text-gray-500">四</div>
+                                        <div class="text-center text-xs text-gray-500">五</div>
+                                        <div class="text-center text-xs text-gray-500">六</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">日期选择器 (DatePicker)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 时间选择器组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative">
+                                    <input type="text" placeholder="选择时间" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-xs" value="14:30:00" />
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <svg class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="mt-1 border border-gray-200 rounded-md shadow-sm p-2 hidden">
+                                    <div class="flex justify-between mb-2">
+                                        <div class="text-center w-1/3 border-r">小时</div>
+                                        <div class="text-center w-1/3 border-r">分钟</div>
+                                        <div class="text-center w-1/3">秒数</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">时间选择器 (TimePicker)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 上传组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border-2 border-dashed border-gray-300 rounded-md px-3 py-3 text-center">
+                                    <svg class="mx-auto h-8 w-8 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <div class="text-sm text-gray-600 mt-1">
+                                        <label for="file-upload" class="cursor-pointer text-blue-500 hover:underline">
+                                            点击上传文件
+                                        </label>
+                                        <p class="text-xs">或拖拽文件到此处</p>
+                                    </div>
+                                    <input id="file-upload" type="file" class="hidden" />
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">上传 (Upload)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 表单组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <form class="space-y-2">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">用户名</label>
+                                        <input type="text" class="mt-1 block w-full px-2 py-1 text-xs border border-gray-300 rounded-md shadow-sm" placeholder="请输入用户名">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-700">密码</label>
+                                        <input type="password" class="mt-1 block w-full px-2 py-1 text-xs border border-gray-300 rounded-md shadow-sm" placeholder="请输入密码">
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" class="h-3 w-3 text-blue-600 rounded">
+                                        <label class="ml-1 block text-xs text-gray-700">记住我</label>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="w-full px-2 py-1 text-xs text-white bg-blue-500 rounded-md">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <p class="text-gray-700 font-medium">表单 (Form)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 评分组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3">
+                                <div class="flex">
+                                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                    <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">评分 (Rate)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 富文本编辑器组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden">
+                                    <div class="bg-gray-100 border-b flex p-1 space-x-1">
+                                        <button class="p-1 rounded hover:bg-gray-200">
+                                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 rounded hover:bg-gray-200 font-bold text-xs">B</button>
+                                        <button class="p-1 rounded hover:bg-gray-200 italic text-xs">I</button>
+                                        <button class="p-1 rounded hover:bg-gray-200 underline text-xs">U</button>
+                                        <button class="p-1 rounded hover:bg-gray-200">
+                                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="p-2 h-16 text-xs">这是一个富文本编辑器示例，可以添加、编辑文本内容。</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">富文本编辑器 (RichTextEditor)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据展示组件部分 -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-medium text-gray-600 mb-4">3. 数据展示组件</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- 表格组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden">
+                                    <div class="flex">
+                                        <div class="flex-1 p-1 border-b border-r">第1列标题</div>
+                                        <div class="flex-1 p-1 border-b">第2列标题</div>
+                                    </div>
+                                    <div class="flex text-xs">
+                                        <div class="flex-1 p-1 border-b border-r">内容1</div>
+                                        <div class="flex-1 p-1 border-b">内容2</div>
+                                    </div>
+                                    <div class="flex text-xs">
+                                        <div class="flex-1 p-1 border-r">内容3</div>
+                                        <div class="flex-1 p-1">内容4</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">表格 (Table)</p>
+                        </div>
+                    </div>
+
+                    <!-- 描述列表组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden p-3">
+                                    <div class="grid grid-cols-4 text-xs border-b pb-2 mb-2">
+                                        <div class="font-medium">用户名</div>
+                                        <div class="col-span-3">张三</div>
+                                    </div>
+                                    <div class="grid grid-cols-4 text-xs border-b pb-2 mb-2">
+                                        <div class="font-medium">手机号</div>
+                                        <div class="col-span-3">138****1234</div>
+                                    </div>
+                                    <div class="grid grid-cols-4 text-xs">
+                                        <div class="font-medium">注册时间</div>
+                                        <div class="col-span-3">2023-10-01 10:30:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">描述列表 (Descriptions)</p>
+                        </div>
+                    </div>
+
+                    <!-- 树形控件组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden p-3">
+                                    <ul class="text-xs">
+                                        <li class="mb-1">
+                                            <div class="flex items-center">
+                                                <svg class="h-3 w-3 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>父节点1</span>
+                                            </div>
+                                            <ul class="pl-5 mt-1">
+                                                <li class="mb-1">
+                                                    <div class="flex items-center">
+                                                        <svg class="h-3 w-3 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <span>子节点1-1</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="flex items-center">
+                                                        <svg class="h-3 w-3 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        <span>子节点1-2</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center">
+                                                <svg class="h-3 w-3 text-gray-500 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span>父节点2</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">树形控件 (Tree)</p>
+                        </div>
+                    </div>
+
+                    <!-- 走马灯组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative h-24 border rounded-md overflow-hidden">
+                                    <div class="absolute inset-0 flex items-center justify-center bg-gray-100">
+                                        <p class="text-sm">幻灯片1</p>
+                                    </div>
+                                    <div class="absolute flex justify-between transform -translate-y-1/2 left-0 right-0 top-1/2 px-2">
+                                        <button class="bg-white text-gray-800 p-1 rounded-full shadow-md text-xs">
+                                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <button class="bg-white text-gray-800 p-1 rounded-full shadow-md text-xs">
+                                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-1">
+                                        <span class="h-1 w-2 bg-blue-500 rounded-full"></span>
+                                        <span class="h-1 w-2 bg-gray-300 rounded-full"></span>
+                                        <span class="h-1 w-2 bg-gray-300 rounded-full"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">走马灯 (Carousel)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 折叠面板组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden">
+                                    <div class="border-b">
+                                        <button class="flex justify-between items-center w-full px-3 py-2 text-left text-xs font-medium text-gray-700 bg-gray-50">
+                                            <span>面板标题1</span>
+                                            <svg class="h-3 w-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div class="px-3 py-2 text-xs">
+                                            <p>面板1的内容区域</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button class="flex justify-between items-center w-full px-3 py-2 text-left text-xs font-medium text-gray-700 bg-gray-50">
+                                            <span>面板标题2</span>
+                                            <svg class="h-3 w-3 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">折叠面板 (Collapse)</p>
+                        </div>
+                    </div>
+
+                    <!-- 头像组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3">
+                                <div class="flex items-center -space-x-2">
+                                    <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs border-2 border-white">A</div>
+                                    <div class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center text-white text-xs border-2 border-white">B</div>
+                                    <div class="h-8 w-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs border-2 border-white">C</div>
+                                    <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center text-white text-xs border-2 border-white">
+                                        <svg class="h-4 w-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">头像 (Avatar)</p>
+                        </div>
+                    </div>
+
+                    <!-- 统计数值组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="flex flex-col items-center p-2 border rounded-md">
+                                    <div class="text-gray-500 text-xs mb-1">活跃用户</div>
+                                    <div class="text-2xl font-bold text-gray-800">1,128</div>
+                                    <div class="text-green-500 text-xs flex items-center">
+                                        <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span>16.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">统计数值 (Statistic)</p>
+                        </div>
+                    </div>
+
+                    <!-- 列表组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <ul class="divide-y divide-gray-200 border rounded-md">
+                                    <li class="py-2 px-3 flex items-center">
+                                        <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-xs">1</div>
+                                        <div class="ml-3">
+                                            <p class="text-xs font-medium text-gray-900">列表项目一</p>
+                                            <p class="text-xs text-gray-500">描述信息</p>
+                                        </div>
+                                    </li>
+                                    <li class="py-2 px-3 flex items-center">
+                                        <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-xs">2</div>
+                                        <div class="ml-3">
+                                            <p class="text-xs font-medium text-gray-900">列表项目二</p>
+                                            <p class="text-xs text-gray-500">描述信息</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <p class="text-gray-700 font-medium">列表 (List)</p>
+                        </div>
+                    </div>
+
+                    <!-- 标签组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex flex-wrap gap-2 justify-center">
+                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
+                                    标签一
+                                </span>
+                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-100 text-green-800">
+                                    标签二
+                                </span>
+                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
+                                    标签三
+                                    <button type="button" class="ml-1 inline-flex text-red-500 focus:outline-none">
+                                        <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                            <p class="text-gray-700 font-medium">标签 (Tag)</p>
+                        </div>
+                    </div>
+
+                    <!-- 徽标组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex gap-4 justify-center">
+                                <div class="relative inline-block">
+                                    <div class="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                        </svg>
+                                    </div>
+                                    <span class="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">8</span>
+                                </div>
+                                <div class="relative inline-block">
+                                    <div class="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                        </svg>
+                                    </div>
+                                    <span class="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">5</span>
+                                </div>
+                                <div class="relative inline-block">
+                                    <div class="h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <span class="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-green-500 flex items-center justify-center text-white text-xs">3</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">徽标 (Badge)</p>
+                        </div>
+                    </div>
+
+                    <!-- 卡片组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                                    <div class="h-24 bg-blue-100 flex items-center justify-center">
+                                        <svg class="h-12 w-12 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+                                        </svg>
+                                    </div>
+                                    <div class="p-3">
+                                        <h3 class="text-sm font-medium text-gray-900 mb-1">卡片标题</h3>
+                                        <p class="text-xs text-gray-500 mb-2">这是卡片内容描述，用于展示卡片组件样式。</p>
+                                        <div class="flex justify-end">
+                                            <button class="text-xs text-blue-500 hover:text-blue-600">查看详情</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">卡片 (Card)</p>
+                        </div>
+                    </div>
+
+                    <!-- 时间轴组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md p-3">
+                                    <ul class="relative border-l border-gray-300">
+                                        <li class="mb-3 ml-4">
+                                            <div class="absolute w-2 h-2 bg-blue-500 rounded-full -left-1 border border-white"></div>
+                                            <div class="text-xs font-medium">2023-10-12</div>
+                                            <div class="text-xs text-gray-500">完成项目初始化</div>
+                                        </li>
+                                        <li class="mb-3 ml-4">
+                                            <div class="absolute w-2 h-2 bg-blue-500 rounded-full -left-1 border border-white"></div>
+                                            <div class="text-xs font-medium">2023-10-15</div>
+                                            <div class="text-xs text-gray-500">完成需求分析</div>
+                                        </li>
+                                        <li class="ml-4">
+                                            <div class="absolute w-2 h-2 bg-gray-300 rounded-full -left-1 border border-white"></div>
+                                            <div class="text-xs font-medium">2023-10-20</div>
+                                            <div class="text-xs text-gray-500">进行中...</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">时间轴 (Timeline)</p>
+                        </div>
+                    </div>
+
+                    <!-- 图表组件 - 删除此部分 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hidden">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md p-3">
+                                    <div class="text-xs font-medium mb-2">销售数据</div>
+                                    <div class="h-32 flex items-end space-x-2">
+                                        <div class="bg-blue-500 w-8 h-20 rounded-t-sm"></div>
+                                        <div class="bg-blue-500 w-8 h-16 rounded-t-sm"></div>
+                                        <div class="bg-blue-500 w-8 h-24 rounded-t-sm"></div>
+                                        <div class="bg-blue-500 w-8 h-12 rounded-t-sm"></div>
+                                        <div class="bg-blue-500 w-8 h-28 rounded-t-sm"></div>
+                                        <div class="bg-blue-500 w-8 h-18 rounded-t-sm"></div>
+                                    </div>
+                                    <div class="grid grid-cols-6 text-center mt-1">
+                                        <div class="text-gray-500 text-xs">一月</div>
+                                        <div class="text-gray-500 text-xs">二月</div>
+                                        <div class="text-gray-500 text-xs">三月</div>
+                                        <div class="text-gray-500 text-xs">四月</div>
+                                        <div class="text-gray-500 text-xs">五月</div>
+                                        <div class="text-gray-500 text-xs">六月</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">图表 (Charts)</p>
+                        </div>
+                    </div>
+
+                    <!-- 滚动条组件 - 删除此部分 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hidden">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md p-3 h-32 overflow-y-auto relative">
+                                    <div class="text-xs space-y-2">
+                                        <p>这是一个带有自定义滚动条的内容区域。</p>
+                                        <p>可以通过CSS自定义滚动条的样式，包括宽度、颜色、圆角等。</p>
+                                        <p>在不同的操作系统和浏览器中，滚动条的外观可能有所不同。</p>
+                                        <p>现代网页设计中，常常会对滚动条进行美化，以符合整体UI风格。</p>
+                                        <p>滚动条是用户界面中重要的导航元素，特别是在长内容页面中。</p>
+                                        <p>良好的滚动条设计可以提升用户体验。</p>
+                                    </div>
+                                    <div class="absolute right-0 top-0 bottom-0 w-2 bg-gray-100 rounded-full">
+                                        <div class="absolute top-0 right-0 w-2 h-8 bg-gray-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">滚动条 (Scrollbar)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 导航组件部分 -->
+            <div class="section my-6">
+                <h2 class="text-xl font-bold mb-4">导航组件</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- 菜单组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <ul class="text-xs border border-gray-200 rounded-md">
+                                    <li class="px-3 py-2 text-blue-500 bg-blue-50 border-l-2 border-blue-500">首页</li>
+                                    <li class="px-3 py-2 text-gray-700 border-gray-100">产品</li>
+                                    <li class="px-3 py-2 text-gray-700 border-gray-100">关于我们</li>
+                                    <li class="px-3 py-2 text-gray-700 border-gray-100">联系我们</li>
+                                </ul>
+                            </div>
+                            <p class="text-gray-700 font-medium">菜单 (Menu)</p>
+                        </div>
+                    </div>
+                    <!-- 面包屑组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex items-center">
+                                <a href="#" class="text-xs text-gray-500">首页</a>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                                <a href="#" class="text-xs text-gray-500">产品</a>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                                <span class="text-xs text-gray-900">产品详情</span>
+                            </div>
+                            <p class="text-gray-700 font-medium">面包屑 (Breadcrumb)</p>
+                        </div>
+                    </div>
+                    <!-- 分页组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 flex items-center space-x-1">
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 bg-blue-500 text-white">1</a>
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 text-gray-700">2</a>
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 text-gray-700">3</a>
+                                <span class="px-1 text-xs text-gray-500">...</span>
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 text-gray-700">10</a>
+                                <a href="#" class="px-2 py-1 text-xs rounded border border-gray-300 text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <p class="text-gray-700 font-medium">分页 (Pagination)</p>
+                        </div>
+                    </div>
+                    <!-- 步骤条组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="flex items-center w-full">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs">1</div>
+                                        <p class="text-xs mt-1 text-blue-500">第一步</p>
+                                    </div>
+                                    <div class="flex-1 h-1 bg-blue-500"></div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs">2</div>
+                                        <p class="text-xs mt-1 text-blue-500">第二步</p>
+                                    </div>
+                                    <div class="flex-1 h-1 bg-gray-300"></div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-gray-300 text-gray-500 flex items-center justify-center text-xs">3</div>
+                                        <p class="text-xs mt-1 text-gray-500">第三步</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">步骤条 (Steps)</p>
+                        </div>
+                    </div>
+                    <!-- 标签页组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="w-full border rounded-md overflow-hidden">
+                                    <div class="flex border-b">
+                                        <button class="px-3 py-2 text-xs font-medium border-b-2 border-blue-500 text-blue-500">标签1</button>
+                                        <button class="px-3 py-2 text-xs font-medium text-gray-500">标签2</button>
+                                        <button class="px-3 py-2 text-xs font-medium text-gray-500">标签3</button>
+                                    </div>
+                                    <div class="p-3 text-xs">
+                                        标签1的内容区域
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">标签页 (Tabs)</p>
+                        </div>
+                    </div>
+
+                    <!-- 锚点组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden grid grid-cols-4">
+                                    <div class="col-span-1 border-r bg-gray-50 p-2">
+                                        <ul class="space-y-1 text-xs">
+                                            <li>
+                                                <a href="#section1" class="flex items-center text-blue-500 py-1 px-2 bg-blue-50 border-l-2 border-blue-500">
+                                                    <span>第一部分</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#section2" class="flex items-center text-gray-700 py-1 px-2 hover:bg-gray-100">
+                                                    <span>第二部分</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#section3" class="flex items-center text-gray-700 py-1 px-2 hover:bg-gray-100">
+                                                    <span>第三部分</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-span-3 p-2 text-xs">
+                                        <div id="section1" class="py-1">第一部分内容...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">锚点 (Anchor)</p>
+                        </div>
+                    </div>
+
+                    <!-- 返回顶部组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full flex justify-end">
+                                <button class="flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md border border-gray-200">
+                                    <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-gray-700 font-medium">返回顶部 (BackTop)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 反馈组件 -->
+            <div class="section my-6">
+                <h2 class="text-xl font-bold mb-4">反馈组件</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- 对话框组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative w-full max-w-md mx-auto">
+                                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center rounded-md">
+                                        <div class="bg-white w-60 rounded-md shadow-lg">
+                                            <div class="px-4 py-3 border-b border-gray-200">
+                                                <h3 class="text-xs font-medium text-gray-700">确认删除</h3>
+                                            </div>
+                                            <div class="p-4 text-xs text-gray-600">
+                                                确定要删除这条记录吗？此操作无法撤销。
+                                            </div>
+                                            <div class="px-4 py-3 bg-gray-50 flex justify-end space-x-2 rounded-b-md">
+                                                <button class="px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 rounded">取消</button>
+                                                <button class="px-2 py-1 text-xs text-white bg-red-500 hover:bg-red-600 rounded">删除</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="h-40 border rounded-md bg-gray-50"></div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">对话框 (Modal/Dialog)</p>
+                        </div>
+                    </div>
+
+                    <!-- 抽屉组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative h-40 border rounded-md bg-gray-50">
+                                    <div class="absolute right-0 top-0 bottom-0 w-40 bg-white shadow-lg border-l">
+                                        <div class="px-3 py-2 border-b border-gray-200">
+                                            <h3 class="text-xs font-medium text-gray-700">筛选条件</h3>
+                                        </div>
+                                        <div class="p-3">
+                                            <div class="space-y-2 text-xs">
+                                                <div>
+                                                    <label class="block mb-1 text-gray-700">时间范围</label>
+                                                    <select class="w-full px-2 py-1 border rounded text-xs">
+                                                        <option>全部</option>
+                                                        <option>最近一周</option>
+                                                        <option>最近一月</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">抽屉 (Drawer)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 通知提醒组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="max-w-xs">
+                                    <div class="bg-white rounded-md shadow-lg border border-gray-200 p-3 mb-2">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <svg class="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <div class="ml-2">
+                                                <h3 class="text-xs font-medium text-gray-900">操作成功</h3>
+                                                <p class="text-xs text-gray-500 mt-1">数据已成功保存到系统</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">通知提醒 (Notification)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 警告提示组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-2">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <svg class="h-4 w-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-2">
+                                            <p class="text-xs text-yellow-700">
+                                                注意：此操作需要谨慎执行，可能会影响到系统数据。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">警告提示 (Alert)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 消息提示组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="flex justify-center">
+                                    <div class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs flex items-center shadow-sm">
+                                        <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                        </svg>
+                                        文件已更新
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">消息提示 (Message)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 气泡确认框 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative flex justify-center">
+                                    <button class="px-2 py-1 text-xs border border-red-500 text-red-500 rounded hover:bg-red-50">删除</button>
+                                    <div class="absolute top-8 left-1/2 transform -translate-x-1/2 bg-white border border-gray-200 rounded shadow-lg p-2 w-40">
+                                        <div class="text-xs">确定删除此项？</div>
+                                        <div class="flex justify-end mt-2 space-x-1">
+                                            <button class="px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded">取消</button>
+                                            <button class="px-2 py-1 text-xs text-white bg-red-500 rounded">确定</button>
+                                        </div>
+                                        <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">气泡确认框 (Popconfirm)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 进度条组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="space-y-2">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 65%"></div>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-blue-500 text-xs">65%</div>
+                                        <div class="text-gray-500 text-xs">100%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">进度条 (Progress)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 加载中组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full flex flex-col items-center">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                                <p class="mt-2 text-xs text-gray-500">加载中...</p>
+                            </div>
+                            <p class="text-gray-700 font-medium">加载中 (Loading)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 骨架屏组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="animate-pulse space-y-2">
+                                    <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                    <div class="h-4 bg-gray-200 rounded"></div>
+                                    <div class="h-4 bg-gray-200 rounded"></div>
+                                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">骨架屏 (Skeleton)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 结果页组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="text-center">
+                                    <div class="mx-auto flex items-center justify-center h-10 w-10 rounded-full bg-green-100">
+                                        <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900">操作成功</h3>
+                                    <p class="mt-1 text-xs text-gray-500">您的请求已成功处理</p>
+                                    <div class="mt-3">
+                                        <button class="px-2 py-1 text-xs text-white bg-blue-500 rounded hover:bg-blue-600">返回首页</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">结果页 (Result)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 空状态组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="text-center py-4">
+                                    <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                    </svg>
+                                    <p class="mt-1 text-sm font-medium text-gray-900">暂无数据</p>
+                                    <p class="mt-1 text-xs text-gray-500">暂无相关数据，请稍后重试</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">空状态 (Empty)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 其他组件 -->
+            <div class="section my-6">
+                <h2 class="text-xl font-bold mb-4">其他组件</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- 日历组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="border rounded-md overflow-hidden">
+                                    <div class="bg-blue-500 text-white text-center p-2 text-xs font-medium">2023年10月</div>
+                                    <div class="p-2">
+                                        <div class="grid grid-cols-7 gap-1 text-center mb-1">
+                                            <div class="text-gray-500 text-xs">日</div>
+                                            <div class="text-gray-500 text-xs">一</div>
+                                            <div class="text-gray-500 text-xs">二</div>
+                                            <div class="text-gray-500 text-xs">三</div>
+                                            <div class="text-gray-500 text-xs">四</div>
+                                            <div class="text-gray-500 text-xs">五</div>
+                                            <div class="text-gray-500 text-xs">六</div>
+                                        </div>
+                                        <div class="grid grid-cols-7 gap-1 text-center">
+                                            <div class="text-gray-300 text-xs">30</div>
+                                            <div class="text-xs">1</div>
+                                            <div class="text-xs">2</div>
+                                            <div class="text-xs">3</div>
+                                            <div class="text-xs">4</div>
+                                            <div class="text-xs">5</div>
+                                            <div class="text-xs">6</div>
+                                            <div class="text-xs">7</div>
+                                            <div class="text-xs">8</div>
+                                            <div class="text-xs">9</div>
+                                            <div class="text-xs rounded-full bg-blue-500 text-white w-5 h-5 flex items-center justify-center mx-auto">10</div>
+                                            <div class="text-xs">11</div>
+                                            <div class="text-xs">12</div>
+                                            <div class="text-xs">13</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">日历 (Calendar)</p>
+                        </div>
+                    </div>
+
+                    <!-- 气泡卡片组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative flex justify-center">
+                                    <button class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md border border-gray-300">悬停查看</button>
+                                    <div class="absolute top-8 left-1/2 transform -translate-x-1/2 mt-1 bg-white border border-gray-200 rounded-md shadow-md p-2 w-40">
+                                        <div class="text-xs font-medium mb-1">标题</div>
+                                        <div class="text-xs text-gray-600">这是一个气泡卡片的内容</div>
+                                        <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">气泡卡片 (Popover)</p>
+                        </div>
+                    </div>
+
+                    <!-- 文字提示组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative flex justify-center">
+                                    <button class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md border border-gray-300">悬停查看</button>
+                                    <div class="absolute top-7 left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white rounded px-2 py-1 text-xs w-auto">
+                                        提示文本信息
+                                        <div class="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">文字提示 (Tooltip)</p>
+                        </div>
+                    </div>
+
+                    <!-- 水印组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full">
+                                <div class="relative h-24 border rounded-md">
+                                    <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+                                        <div class="text-gray-200 transform rotate-315 text-lg font-bold whitespace-nowrap opacity-20">
+                                            WATERMARK DEMO 水印演示
+                                        </div>
+                                    </div>
+                                    <div class="relative z-10 p-3 text-xs">
+                                        水印组件可在内容上方覆盖半透明标记，用于版权保护或标识文档所有者。
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 font-medium">水印 (Watermark)</p>
+                        </div>
+                    </div>
+
+                    <!-- 浮动操作按钮组件 -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex flex-col items-center">
+                            <div class="mb-3 w-full flex justify-end">
+                                <button class="rounded-full w-12 h-12 bg-blue-500 text-white shadow-lg flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-gray-700 font-medium">浮动操作按钮 (FloatingActionButton)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

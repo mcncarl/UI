@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI组件库分类大全</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl mt-24">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-center mb-4">UI组件库分类大全</h1>
+            <p class="text-gray-600 text-center mb-4">按设备/场景分类的常见UI组件库及其详细介绍</p>
+            <div class="flex justify-center gap-4">
+                <a href="ui-components.html" class="text-blue-500 hover:text-blue-700">查看UI组件分类</a>
+                <a href="ui-libraries.html" class="text-blue-700 font-medium">UI组件库分类</a>
+            </div>
+        </header>
+
+        <section>
+            <!-- 桌面端（PC）组件库 -->
+            <div class="section my-8">
+                <h2 class="text-2xl font-bold mb-4">1. 桌面端（PC）组件库</h2>
+                
+                <!-- 企业级组件库 -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-3">企业级组件库</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        
+                        <!-- Ant Design -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="bg-blue-500 text-white p-4">
+                                <h4 class="text-lg font-bold">Ant Design</h4>
+                            </div>
+                            <div class="p-4">
+                                <p class="mb-2 text-sm">由蚂蚁金服开发的企业级UI设计语言和React组件库</p>
+                                <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                                <ul class="list-disc pl-5 mb-2 text-sm">
+                                    <li>中后台管理系统</li>
+                                    <li>企业级应用</li>
+                                    <li>数据密集型应用</li>
+                                    <li>需要统一设计规范的大型项目</li>
+                                </ul>
+                                <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                                <p class="text-sm mb-2">通过npm或yarn安装：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install antd</pre>
+                                <p class="text-sm">在React项目中引入组件：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs">import { Button } from 'antd';</pre>
+                                <div class="mt-3">
+                                    <a href="https://ant.design/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Element UI -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="bg-teal-500 text-white p-4">
+                                <h4 class="text-lg font-bold">Element UI</h4>
+                            </div>
+                            <div class="p-4">
+                                <p class="mb-2 text-sm">由饿了么前端团队开发的基于Vue的桌面端组件库</p>
+                                <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                                <ul class="list-disc pl-5 mb-2 text-sm">
+                                    <li>基于Vue开发的中后台系统</li>
+                                    <li>需要美观统一UI的企业应用</li>
+                                    <li>追求开发效率的项目</li>
+                                </ul>
+                                <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                                <p class="text-sm mb-2">通过npm或yarn安装：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install element-ui</pre>
+                                <p class="text-sm">在Vue项目中引入：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs">import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+Vue.use(ElementUI);</pre>
+                                <div class="mt-3">
+                                    <a href="https://element.eleme.io/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Material UI -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="bg-purple-500 text-white p-4">
+                                <h4 class="text-lg font-bold">Material UI</h4>
+                            </div>
+                            <div class="p-4">
+                                <p class="mb-2 text-sm">基于Google的Material Design设计规范的React组件库</p>
+                                <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                                <ul class="list-disc pl-5 mb-2 text-sm">
+                                    <li>想要遵循Material Design的应用</li>
+                                    <li>React应用程序</li>
+                                    <li>响应式Web应用</li>
+                                </ul>
+                                <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                                <p class="text-sm mb-2">通过npm或yarn安装：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install @mui/material @emotion/react @emotion/styled</pre>
+                                <p class="text-sm">在React项目中使用：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs">import Button from '@mui/material/Button';
+
+function App() {
+  return <Button variant="contained">Hello World</Button>;
+}</pre>
+                                <div class="mt-3">
+                                    <a href="https://mui.com/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 轻量级组件库 -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold mb-3">轻量级组件库</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        
+                        <!-- Bulma -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="bg-green-500 text-white p-4">
+                                <h4 class="text-lg font-bold">Bulma</h4>
+                            </div>
+                            <div class="p-4">
+                                <p class="mb-2 text-sm">基于Flexbox的现代CSS框架，无JavaScript依赖</p>
+                                <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                                <ul class="list-disc pl-5 mb-2 text-sm">
+                                    <li>需要简洁但漂亮UI的项目</li>
+                                    <li>希望避免JavaScript依赖的项目</li>
+                                    <li>快速开发原型</li>
+                                    <li>小型到中型网站</li>
+                                </ul>
+                                <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                                <p class="text-sm mb-2">通过CDN引入：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs mb-2">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"&gt;</pre>
+                                <p class="text-sm">或通过npm安装：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs">npm install bulma</pre>
+                                <div class="mt-3">
+                                    <a href="https://bulma.io/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tailwind UI -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="bg-blue-600 text-white p-4">
+                                <h4 class="text-lg font-bold">Tailwind UI</h4>
+                            </div>
+                            <div class="p-4">
+                                <p class="mb-2 text-sm">基于Tailwind CSS的官方高级UI组件集合</p>
+                                <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                                <ul class="list-disc pl-5 mb-2 text-sm">
+                                    <li>使用Tailwind CSS的项目</li>
+                                    <li>需要灵活定制样式的应用</li>
+                                    <li>追求原子化CSS开发体验</li>
+                                    <li>从头构建UI系统的项目</li>
+                                </ul>
+                                <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                                <p class="text-sm mb-2">先安装Tailwind CSS：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install tailwindcss</pre>
+                                <p class="text-sm">配置Tailwind CSS，然后将Tailwind UI组件复制到您的项目中：</p>
+                                <pre class="bg-gray-100 p-2 rounded text-xs">&lt;div class="bg-white shadow overflow-hidden sm:rounded-lg"&gt;
+  &lt;!-- 复制Tailwind UI组件的HTML --&gt;
+&lt;/div&gt;</pre>
+                                <div class="mt-3">
+                                    <a href="https://tailwindui.com/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 移动端组件库 -->
+            <div class="section my-8">
+                <h2 class="text-2xl font-bold mb-4">2. 移动端组件库</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- Vant -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-500 text-white p-4">
+                            <h4 class="text-lg font-bold">Vant</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">有赞前端团队开发的轻量、可靠的移动端Vue组件库</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>移动端Vue项目</li>
+                                <li>电商类应用</li>
+                                <li>需要高性能UI组件的项目</li>
+                                <li>需要兼顾功能和视觉效果的应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm i vant</pre>
+                            <p class="text-sm">在Vue项目中引入：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">import { Button } from 'vant';
+import 'vant/lib/index.css';
+
+// 注册组件
+app.use(Button);</pre>
+                            <div class="mt-3">
+                                <a href="https://vant-ui.github.io/vant/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mint UI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-green-500 text-white p-4">
+                            <h4 class="text-lg font-bold">Mint UI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">饿了么团队开发的基于Vue的移动端组件库</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>基于Vue的移动端应用</li>
+                                <li>需要扁平化风格UI的项目</li>
+                                <li>需要轻量级解决方案的应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install mint-ui</pre>
+                            <p class="text-sm">在Vue项目中引入：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css';
+
+Vue.use(Mint);</pre>
+                            <div class="mt-3">
+                                <a href="http://mint-ui.github.io/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cube UI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-yellow-500 text-white p-4">
+                            <h4 class="text-lg font-bold">Cube UI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">滴滴团队开发的精致移动端Vue组件库</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>Vue移动端应用</li>
+                                <li>需要丰富交互效果的项目</li>
+                                <li>追求高质量细节表现的应用</li>
+                                <li>支持按需引入的项目</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install cube-ui</pre>
+                            <p class="text-sm">配置Vue项目以使用Cube UI：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">// vue.config.js
+module.exports = {
+  css: {
+    loaderOptions: {
+      stylus: {
+        'resolve url': true
+      }
+    }
+  },
+  pluginOptions: {
+    'cube-ui': {
+      postCompile: true,
+      theme: true
+    }
+  }
+}</pre>
+                            <div class="mt-3">
+                                <a href="https://didi.github.io/cube-ui/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WeUI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-green-600 text-white p-4">
+                            <h4 class="text-lg font-bold">WeUI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">微信官方设计团队为微信内网页开发的UI库</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>微信内H5应用</li>
+                                <li>需要微信原生体验的Web应用</li>
+                                <li>公众号网页开发</li>
+                                <li>追求与微信一致UI体验的应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过CDN引入：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">&lt;link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.4/weui.min.css"&gt;</pre>
+                            <p class="text-sm">或通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">npm install weui</pre>
+                            <div class="mt-3">
+                                <a href="https://github.com/Tencent/weui" target="_blank" class="text-blue-500 hover:underline text-sm">官方仓库 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 小程序组件库 -->
+            <div class="section my-8">
+                <h2 class="text-2xl font-bold mb-4">3. 小程序组件库</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- WeUI WXSS -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-green-600 text-white p-4">
+                            <h4 class="text-lg font-bold">WeUI WXSS</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">微信官方为小程序设计的UI库，与微信原生风格一致</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>微信小程序开发</li>
+                                <li>需要原生微信体验的应用</li>
+                                <li>追求简洁高效的小程序</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">下载WeUI WXSS源码到本地项目：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">git clone https://github.com/Tencent/weui-wxss.git</pre>
+                            <p class="text-sm">在小程序中引入样式：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">/* 在app.wxss中 */
+@import 'path/to/weui-wxss/dist/style/weui.wxss';</pre>
+                            <div class="mt-3">
+                                <a href="https://github.com/Tencent/weui-wxss" target="_blank" class="text-blue-500 hover:underline text-sm">官方仓库 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Vant Weapp -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-500 text-white p-4">
+                            <h4 class="text-lg font-bold">Vant Weapp</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">有赞团队开发的轻量级、高性能微信小程序UI组件库</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>微信小程序开发</li>
+                                <li>电商类小程序</li>
+                                <li>需要丰富组件的小程序</li>
+                                <li>注重性能的项目</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm i @vant/weapp -S --production</pre>
+                            <p class="text-sm">在小程序中使用组件：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">// 在app.json或页面json中配置
+"usingComponents": {
+  "van-button": "@vant/weapp/button/index"
+}</pre>
+                            <div class="mt-3">
+                                <a href="https://youzan.github.io/vant-weapp/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Taro UI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-600 text-white p-4">
+                            <h4 class="text-lg font-bold">Taro UI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">基于Taro框架开发的多端UI组件库，支持微信、支付宝、百度等小程序</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>使用Taro开发的多端应用</li>
+                                <li>需要同时适配多个小程序平台</li>
+                                <li>React开发风格的小程序项目</li>
+                                <li>需要统一多端体验的应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">首先安装Taro框架，然后安装Taro UI：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install taro-ui</pre>
+                            <p class="text-sm">配置项目以使用Taro UI：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">// 引入组件样式
+import 'taro-ui/dist/style/index.scss'
+
+// 使用组件
+import { AtButton } from 'taro-ui'
+
+render() {
+  return <AtButton type='primary'>按钮文案</AtButton>
+}</pre>
+                            <div class="mt-3">
+                                <a href="https://taro-ui.jd.com/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 跨平台组件库 -->
+            <div class="section my-8">
+                <h2 class="text-2xl font-bold mb-4">4. 跨平台组件库</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- NutUI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-red-500 text-white p-4">
+                            <h4 class="text-lg font-bold">NutUI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">京东风格的跨端组件库，同时支持Vue和小程序开发</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>需要同时开发移动端Web和小程序</li>
+                                <li>京东系产品或类似电商应用</li>
+                                <li>Vue技术栈项目</li>
+                                <li>需要高性能和丰富功能的应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">通过npm安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm i @nutui/nutui</pre>
+                            <p class="text-sm">在Vue项目中引入：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">import NutUI from "@nutui/nutui";
+import "@nutui/nutui/dist/style.css";
+
+app.use(NutUI);</pre>
+                            <div class="mt-3">
+                                <a href="https://nutui.jd.com/" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- uni-app UI -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="bg-blue-600 text-white p-4">
+                            <h4 class="text-lg font-bold">uni-app UI</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="mb-2 text-sm">基于uni-app的跨平台UI组件库，支持H5、App和小程序</p>
+                            <h5 class="font-medium mb-1 text-sm">适用场景：</h5>
+                            <ul class="list-disc pl-5 mb-2 text-sm">
+                                <li>使用uni-app框架的项目</li>
+                                <li>需要同时开发多端应用</li>
+                                <li>追求一套代码多端使用的项目</li>
+                                <li>需要丰富组件的跨平台应用</li>
+                            </ul>
+                            <h5 class="font-medium mb-1 text-sm">使用方法：</h5>
+                            <p class="text-sm mb-2">在uni-app项目中安装：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs mb-2">npm install @dcloudio/uni-ui</pre>
+                            <p class="text-sm">在页面中使用组件：</p>
+                            <pre class="bg-gray-100 p-2 rounded text-xs">// pages.json
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  }
+}
+
+// 页面中使用
+<template>
+  <uni-button type="primary">按钮</uni-button>
+</template></pre>
+                            <div class="mt-3">
+                                <a href="https://uniapp.dcloud.io/component/uniui/uni-ui.html" target="_blank" class="text-blue-500 hover:underline text-sm">官方网站 →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 添加JavaScript脚本 -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // 分享网站功能
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'UI指导书 - UI组件库分类大全',
+                    text: '按设备/场景分类的常见UI组件库及其详细介绍',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('分享成功');
+                }).catch((error) => {
+                    console.log('分享失败:', error);
+                });
+            } else {
+                // 不支持原生分享API时，复制链接到剪贴板
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                alert('链接已复制到剪贴板，可以分享给朋友了！');
+            }
+        }
+    </script>
+</body>
+</html> 

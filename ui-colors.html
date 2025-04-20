@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI色彩系统 - 颜色大全</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .color-box {
+                @apply w-full h-20 rounded-md shadow-md flex items-end justify-center p-2 text-xs font-medium;
+            }
+            .color-group {
+                @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4;
+            }
+            .gradient-box {
+                @apply w-full h-24 rounded-md shadow-md flex items-end justify-center p-2 text-xs font-medium text-white;
+            }
+        }
+    </style>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- 修改logo链接 -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <!-- 修改移动端导航菜单链接 -->
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 增加页面内容顶部边距 -->
+    <div class="container mx-auto px-4 py-12 mt-24">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">UI颜色系统</h1>
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">UI 颜色系统</h1>
+            <p class="text-gray-600">全面展示各种颜色类型及其应用</p>
+        </header>
+
+        <nav class="mb-8">
+            <ul class="flex flex-wrap gap-4 justify-center">
+                <li><a href="#solid-colors" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">纯色系统</a></li>
+                <li><a href="#gradients" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">渐变色</a></li>
+                <li><a href="#mixed-colors" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">混合色</a></li>
+                <li><a href="#gradient-mix" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">渐变混合</a></li>
+            </ul>
+        </nav>
+
+        <!-- 纯色系统 -->
+        <section id="solid-colors" class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">纯色系统</h2>
+            
+            <!-- 主题色系 -->
+            <div class="mb-12">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">主题色系</h3>
+                <p class="text-gray-600 mb-6">主题色是应用的核心色彩，每种颜色包含从浅到深的10个色阶变化</p>
+                
+                <!-- 薄暮 Dust Red -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Dust Red / 薄暮</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">斗志、奔放、警示</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-red-50 text-gray-700">red-1</div>
+                        <div class="color-box bg-red-100 text-gray-700">red-2</div>
+                        <div class="color-box bg-red-200 text-gray-700">red-3</div>
+                        <div class="color-box bg-red-300 text-gray-700">red-4</div>
+                        <div class="color-box bg-red-400 text-gray-700">red-5</div>
+                        <div class="color-box bg-red-500 text-white">red-6</div>
+                        <div class="color-box bg-red-600 text-white">red-7</div>
+                        <div class="color-box bg-red-700 text-white">red-8</div>
+                        <div class="color-box bg-red-800 text-white">red-9</div>
+                        <div class="color-box bg-red-900 text-white">red-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#fff1f0</div>
+                        <div class="text-xs text-center text-gray-500">#ffccc7</div>
+                        <div class="text-xs text-center text-gray-500">#ffa39e</div>
+                        <div class="text-xs text-center text-gray-500">#ff7875</div>
+                        <div class="text-xs text-center text-gray-500">#ff4d4f</div>
+                        <div class="text-xs text-center text-gray-500">#f5222d</div>
+                        <div class="text-xs text-center text-gray-500">#cf1322</div>
+                        <div class="text-xs text-center text-gray-500">#a8071a</div>
+                        <div class="text-xs text-center text-gray-500">#820014</div>
+                        <div class="text-xs text-center text-gray-500">#5c0011</div>
+                    </div>
+                </div>
+                
+                <!-- 火山 Volcano -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Volcano / 火山</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">活力、温暖、激情</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-orange-50 text-gray-700">volcano-1</div>
+                        <div class="color-box bg-orange-100 text-gray-700">volcano-2</div>
+                        <div class="color-box bg-orange-200 text-gray-700">volcano-3</div>
+                        <div class="color-box bg-orange-300 text-gray-700">volcano-4</div>
+                        <div class="color-box bg-orange-400 text-gray-700">volcano-5</div>
+                        <div class="color-box bg-orange-500 text-white">volcano-6</div>
+                        <div class="color-box bg-orange-600 text-white">volcano-7</div>
+                        <div class="color-box bg-orange-700 text-white">volcano-8</div>
+                        <div class="color-box bg-orange-800 text-white">volcano-9</div>
+                        <div class="color-box bg-orange-900 text-white">volcano-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#fff2e8</div>
+                        <div class="text-xs text-center text-gray-500">#ffd8bf</div>
+                        <div class="text-xs text-center text-gray-500">#ffbb96</div>
+                        <div class="text-xs text-center text-gray-500">#ff9c6e</div>
+                        <div class="text-xs text-center text-gray-500">#ff7a45</div>
+                        <div class="text-xs text-center text-gray-500">#fa541c</div>
+                        <div class="text-xs text-center text-gray-500">#d4380d</div>
+                        <div class="text-xs text-center text-gray-500">#ad2102</div>
+                        <div class="text-xs text-center text-gray-500">#871400</div>
+                        <div class="text-xs text-center text-gray-500">#610b00</div>
+                    </div>
+                </div>
+                
+                <!-- 日出 Sunset Orange -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Sunset Orange / 日出</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">愉悦、活泼、明快</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-amber-50 text-gray-700">orange-1</div>
+                        <div class="color-box bg-amber-100 text-gray-700">orange-2</div>
+                        <div class="color-box bg-amber-200 text-gray-700">orange-3</div>
+                        <div class="color-box bg-amber-300 text-gray-700">orange-4</div>
+                        <div class="color-box bg-amber-400 text-gray-700">orange-5</div>
+                        <div class="color-box bg-amber-500 text-white">orange-6</div>
+                        <div class="color-box bg-amber-600 text-white">orange-7</div>
+                        <div class="color-box bg-amber-700 text-white">orange-8</div>
+                        <div class="color-box bg-amber-800 text-white">orange-9</div>
+                        <div class="color-box bg-amber-900 text-white">orange-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#fff7e6</div>
+                        <div class="text-xs text-center text-gray-500">#ffe7ba</div>
+                        <div class="text-xs text-center text-gray-500">#ffd591</div>
+                        <div class="text-xs text-center text-gray-500">#ffc069</div>
+                        <div class="text-xs text-center text-gray-500">#ffa940</div>
+                        <div class="text-xs text-center text-gray-500">#fa8c16</div>
+                        <div class="text-xs text-center text-gray-500">#d46b08</div>
+                        <div class="text-xs text-center text-gray-500">#ad4e00</div>
+                        <div class="text-xs text-center text-gray-500">#873800</div>
+                        <div class="text-xs text-center text-gray-500">#612500</div>
+                    </div>
+                </div>
+                
+                <!-- 金盏花 Calendula Gold -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Calendula Gold / 金盏花</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">明亮、积极、活力</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-yellow-50 text-gray-700">yellow-1</div>
+                        <div class="color-box bg-yellow-100 text-gray-700">yellow-2</div>
+                        <div class="color-box bg-yellow-200 text-gray-700">yellow-3</div>
+                        <div class="color-box bg-yellow-300 text-gray-700">yellow-4</div>
+                        <div class="color-box bg-yellow-400 text-gray-700">yellow-5</div>
+                        <div class="color-box bg-yellow-500 text-gray-700">yellow-6</div>
+                        <div class="color-box bg-yellow-600 text-white">yellow-7</div>
+                        <div class="color-box bg-yellow-700 text-white">yellow-8</div>
+                        <div class="color-box bg-yellow-800 text-white">yellow-9</div>
+                        <div class="color-box bg-yellow-900 text-white">yellow-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#feffe6</div>
+                        <div class="text-xs text-center text-gray-500">#ffffb8</div>
+                        <div class="text-xs text-center text-gray-500">#fffb8f</div>
+                        <div class="text-xs text-center text-gray-500">#fff566</div>
+                        <div class="text-xs text-center text-gray-500">#ffec3d</div>
+                        <div class="text-xs text-center text-gray-500">#fadb14</div>
+                        <div class="text-xs text-center text-gray-500">#d4b106</div>
+                        <div class="text-xs text-center text-gray-500">#ad8b00</div>
+                        <div class="text-xs text-center text-gray-500">#876800</div>
+                        <div class="text-xs text-center text-gray-500">#614700</div>
+                    </div>
+                </div>
+                
+                <!-- 青柠 Lime -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Lime / 青柠</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">自然、生机、清新</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-lime-50 text-gray-700">lime-1</div>
+                        <div class="color-box bg-lime-100 text-gray-700">lime-2</div>
+                        <div class="color-box bg-lime-200 text-gray-700">lime-3</div>
+                        <div class="color-box bg-lime-300 text-gray-700">lime-4</div>
+                        <div class="color-box bg-lime-400 text-gray-700">lime-5</div>
+                        <div class="color-box bg-lime-500 text-gray-700">lime-6</div>
+                        <div class="color-box bg-lime-600 text-white">lime-7</div>
+                        <div class="color-box bg-lime-700 text-white">lime-8</div>
+                        <div class="color-box bg-lime-800 text-white">lime-9</div>
+                        <div class="color-box bg-lime-900 text-white">lime-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#fcffe6</div>
+                        <div class="text-xs text-center text-gray-500">#f4ffb8</div>
+                        <div class="text-xs text-center text-gray-500">#eaff8f</div>
+                        <div class="text-xs text-center text-gray-500">#d3f261</div>
+                        <div class="text-xs text-center text-gray-500">#bae637</div>
+                        <div class="text-xs text-center text-gray-500">#a0d911</div>
+                        <div class="text-xs text-center text-gray-500">#7cb305</div>
+                        <div class="text-xs text-center text-gray-500">#5b8c00</div>
+                        <div class="text-xs text-center text-gray-500">#3f6600</div>
+                        <div class="text-xs text-center text-gray-500">#254000</div>
+                    </div>
+                </div>
+                
+                <!-- 极光绿 Polar Green -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Polar Green / 极光绿</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">健康、平和、自然</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-green-50 text-gray-700">green-1</div>
+                        <div class="color-box bg-green-100 text-gray-700">green-2</div>
+                        <div class="color-box bg-green-200 text-gray-700">green-3</div>
+                        <div class="color-box bg-green-300 text-gray-700">green-4</div>
+                        <div class="color-box bg-green-400 text-gray-700">green-5</div>
+                        <div class="color-box bg-green-500 text-white">green-6</div>
+                        <div class="color-box bg-green-600 text-white">green-7</div>
+                        <div class="color-box bg-green-700 text-white">green-8</div>
+                        <div class="color-box bg-green-800 text-white">green-9</div>
+                        <div class="color-box bg-green-900 text-white">green-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#e8f5e9</div>
+                        <div class="text-xs text-center text-gray-500">#c8e6c9</div>
+                        <div class="text-xs text-center text-gray-500">#a5d6a7</div>
+                        <div class="text-xs text-center text-gray-500">#81c784</div>
+                        <div class="text-xs text-center text-gray-500">#66bb6a</div>
+                        <div class="text-xs text-center text-gray-500">#52b152</div>
+                        <div class="text-xs text-center text-gray-500">#43a047</div>
+                        <div class="text-xs text-center text-gray-500">#388e3c</div>
+                        <div class="text-xs text-center text-gray-500">#2e7d32</div>
+                        <div class="text-xs text-center text-gray-500">#1b5e20</div>
+                    </div>
+                </div>
+                
+                <!-- 青碧 Cyan -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Cyan / 青碧</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">清爽、科技、明亮</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-cyan-50 text-gray-700">cyan-1</div>
+                        <div class="color-box bg-cyan-100 text-gray-700">cyan-2</div>
+                        <div class="color-box bg-cyan-200 text-gray-700">cyan-3</div>
+                        <div class="color-box bg-cyan-300 text-gray-700">cyan-4</div>
+                        <div class="color-box bg-cyan-400 text-gray-700">cyan-5</div>
+                        <div class="color-box bg-cyan-500 text-white">cyan-6</div>
+                        <div class="color-box bg-cyan-600 text-white">cyan-7</div>
+                        <div class="color-box bg-cyan-700 text-white">cyan-8</div>
+                        <div class="color-box bg-cyan-800 text-white">cyan-9</div>
+                        <div class="color-box bg-cyan-900 text-white">cyan-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#e0f7fa</div>
+                        <div class="text-xs text-center text-gray-500">#b2ebf2</div>
+                        <div class="text-xs text-center text-gray-500">#80deea</div>
+                        <div class="text-xs text-center text-gray-500">#4dd0e1</div>
+                        <div class="text-xs text-center text-gray-500">#26c6da</div>
+                        <div class="text-xs text-center text-gray-500">#00bcd4</div>
+                        <div class="text-xs text-center text-gray-500">#00acc1</div>
+                        <div class="text-xs text-center text-gray-500">#0097a7</div>
+                        <div class="text-xs text-center text-gray-500">#00838f</div>
+                        <div class="text-xs text-center text-gray-500">#006064</div>
+                    </div>
+                </div>
+                
+                <!-- 湖光蓝 Daybreak Blue -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Daybreak Blue / 湖光蓝</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">沉稳、理性、专业</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-blue-50 text-gray-700">blue-1</div>
+                        <div class="color-box bg-blue-100 text-gray-700">blue-2</div>
+                        <div class="color-box bg-blue-200 text-gray-700">blue-3</div>
+                        <div class="color-box bg-blue-300 text-gray-700">blue-4</div>
+                        <div class="color-box bg-blue-400 text-gray-700">blue-5</div>
+                        <div class="color-box bg-blue-500 text-white">blue-6</div>
+                        <div class="color-box bg-blue-600 text-white">blue-7</div>
+                        <div class="color-box bg-blue-700 text-white">blue-8</div>
+                        <div class="color-box bg-blue-800 text-white">blue-9</div>
+                        <div class="color-box bg-blue-900 text-white">blue-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#e6f7ff</div>
+                        <div class="text-xs text-center text-gray-500">#bae7ff</div>
+                        <div class="text-xs text-center text-gray-500">#91d5ff</div>
+                        <div class="text-xs text-center text-gray-500">#69c0ff</div>
+                        <div class="text-xs text-center text-gray-500">#40a9ff</div>
+                        <div class="text-xs text-center text-gray-500">#1890ff</div>
+                        <div class="text-xs text-center text-gray-500">#096dd9</div>
+                        <div class="text-xs text-center text-gray-500">#0050b3</div>
+                        <div class="text-xs text-center text-gray-500">#003a8c</div>
+                        <div class="text-xs text-center text-gray-500">#002766</div>
+                    </div>
+                </div>
+                
+                <!-- 极客蓝 Geek Blue -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Geek Blue / 极客蓝</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">科技、未来、智慧</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-indigo-50 text-gray-700">geekblue-1</div>
+                        <div class="color-box bg-indigo-100 text-gray-700">geekblue-2</div>
+                        <div class="color-box bg-indigo-200 text-gray-700">geekblue-3</div>
+                        <div class="color-box bg-indigo-300 text-gray-700">geekblue-4</div>
+                        <div class="color-box bg-indigo-400 text-gray-700">geekblue-5</div>
+                        <div class="color-box bg-indigo-500 text-white">geekblue-6</div>
+                        <div class="color-box bg-indigo-600 text-white">geekblue-7</div>
+                        <div class="color-box bg-indigo-700 text-white">geekblue-8</div>
+                        <div class="color-box bg-indigo-800 text-white">geekblue-9</div>
+                        <div class="color-box bg-indigo-900 text-white">geekblue-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#f0f5ff</div>
+                        <div class="text-xs text-center text-gray-500">#d6e4ff</div>
+                        <div class="text-xs text-center text-gray-500">#adc6ff</div>
+                        <div class="text-xs text-center text-gray-500">#85a5ff</div>
+                        <div class="text-xs text-center text-gray-500">#597ef7</div>
+                        <div class="text-xs text-center text-gray-500">#2f54eb</div>
+                        <div class="text-xs text-center text-gray-500">#1d39c4</div>
+                        <div class="text-xs text-center text-gray-500">#10239e</div>
+                        <div class="text-xs text-center text-gray-500">#061178</div>
+                        <div class="text-xs text-center text-gray-500">#030852</div>
+                    </div>
+                </div>
+                
+                <!-- 酱紫 Purple -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Purple / 酱紫</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">神秘、高贵、优雅</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-purple-50 text-gray-700">purple-1</div>
+                        <div class="color-box bg-purple-100 text-gray-700">purple-2</div>
+                        <div class="color-box bg-purple-200 text-gray-700">purple-3</div>
+                        <div class="color-box bg-purple-300 text-gray-700">purple-4</div>
+                        <div class="color-box bg-purple-400 text-gray-700">purple-5</div>
+                        <div class="color-box bg-purple-500 text-white">purple-6</div>
+                        <div class="color-box bg-purple-600 text-white">purple-7</div>
+                        <div class="color-box bg-purple-700 text-white">purple-8</div>
+                        <div class="color-box bg-purple-800 text-white">purple-9</div>
+                        <div class="color-box bg-purple-900 text-white">purple-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#f9f0ff</div>
+                        <div class="text-xs text-center text-gray-500">#efdbff</div>
+                        <div class="text-xs text-center text-gray-500">#d3adf7</div>
+                        <div class="text-xs text-center text-gray-500">#b37feb</div>
+                        <div class="text-xs text-center text-gray-500">#9254de</div>
+                        <div class="text-xs text-center text-gray-500">#722ed1</div>
+                        <div class="text-xs text-center text-gray-500">#531dab</div>
+                        <div class="text-xs text-center text-gray-500">#391085</div>
+                        <div class="text-xs text-center text-gray-500">#22075e</div>
+                        <div class="text-xs text-center text-gray-500">#120338</div>
+                    </div>
+                </div>
+                
+                <!-- 玫瑰紫 Magenta -->
+                <div class="mb-12">
+                    <div class="flex items-center mb-2">
+                        <h4 class="text-lg font-medium text-gray-800">Magenta / 玫瑰紫</h4>
+                    </div>
+                    <p class="text-gray-600 mb-4">浪漫、温柔、优雅</p>
+                    <div class="grid grid-cols-10 gap-2 mb-2">
+                        <div class="color-box bg-pink-50 text-gray-700">magenta-1</div>
+                        <div class="color-box bg-pink-100 text-gray-700">magenta-2</div>
+                        <div class="color-box bg-pink-200 text-gray-700">magenta-3</div>
+                        <div class="color-box bg-pink-300 text-gray-700">magenta-4</div>
+                        <div class="color-box bg-pink-400 text-gray-700">magenta-5</div>
+                        <div class="color-box bg-pink-500 text-white">magenta-6</div>
+                        <div class="color-box bg-pink-600 text-white">magenta-7</div>
+                        <div class="color-box bg-pink-700 text-white">magenta-8</div>
+                        <div class="color-box bg-pink-800 text-white">magenta-9</div>
+                        <div class="color-box bg-pink-900 text-white">magenta-10</div>
+                    </div>
+                    <div class="grid grid-cols-10 gap-2">
+                        <div class="text-xs text-center text-gray-500">#fff0f6</div>
+                        <div class="text-xs text-center text-gray-500">#ffd6e7</div>
+                        <div class="text-xs text-center text-gray-500">#ffadd2</div>
+                        <div class="text-xs text-center text-gray-500">#ff85c0</div>
+                        <div class="text-xs text-center text-gray-500">#f759ab</div>
+                        <div class="text-xs text-center text-gray-500">#eb2f96</div>
+                        <div class="text-xs text-center text-gray-500">#c41d7f</div>
+                        <div class="text-xs text-center text-gray-500">#9e1068</div>
+                        <div class="text-xs text-center text-gray-500">#780650</div>
+                        <div class="text-xs text-center text-gray-500">#520339</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主题色 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">主题色</h3>
+                <p class="text-gray-600 mb-4">主题色是应用的核心色彩，通常用于主要按钮、链接和重点元素</p>
+                <div class="color-group">
+                    <div>
+                        <div class="color-box bg-blue-500 text-white">主蓝 Blue-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#0ea5e9</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-red-500 text-white">主红 Red-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#ef4444</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-green-500 text-white">主绿 Green-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#22c55e</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-yellow-500 text-white">主黄 Yellow-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#eab308</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-purple-500 text-white">主紫 Purple-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#a855f7</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 扩展色板 - 蓝色 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">蓝色色板</h3>
+                <p class="text-gray-600 mb-4">展示从浅到深的蓝色梯度，适用于不同状态和层次</p>
+                <div class="color-group">
+                    <div>
+                        <div class="color-box bg-blue-50 text-gray-800">Blue-50</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#eff6ff</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-100 text-gray-800">Blue-100</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#dbeafe</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-200 text-gray-800">Blue-200</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#bfdbfe</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-300 text-gray-800">Blue-300</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#93c5fd</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-400 text-white">Blue-400</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#60a5fa</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-500 text-white">Blue-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#3b82f6</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-600 text-white">Blue-600</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#2563eb</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-700 text-white">Blue-700</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#1d4ed8</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-800 text-white">Blue-800</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#1e40af</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-900 text-white">Blue-900</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#1e3a8a</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 功能色 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">功能色</h3>
+                <p class="text-gray-600 mb-4">功能色表示不同状态和操作的颜色，如成功、警告、错误等</p>
+                <div class="color-group">
+                    <div>
+                        <div class="color-box bg-green-500 text-white">成功 Success</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#22c55e</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-yellow-500 text-white">警告 Warning</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#eab308</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-red-500 text-white">错误 Error</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#ef4444</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-blue-500 text-white">信息 Info</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#3b82f6</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-500 text-white">禁用 Disabled</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#6b7280</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中性色 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">中性色</h3>
+                <p class="text-gray-600 mb-4">中性色用于文本、背景和边框等元素</p>
+                <div class="color-group">
+                    <div>
+                        <div class="color-box bg-gray-50 text-gray-800">Gray-50</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#f9fafb</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-100 text-gray-800">Gray-100</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#f3f4f6</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-200 text-gray-800">Gray-200</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#e5e7eb</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-300 text-gray-800">Gray-300</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#d1d5db</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-400 text-white">Gray-400</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#9ca3af</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-500 text-white">Gray-500</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#6b7280</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-600 text-white">Gray-600</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#4b5563</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-700 text-white">Gray-700</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#374151</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-800 text-white">Gray-800</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#1f2937</div>
+                    </div>
+                    <div>
+                        <div class="color-box bg-gray-900 text-white">Gray-900</div>
+                        <div class="mt-2 text-sm text-center text-gray-600">#111827</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 渐变色系 -->
+        <div class="mb-16" id="gradients">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">渐变色系</h3>
+            <p class="text-gray-600 mb-6">渐变色在现代UI设计中常用于按钮、背景、卡片等元素，创造深度和动感</p>
+            
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 蓝紫渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">蓝紫渐变 (Blue to Purple)</h4>
+                    <p class="text-sm text-gray-600 mb-3">科技感与创意的结合，常用于创新产品</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #1890ff 0%, #722ed1 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#1890ff → #722ed1</p>
+                    </div>
+                </div>
+                
+                <!-- 日落渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">日落渐变 (Sunset Gradient)</h4>
+                    <p class="text-sm text-gray-600 mb-3">温暖舒适的色调，适合社交和休闲应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #ff7a45 0%, #fa541c 50%, #ad2102 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#ff7a45 → #fa541c → #ad2102</p>
+                    </div>
+                </div>
+                
+                <!-- 薄荷清新 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">薄荷清新 (Mint Fresh)</h4>
+                    <p class="text-sm text-gray-600 mb-3">清爽宜人的色调，适合健康和环保类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #52c41a 0%, #13c2c2 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#52c41a → #13c2c2</p>
+                    </div>
+                </div>
+                
+                <!-- 紫粉渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">紫粉渐变 (Purple to Pink)</h4>
+                    <p class="text-sm text-gray-600 mb-3">时尚浪漫的色调，适合女性用户和时尚产品</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #722ed1 0%, #eb2f96 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#722ed1 → #eb2f96</p>
+                    </div>
+                </div>
+                
+                <!-- 商务蓝调 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">商务蓝调 (Business Blue)</h4>
+                    <p class="text-sm text-gray-600 mb-3">专业可靠的色调，适合企业和金融应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #003a8c 0%, #1890ff 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#003a8c → #1890ff</p>
+                    </div>
+                </div>
+                
+                <!-- 活力橙黄 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">活力橙黄 (Energetic Orange)</h4>
+                    <p class="text-sm text-gray-600 mb-3">充满活力的色调，适合运动和娱乐类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #faad14 0%, #fa541c 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#faad14 → #fa541c</p>
+                    </div>
+                </div>
+                
+                <!-- 暗夜模式 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">暗夜模式 (Dark Mode)</h4>
+                    <p class="text-sm text-gray-600 mb-3">深邃高级的色调，适合专业工具和夜间模式</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #141414 0%, #434343 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#141414 → #434343</p>
+                    </div>
+                </div>
+                
+                <!-- 极光渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">极光渐变 (Aurora)</h4>
+                    <p class="text-sm text-gray-600 mb-3">神秘梦幻的色调，适合创意和艺术类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #13c2c2 0%, #722ed1 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#13c2c2 → #722ed1</p>
+                    </div>
+                </div>
+                
+                <!-- 草莓奶昔 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">草莓奶昔 (Strawberry Milkshake)</h4>
+                    <p class="text-sm text-gray-600 mb-3">甜美可爱的色调，适合儿童和甜点类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #fff1f0 0%, #ffadd2 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#fff1f0 → #ffadd2</p>
+                    </div>
+                </div>
+                
+                <!-- 深海渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">深海渐变 (Deep Ocean)</h4>
+                    <p class="text-sm text-gray-600 mb-3">深沉稳重的色调，适合数据和科学类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #002766 0%, #0050b3 50%, #096dd9 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#002766 → #0050b3 → #096dd9</p>
+                    </div>
+                </div>
+                
+                <!-- 翡翠玉石 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">翡翠玉石 (Jade)</h4>
+                    <p class="text-sm text-gray-600 mb-3">清新怡人的色调，适合健康和生活类应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #52c41a 0%, #08979c 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#52c41a → #08979c</p>
+                    </div>
+                </div>
+                
+                <!-- 火山熔岩 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">火山熔岩 (Volcano Lava)</h4>
+                    <p class="text-sm text-gray-600 mb-3">热情激烈的色调，适合游戏和紧急提醒</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #d4380d 0%, #ad2102 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#d4380d → #ad2102</p>
+                    </div>
+                </div>
+                
+                <!-- 迷幻紫罗兰 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">迷幻紫罗兰 (Psychedelic Violet)</h4>
+                    <p class="text-sm text-gray-600 mb-3">神秘梦幻的色调，适合娱乐和创意产品</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(135deg, #531dab 0%, #c41d7f 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>对角线：#531dab → #c41d7f</p>
+                    </div>
+                </div>
+                
+                <!-- 晨曦金光 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">晨曦金光 (Golden Dawn)</h4>
+                    <p class="text-sm text-gray-600 mb-3">温暖明亮的色调，适合早间应用和励志产品</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #fadb14 0%, #fa8c16 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#fadb14 → #fa8c16</p>
+                    </div>
+                </div>
+                
+                <!-- 青柠莫吉托 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">青柠莫吉托 (Lime Mojito)</h4>
+                    <p class="text-sm text-gray-600 mb-3">清新活力的色调，适合饮料和休闲应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #a0d911 0%, #13c2c2 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#a0d911 → #13c2c2</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 方向变化渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">径向日出 (Radial Sunrise)</h4>
+                    <p class="text-sm text-gray-600 mb-3">由中心向外扩散的暖色调，适合重点突出</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: radial-gradient(circle, #fadb14 0%, #fa8c16 50%, #fa541c 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>中心向外：#fadb14 → #fa8c16 → #fa541c</p>
+                    </div>
+                </div>
+                
+                <!-- 锥形渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">锥形彩虹 (Conic Rainbow)</h4>
+                    <p class="text-sm text-gray-600 mb-3">旋转色彩渐变，适合图表和数据可视化</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: conic-gradient(from 0deg, #f5222d, #fa8c16, #fadb14, #52c41a, #1890ff, #722ed1, #eb2f96, #f5222d);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>旋转：红橙黄绿蓝紫粉红</p>
+                    </div>
+                </div>
+                
+                <!-- 对角线渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">对角科技 (Diagonal Tech)</h4>
+                    <p class="text-sm text-gray-600 mb-3">对角线渐变，现代感十足，适合科技产品</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(135deg, #002766 0%, #1890ff 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>对角线：#002766 → #1890ff</p>
+                    </div>
+                </div>
+                
+                <!-- 多色渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">多彩人生 (Colorful Life)</h4>
+                    <p class="text-sm text-gray-600 mb-3">多种色彩过渡，适合表达多样性和包容性</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #f5222d 0%, #fa8c16 20%, #fadb14 40%, #52c41a 60%, #1890ff 80%, #722ed1 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>多色：红→橙→黄→绿→蓝→紫</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 混合色系 -->
+        <div class="mb-16" id="mixed-colors">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">混合色系</h3>
+            <p class="text-gray-600 mb-6">混合色是通过两种或多种颜色按一定比例混合产生的新颜色，为设计增添丰富性</p>
+            
+            <!-- 蓝绿混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">蓝绿混合系 (Blue-Green Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">蓝绿色调混合，创造出平静且专业的色彩，适合医疗和科技应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #2db7f5;"></div>
+                        <p class="text-xs text-gray-700">湖蓝 #2db7f5</p>
+                        <p class="text-xs text-gray-500">蓝:绿 = 7:3</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #5cdbd3;"></div>
+                        <p class="text-xs text-gray-700">薄荷 #5cdbd3</p>
+                        <p class="text-xs text-gray-500">蓝:绿 = 4:6</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #36cfc9;"></div>
+                        <p class="text-xs text-gray-700">蔚蓝 #36cfc9</p>
+                        <p class="text-xs text-gray-500">蓝:绿 = 5:5</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 红紫混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">红紫混合系 (Red-Purple Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">红紫色调混合，创造出热情且神秘的色彩，适合时尚和娱乐应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #eb2f96;"></div>
+                        <p class="text-xs text-gray-700">玫红 #eb2f96</p>
+                        <p class="text-xs text-gray-500">红:紫 = 7:3</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #cb2b83;"></div>
+                        <p class="text-xs text-gray-700">洋红 #cb2b83</p>
+                        <p class="text-xs text-gray-500">红:紫 = 6:4</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #b71c7d;"></div>
+                        <p class="text-xs text-gray-700">品红 #b71c7d</p>
+                        <p class="text-xs text-gray-500">红:紫 = 5:5</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 黄绿混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">黄绿混合系 (Yellow-Green Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">黄绿色调混合，创造出自然且活力的色彩，适合环保和健康应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #a0d911;"></div>
+                        <p class="text-xs text-gray-700">青柠 #a0d911</p>
+                        <p class="text-xs text-gray-500">黄:绿 = 4:6</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #bae637;"></div>
+                        <p class="text-xs text-gray-700">柠檬 #bae637</p>
+                        <p class="text-xs text-gray-500">黄:绿 = 6:4</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #95de64;"></div>
+                        <p class="text-xs text-gray-700">嫩绿 #95de64</p>
+                        <p class="text-xs text-gray-500">黄:绿 = 5:5</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 橙红混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">橙红混合系 (Orange-Red Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">橙红色调混合，创造出热情且温暖的色彩，适合餐饮和社交应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #ff4d4f;"></div>
+                        <p class="text-xs text-gray-700">火红 #ff4d4f</p>
+                        <p class="text-xs text-gray-500">红:橙 = 8:2</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #ff7a45;"></div>
+                        <p class="text-xs text-gray-700">珊瑚 #ff7a45</p>
+                        <p class="text-xs text-gray-500">红:橙 = 5:5</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #fa541c;"></div>
+                        <p class="text-xs text-gray-700">赤橙 #fa541c</p>
+                        <p class="text-xs text-gray-500">红:橙 = 4:6</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 蓝紫混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">蓝紫混合系 (Blue-Purple Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">蓝紫色调混合，创造出神秘且高贵的色彩，适合创意和高端应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #597ef7;"></div>
+                        <p class="text-xs text-gray-700">靛蓝 #597ef7</p>
+                        <p class="text-xs text-gray-500">蓝:紫 = 7:3</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #9254de;"></div>
+                        <p class="text-xs text-gray-700">丁香 #9254de</p>
+                        <p class="text-xs text-gray-500">蓝:紫 = 3:7</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #7b61ff;"></div>
+                        <p class="text-xs text-gray-700">宝石蓝 #7b61ff</p>
+                        <p class="text-xs text-gray-500">蓝:紫 = 5:5</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 三色混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">三色混合系 (Triadic Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">三种颜色混合，创造出复杂且平衡的色彩，适合创意和艺术应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #8e7cc3;"></div>
+                        <p class="text-xs text-gray-700">暮光 #8e7cc3</p>
+                        <p class="text-xs text-gray-500">蓝:紫:灰 = 3:5:2</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #c2c280;"></div>
+                        <p class="text-xs text-gray-700">橄榄 #c2c280</p>
+                        <p class="text-xs text-gray-500">黄:绿:灰 = 4:4:2</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #d4a5a5;"></div>
+                        <p class="text-xs text-gray-700">豆沙 #d4a5a5</p>
+                        <p class="text-xs text-gray-500">红:棕:白 = 4:3:3</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 复合混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">复合混合系 (Complex Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">多种颜色复杂混合，创造出独特且丰富的色彩，适合艺术和品牌应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #6b7280;"></div>
+                        <p class="text-xs text-gray-700">青石 #6b7280</p>
+                        <p class="text-xs text-gray-500">蓝:灰:黑 = 2:6:2</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #d3adf7;"></div>
+                        <p class="text-xs text-gray-700">薰衣草 #d3adf7</p>
+                        <p class="text-xs text-gray-500">蓝:紫:白 = 2:5:3</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #ffd666;"></div>
+                        <p class="text-xs text-gray-700">蜜糖 #ffd666</p>
+                        <p class="text-xs text-gray-500">黄:橙:白 = 6:3:1</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 暗色混合系列 -->
+            <div>
+                <h4 class="text-md font-medium text-gray-800 mb-2">暗色混合系 (Dark Mixes)</h4>
+                <p class="text-sm text-gray-600 mb-3">暗色调混合，创造出深沉且稳重的色彩，适合夜间模式和高级应用</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #303f9f;"></div>
+                        <p class="text-xs text-gray-700">靛青 #303f9f</p>
+                        <p class="text-xs text-gray-500">蓝:黑 = 7:3</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #5c6bc0;"></div>
+                        <p class="text-xs text-gray-700">暗蓝 #5c6bc0</p>
+                        <p class="text-xs text-gray-500">蓝:黑:灰 = 6:2:2</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: #4b0082;"></div>
+                        <p class="text-xs text-gray-700">靛紫 #4b0082</p>
+                        <p class="text-xs text-gray-500">紫:黑 = 6:4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 渐变混合 -->
+        <div class="mb-16" id="gradient-mixes">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">渐变混合系</h3>
+            <p class="text-gray-600 mb-6">渐变混合是将不同色彩和渐变模式结合创造的复杂色彩效果，为UI增添层次感和动态效果</p>
+            
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 重叠渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">重叠渐变 (Overlapping Gradients)</h4>
+                    <p class="text-sm text-gray-600 mb-3">通过半透明渐变叠加产生丰富层次感</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden">
+                        <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(24, 144, 255, 0.7) 0%, rgba(24, 144, 255, 0) 100%);"></div>
+                        <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(114, 46, 209, 0.7) 0%, rgba(114, 46, 209, 0) 100%);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>蓝色水平渐变 + 紫色垂直渐变（半透明）</p>
+                    </div>
+                </div>
+                
+                <!-- 纹理渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">纹理渐变 (Textured Gradients)</h4>
+                    <p class="text-sm text-gray-600 mb-3">渐变与纹理结合产生高级视觉效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(90deg, #1890ff 0%, #722ed1 100%);">
+                        <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSJ3aGl0ZSI+PC9yZWN0Pgo8cGF0aCBkPSJNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuMyI+PC9wYXRoPgo8L3N2Zz4=');"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>蓝紫渐变 + 纹理图案叠加</p>
+                    </div>
+                </div>
+                
+                <!-- 多重渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">多重渐变 (Multiple Gradients)</h4>
+                    <p class="text-sm text-gray-600 mb-3">多组渐变通过不同混合模式叠加</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden">
+                        <div class="absolute inset-0" style="background: linear-gradient(90deg, #fadb14 0%, #fa8c16 100%);"></div>
+                        <div class="absolute inset-0 mix-blend-multiply" style="background: linear-gradient(180deg, transparent 0%, #d48806 100%);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>黄橙水平渐变 + 金黄垂直渐变（multiply混合）</p>
+                    </div>
+                </div>
+                
+                <!-- 噪点渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">噪点渐变 (Noisy Gradients)</h4>
+                    <p class="text-sm text-gray-600 mb-3">渐变与噪点结合产生自然有机感</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(135deg, #52c41a 0%, #13c2c2 100%);">
+                        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4KICA8ZmlsdGVyIGlkPSJub2lzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIgcmVzdWx0PSJub2lzZSI+PC9mZVR1cmJ1bGVuY2U+CiAgICA8ZmVCbGVuZCBpbj0ibm9pc2UiIGluMj0iU291cmNlR3JhcGhpYyIgbW9kZT0ib3ZlcmxheSIgcmVzdWx0PSJibGVuZGVkTm9pc2UiPjwvZmVCbGVuZD4KICA8L2ZpbHRlcj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjQiIGZpbGw9IndoaXRlIj48L3JlY3Q+Cjwvc3ZnPg==');"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>绿青渐变 + 分形噪点叠加</p>
+                    </div>
+                </div>
+                
+                <!-- 渐变边框 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">渐变边框 (Gradient Borders)</h4>
+                    <p class="text-sm text-gray-600 mb-3">渐变应用于边框创造精致效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative" style="background: white;">
+                        <div class="absolute inset-0 rounded-lg p-0.5" style="background: linear-gradient(90deg, #eb2f96 0%, #722ed1 100%);">
+                            <div class="absolute inset-0 rounded-lg bg-white"></div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-gray-700">内容区域</span>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>粉紫渐变边框 + 白色内容区</p>
+                    </div>
+                </div>
+                
+                <!-- 背景叠加 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">背景叠加 (Background Blend)</h4>
+                    <p class="text-sm text-gray-600 mb-3">渐变与背景图案叠加创造复合效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(to right, rgba(236, 72, 153, 0.7), rgba(67, 56, 202, 0.7)), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgogIDxjaXJjbGUgY3g9IjMwIiBjeT0iMzAiIHI9IjIiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9IjAuMyIvPgo8L3BhdHRlcm4+CjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz4KPC9zdmc+');"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>粉蓝渐变 + 圆点图案背景</p>
+                    </div>
+                </div>
+                
+                <!-- 霓虹效果 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">霓虹效果 (Neon Effect)</h4>
+                    <p class="text-sm text-gray-600 mb-3">渐变与发光效果结合产生霓虹感</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden bg-gray-900 flex items-center justify-center">
+                        <div class="text-white text-lg font-bold relative z-10">霓虹文本</div>
+                        <div class="absolute inset-0 opacity-75 blur-md" style="background: linear-gradient(45deg, #ff4d4f 0%, #1890ff 50%, #52c41a 100%);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>多色渐变 + 模糊效果 + 暗色背景</p>
+                    </div>
+                </div>
+                
+                <!-- 金属质感 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">金属质感 (Metallic Effect)</h4>
+                    <p class="text-sm text-gray-600 mb-3">多层渐变模拟金属材质效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(135deg, #d9d9d9 0%, #f5f5f5 30%, #d9d9d9 60%, #f5f5f5 100%);">
+                        <div class="absolute inset-0 opacity-20" style="background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>银色对角渐变 + 水平高光效果</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 高级渐变混合技术 -->
+            <h4 class="text-md font-medium text-gray-800 mb-2">高级渐变混合技术</h4>
+            <p class="text-sm text-gray-600 mb-6">利用CSS高级特性创造的复杂渐变混合效果，适用于高级UI设计</p>
+            
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 透明玻璃效果 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">透明玻璃效果 (Glassmorphism)</h4>
+                    <p class="text-sm text-gray-600 mb-3">模拟磨砂玻璃的现代UI效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(135deg, #ff4d4f 0%, #1890ff 100%);">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 h-1/2 rounded-lg" style="background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.3);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>彩色背景 + 半透明模糊前景</p>
+                    </div>
+                </div>
+                
+                <!-- 全息效果 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">全息效果 (Holographic)</h4>
+                    <p class="text-sm text-gray-600 mb-3">模拟全息材质的未来感效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(135deg, #f0f, #0ff); background-size: 400% 400%; animation: gradient 3s ease infinite; position: relative;"></div>
+                    <style>
+                        @keyframes gradient {
+                            0% { background-position: 0% 50% }
+                            50% { background-position: 100% 50% }
+                            100% { background-position: 0% 50% }
+                        }
+                    </style>
+                    <div class="text-sm text-gray-700">
+                        <p>动态渐变效果模拟全息感</p>
+                    </div>
+                </div>
+                
+                <!-- 深度渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">深度渐变 (Depth Gradient)</h4>
+                    <p class="text-sm text-gray-600 mb-3">多层次渐变创造3D深度感</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden bg-white">
+                        <div class="absolute inset-0 opacity-80" style="background: radial-gradient(circle at 30% 30%, rgba(250, 219, 20, 0.8), rgba(255, 77, 79, 0.3));"></div>
+                        <div class="absolute inset-0 opacity-60" style="background: radial-gradient(circle at 70% 70%, rgba(24, 144, 255, 0.6), transparent);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>多点径向渐变叠加</p>
+                    </div>
+                </div>
+                
+                <!-- 动态互动渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">光影互动 (Interactive Light)</h4>
+                    <p class="text-sm text-gray-600 mb-3">模拟光照效果的动态渐变</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" id="interactive-gradient" style="background: #13c2c2;">
+                        <div class="absolute inset-0" id="light-effect" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8), transparent 70%); pointer-events: none;"></div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            let gradientEl = document.getElementById('interactive-gradient');
+                            let lightEl = document.getElementById('light-effect');
+                            
+                            if (gradientEl && lightEl) {
+                                gradientEl.addEventListener('mousemove', function(e) {
+                                    let rect = this.getBoundingClientRect();
+                                    let x = e.clientX - rect.left;
+                                    let y = e.clientY - rect.top;
+                                    let percentX = Math.round(x / rect.width * 100);
+                                    let percentY = Math.round(y / rect.height * 100);
+                                    
+                                    lightEl.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255,255,255,0.8), transparent 70%)`;
+                                });
+                                
+                                gradientEl.addEventListener('mouseleave', function() {
+                                    lightEl.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8), transparent 70%)';
+                                });
+                            }
+                        });
+                    </script>
+                    <div class="text-sm text-gray-700">
+                        <p>悬停时光影效果跟随移动（交互式）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="mt-20 pb-10 text-center text-gray-600">
+            <p>© 2023 UI色彩系统展示</p>
+        </footer>
+    </div>
+</body>
+</html> 

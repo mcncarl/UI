@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI组件通用属性分类</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4f46e5;
+            padding-left: 0.5rem;
+        }
+        .component-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-12 mt-24">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">UI组件的通用属性分类</h1>
+
+        <!-- 1. 尺寸与间距 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">1. 尺寸与间距</h2>
+            
+            <!-- 尺寸 -->
+            <h3 class="component-title">尺寸（Size）：大、中、小等标准尺寸</h3>
+            <p class="description">组件通常提供多种标准尺寸选项，以适应不同的使用场景。</p>
+            
+            <div class="grid grid-cols-1 gap-6 mt-4">
+                <!-- 按钮尺寸示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">按钮尺寸示例</h4>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <button class="bg-indigo-600 text-white px-6 py-3 rounded-md">大尺寸按钮</button>
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md">中尺寸按钮</button>
+                        <button class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md">小尺寸按钮</button>
+                    </div>
+                </div>
+                
+                <!-- 文本输入框尺寸示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">输入框尺寸示例</h4>
+                    <div class="flex flex-col gap-4">
+                        <input type="text" placeholder="大尺寸输入框" class="border border-gray-300 rounded-md px-4 py-3">
+                        <input type="text" placeholder="中尺寸输入框" class="border border-gray-300 rounded-md px-3 py-2">
+                        <input type="text" placeholder="小尺寸输入框" class="border border-gray-300 rounded-md px-2 py-1 text-sm">
+                    </div>
+                </div>
+                
+                <!-- 图标尺寸示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">图标尺寸示例</h4>
+                    <div class="flex items-center gap-6">
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm mt-2">大尺寸</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm mt-2">中尺寸</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-sm mt-2">小尺寸</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 间距 -->
+            <h3 class="component-title">间距（Spacing）：内边距、外边距、行高等</h3>
+            <p class="description">合理的间距设计能提升界面的可读性和美观度。</p>
+            
+            <div class="grid grid-cols-1 gap-6 mt-4">
+                <!-- 内边距示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">内边距（Padding）示例</h4>
+                    <p class="text-gray-600 mb-4">内边距是指内容与容器边界之间的空间，下面显示了大、中、小三种内边距效果对比：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- 大内边距 -->
+                        <div class="flex flex-col items-center">
+                            <div class="border-2 border-indigo-500 mb-2 bg-white">
+                                <div class="border-4 border-dashed border-indigo-200 bg-indigo-50 p-8">
+                                    <div class="bg-white border border-gray-400 px-4 py-2 text-center">
+                                        内容
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span class="bg-indigo-100 px-3 py-1 rounded-full text-indigo-700 font-medium">大内边距 (32px)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 中内边距 -->
+                        <div class="flex flex-col items-center">
+                            <div class="border-2 border-indigo-500 mb-2 bg-white">
+                                <div class="border-4 border-dashed border-indigo-200 bg-indigo-50 p-4">
+                                    <div class="bg-white border border-gray-400 px-4 py-2 text-center">
+                                        内容
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span class="bg-indigo-100 px-3 py-1 rounded-full text-indigo-700 font-medium">中内边距 (16px)</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 小内边距 -->
+                        <div class="flex flex-col items-center">
+                            <div class="border-2 border-indigo-500 mb-2 bg-white">
+                                <div class="border-4 border-dashed border-indigo-200 bg-indigo-50 p-2">
+                                    <div class="bg-white border border-gray-400 px-4 py-2 text-center">
+                                        内容
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <span class="bg-indigo-100 px-3 py-1 rounded-full text-indigo-700 font-medium">小内边距 (8px)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 内边距说明 -->
+                    <div class="mt-6 bg-gray-50 p-4 rounded-md">
+                        <h5 class="font-medium mb-2">内边距说明：</h5>
+                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                            <li>内边距是<span class="text-indigo-600 font-medium">内容</span>与<span class="text-indigo-600 font-medium">容器边框</span>之间的空间</li>
+                            <li>上图中<span class="text-indigo-600 font-medium">虚线区域</span>表示内边距大小</li>
+                            <li>内边距越大，内容与容器边界的距离越远</li>
+                            <li>CSS中使用 <code class="bg-gray-200 px-1 py-0.5 rounded">padding</code> 属性设置内边距</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 外边距示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">外边距（Margin）示例</h4>
+                    <div class="flex flex-wrap items-start gap-8 bg-gray-100 p-6">
+                        <div class="relative">
+                            <div class="bg-white px-4 py-2 border border-indigo-500">元素1</div>
+                            <div class="absolute left-full top-1/2 transform -translate-y-1/2 pl-2">
+                                <span class="text-indigo-600 text-sm">8px 外边距</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="bg-white px-4 py-2 border border-indigo-500">元素2</div>
+                    </div>
+                    
+                    <div class="flex flex-col items-start gap-4 bg-gray-100 p-6 mt-4">
+                        <div class="relative">
+                            <div class="bg-white px-4 py-2 border border-indigo-500">元素1</div>
+                            <div class="absolute left-1/2 top-full transform -translate-x-1/2 pt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-600 transform rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                                <span class="text-indigo-600 text-sm">4px 外边距</span>
+                            </div>
+                        </div>
+                        <div class="bg-white px-4 py-2 border border-indigo-500">元素2</div>
+                    </div>
+                </div>
+                
+                <!-- 行高示例 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">行高（Line Height）示例</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-gray-100 p-4">
+                            <p class="mb-2 font-bold">紧凑行高 (1.2)</p>
+                            <p class="leading-tight">这是一段示例文本，用于展示不同的行高效果。紧凑的行高适合短文本，但长段落可能会降低可读性。这是一段示例文本，用于展示不同的行高效果。</p>
+                        </div>
+                        
+                        <div class="bg-gray-100 p-4">
+                            <p class="mb-2 font-bold">标准行高 (1.5)</p>
+                            <p class="leading-normal">这是一段示例文本，用于展示不同的行高效果。标准行高适合大多数正文内容，提供良好的可读性。这是一段示例文本，用于展示不同的行高效果。</p>
+                        </div>
+                        
+                        <div class="bg-gray-100 p-4">
+                            <p class="mb-2 font-bold">宽松行高 (2)</p>
+                            <p class="leading-loose">这是一段示例文本，用于展示不同的行高效果。宽松的行高适合需要强调的文本或提高阅读舒适度。这是一段示例文本，用于展示不同的行高效果。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 状态控制 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">2. 状态控制</h2>
+            <p class="description">UI组件通常有多种状态，用于表示不同的交互阶段和可用性。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <!-- 禁用状态 -->
+                <div class="border p-6 rounded-md">
+                    <h3 class="font-bold mb-4">禁用状态（Disabled）</h3>
+                    <div class="flex flex-col gap-4">
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md">正常按钮</button>
+                        <button class="bg-indigo-300 text-white px-4 py-2 rounded-md cursor-not-allowed" disabled>禁用按钮</button>
+                        
+                        <input type="text" placeholder="正常输入框" class="border border-gray-300 rounded-md px-3 py-2 mt-2">
+                        <input type="text" placeholder="禁用输入框" class="border border-gray-200 bg-gray-100 rounded-md px-3 py-2 cursor-not-allowed" disabled>
+                        
+                        <div class="flex items-center mt-2">
+                            <input type="checkbox" id="normal-checkbox" class="mr-2">
+                            <label for="normal-checkbox">正常复选框</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="disabled-checkbox" class="mr-2" disabled>
+                            <label for="disabled-checkbox" class="text-gray-400">禁用复选框</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 加载状态 -->
+                <div class="border p-6 rounded-md">
+                    <h3 class="font-bold mb-4">加载状态（Loading）</h3>
+                    <div class="flex flex-col gap-4">
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center justify-center">
+                            <span>正常按钮</span>
+                        </button>
+                        
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center justify-center">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span>加载中...</span>
+                        </button>
+                        
+                        <div class="relative mt-2">
+                            <input type="text" placeholder="正常输入框" class="border border-gray-300 rounded-md px-3 py-2 w-full">
+                        </div>
+                        
+                        <div class="relative mt-2">
+                            <input type="text" placeholder="加载中输入框" class="border border-gray-300 rounded-md px-3 py-2 w-full pr-10">
+                            <svg class="animate-spin h-5 w-5 text-indigo-600 absolute right-3 top-1/2 transform -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 激活状态 -->
+                <div class="border p-6 rounded-md">
+                    <h3 class="font-bold mb-4">激活状态（Active）</h3>
+                    <div class="flex flex-col gap-4">
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">悬停按钮</button>
+                        <button class="bg-indigo-800 text-white px-4 py-2 rounded-md">激活按钮</button>
+                        
+                        <div class="flex gap-4 mt-2">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-800 hover:underline">普通链接</a>
+                            <a href="#" class="text-indigo-800 font-bold underline">激活链接</a>
+                        </div>
+                        
+                        <div class="flex border rounded-md mt-2 overflow-hidden">
+                            <button class="px-4 py-2 bg-white">标签1</button>
+                            <button class="px-4 py-2 bg-indigo-600 text-white">标签2（激活）</button>
+                            <button class="px-4 py-2 bg-white">标签3</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 选中状态 -->
+                <div class="border p-6 rounded-md">
+                    <h3 class="font-bold mb-4">选中状态（Selected）</h3>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="checkbox-1" class="mr-2">
+                            <label for="checkbox-1">未选中复选框</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="checkbox-2" class="mr-2" checked>
+                            <label for="checkbox-2">选中复选框</label>
+                        </div>
+                        
+                        <div class="flex items-center mt-2">
+                            <input type="radio" id="radio-1" name="radio-group" class="mr-2">
+                            <label for="radio-1">未选中单选框</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="radio-2" name="radio-group" class="mr-2" checked>
+                            <label for="radio-2">选中单选框</label>
+                        </div>
+                        
+                        <div class="flex mt-2">
+                            <div class="px-4 py-2 border rounded-l-md">未选中选项</div>
+                            <div class="px-4 py-2 bg-indigo-600 text-white border border-indigo-600 rounded-r-md">选中选项</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 聚焦状态 -->
+                <div class="border p-6 rounded-md">
+                    <h3 class="font-bold mb-4">聚焦状态（Focused）</h3>
+                    <div class="flex flex-col gap-4">
+                        <input type="text" placeholder="普通输入框（点击聚焦）" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        
+                        <div class="relative mt-2 border-2 border-indigo-500 rounded-md p-1">
+                            <input type="text" placeholder="聚焦状态的输入框" class="border-none px-3 py-2 w-full focus:outline-none">
+                            <div class="absolute -top-3 left-2 px-1 bg-white text-indigo-600 text-sm">
+                                <span>输入框标签</span>
+                            </div>
+                        </div>
+                        
+                        <button class="mt-2 bg-white border-2 border-gray-300 px-4 py-2 rounded-md hover:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                            可聚焦按钮（点击或Tab键聚焦）
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 主题与样式 -->
+        <div class="mb-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="section-title">3. 主题与样式</h2>
+            
+            <!-- 主题 -->
+            <h3 class="component-title">主题（Theme）：亮色主题、暗色主题</h3>
+            <p class="description">根据用户偏好和使用环境，提供不同的颜色主题。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <!-- 亮色主题 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">亮色主题</h4>
+                    <div class="bg-white border rounded-md p-4">
+                        <h5 class="text-gray-900 font-bold mb-2">亮色主题示例</h5>
+                        <p class="text-gray-700 mb-4">这是亮色主题下的文本内容，通常背景为浅色，文字为深色。</p>
+                        <div class="flex gap-2">
+                            <button class="bg-indigo-600 text-white px-4 py-2 rounded-md">主按钮</button>
+                            <button class="bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md">次按钮</button>
+                        </div>
+                        <div class="mt-3 flex items-center">
+                            <input type="checkbox" id="light-checkbox" class="mr-2" checked>
+                            <label for="light-checkbox">复选框选项</label>
+                        </div>
+                        <input type="text" placeholder="输入框" class="border border-gray-300 rounded-md px-3 py-2 mt-3 w-full">
+                    </div>
+                </div>
+                
+                <!-- 暗色主题 -->
+                <div class="border p-6 rounded-md">
+                    <h4 class="font-bold mb-4">暗色主题</h4>
+                    <div class="bg-gray-800 border border-gray-700 rounded-md p-4">
+                        <h5 class="text-gray-100 font-bold mb-2">暗色主题示例</h5>
+                        <p class="text-gray-300 mb-4">这是暗色主题下的文本内容，通常背景为深色，文字为浅色。</p>
+                        <div class="flex gap-2">
+                            <button class="bg-indigo-500 text-white px-4 py-2 rounded-md">主按钮</button>
+                            <button class="bg-gray-700 border border-indigo-500 text-indigo-400 px-4 py-2 rounded-md">次按钮</button>
+                        </div>
+                        <div class="mt-3 flex items-center">
+                            <input type="checkbox" id="dark-checkbox" class="mr-2" checked>
+                            <label for="dark-checkbox" class="text-gray-300">复选框选项</label>
+                        </div>
+                        <input type="text" placeholder="输入框" class="bg-gray-700 border border-gray-600 text-gray-100 rounded-md px-3 py-2 mt-3 w-full focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 变体 -->
+            <h3 class="component-title">变体（Variant）：填充、描边、文本等变体</h3>
+            <p class="description">同一组件的不同展现形式，适用于不同的强调程度和视觉层级。</p>
+            
+            <div class="border p-6 rounded-md mt-4">
+                <h4 class="font-bold mb-4">按钮变体示例</h4>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">填充按钮</button>
+                    <button class="bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50">描边按钮</button>
+                    <button class="text-indigo-600 px-4 py-2 hover:bg-indigo-50 rounded-md">文本按钮</button>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700">圆形填充按钮</button>
+                    <button class="bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-full hover:bg-indigo-50">圆形描边按钮</button>
+                </div>
+                
+                <h4 class="font-bold mb-4 mt-6">警告按钮变体示例</h4>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">填充警告按钮</button>
+                    <button class="bg-white border border-red-600 text-red-600 px-4 py-2 rounded-md hover:bg-red-50">描边警告按钮</button>
+                    <button class="text-red-600 px-4 py-2 hover:bg-red-50 rounded-md">文本警告按钮</button>
+                </div>
+                
+                <h4 class="font-bold mb-4 mt-6">图标按钮变体示例</h4>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                    <button class="bg-white border border-indigo-600 text-indigo-600 p-2 rounded-md hover:bg-indigo-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                    <button class="text-indigo-600 p-2 rounded-md hover:bg-indigo-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 圆角 -->
+            <h3 class="component-title">圆角（Radius）：直角、圆角、全圆等</h3>
+            <p class="description">圆角程度的不同可以传达不同的设计风格和视觉感受。</p>
+            
+            <div class="border p-6 rounded-md mt-4">
+                <h4 class="font-bold mb-4">按钮圆角示例</h4>
+                <div class="flex flex-wrap gap-4">
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-none">直角按钮</button>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-sm">小圆角按钮</button>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-md">中圆角按钮</button>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">大圆角按钮</button>
+                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-full">全圆按钮</button>
+                </div>
+                
+                <h4 class="font-bold mb-4 mt-6">卡片圆角示例</h4>
+                <div class="flex flex-wrap gap-4">
+                    <div class="bg-white border border-gray-300 p-4 rounded-none w-32 h-32 flex items-center justify-center">
+                        <span>直角卡片</span>
+                    </div>
+                    <div class="bg-white border border-gray-300 p-4 rounded-sm w-32 h-32 flex items-center justify-center">
+                        <span>小圆角卡片</span>
+                    </div>
+                    <div class="bg-white border border-gray-300 p-4 rounded-md w-32 h-32 flex items-center justify-center">
+                        <span>中圆角卡片</span>
+                    </div>
+                    <div class="bg-white border border-gray-300 p-4 rounded-lg w-32 h-32 flex items-center justify-center">
+                        <span>大圆角卡片</span>
+                    </div>
+                    <div class="bg-white border border-gray-300 p-4 rounded-full w-32 h-32 flex items-center justify-center">
+                        <span>圆形卡片</span>
+                    </div>
+                </div>
+                
+                <h4 class="font-bold mb-4 mt-6">输入框圆角示例</h4>
+                <div class="flex flex-col gap-4">
+                    <input type="text" placeholder="直角输入框" class="border border-gray-300 rounded-none px-3 py-2">
+                    <input type="text" placeholder="小圆角输入框" class="border border-gray-300 rounded-sm px-3 py-2">
+                    <input type="text" placeholder="中圆角输入框" class="border border-gray-300 rounded-md px-3 py-2">
+                    <input type="text" placeholder="大圆角输入框" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <input type="text" placeholder="全圆输入框" class="border border-gray-300 rounded-full px-3 py-2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // 分享网站功能
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'UI指导书 - UI组件通用属性分类',
+                    text: '探索UI组件常见的通用属性，包括尺寸、间距、状态和主题设置等',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('分享成功');
+                }).catch((error) => {
+                    console.log('分享失败:', error);
+                });
+            } else {
+                // 不支持原生分享API时，复制链接到剪贴板
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                alert('链接已复制到剪贴板，可以分享给朋友了！');
+            }
+        }
+    </script>
+</body>
+</html> 
