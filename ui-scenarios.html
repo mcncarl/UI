@@ -1,0 +1,2940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI场景应用 - 网站类型场景示例</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .share-button {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+        }
+        
+        /* 标签按钮样式 */
+        .tab-button {
+            border: 2px solid #0ea5e9;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .tab-button.active {
+            background-color: #0ea5e9;
+            color: white;
+        }
+        
+        /* 场景内容显示控制 */
+        .scenario-content {
+            display: none;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 分享按钮 -->
+    <div class="share-button">
+        <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
+            <i class="fas fa-share-alt text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                    <a href="ui-scenarios.html" class="text-primary-600 font-medium transition duration-150">具体场景</a>
+                    <a href="ui-overlays.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        覆盖效果
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                    </a>
+                    <a href="ui-overlay-example.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        遮挡效果实例
+                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                    </a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+                <a href="ui-scenarios.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 bg-blue-50">具体场景</a>
+                <a href="ui-overlays.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    覆盖效果
+                    <span class="absolute top-2 ml-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                </a>
+                <a href="ui-overlay-example.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    遮挡效果实例
+                    <span class="absolute top-2 ml-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 移动按钮脚本 -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- 增加页面内容顶部边距 -->
+    <div class="container mx-auto px-4 py-12 mt-24">
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">UI 场景应用</h1>
+            <p class="text-gray-600">不同类型网站的UI设计方案与应用示例</p>
+        </header>
+
+        <!-- 场景分类结构 - 添加在标签导航前 -->
+        <div class="mb-8 p-4 bg-blue-50 rounded-lg">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">场景分类</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-medium text-blue-700 mb-2">商业类</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• 电商网站</li>
+                        <li>• 企业官网</li>
+                        <li>• 金融平台</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-medium text-blue-700 mb-2">内容与社交类</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• 博客网站</li>
+                        <li>• 社交媒体</li>
+                        <li>• 教育平台</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-medium text-blue-700 mb-2">专业与服务类</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• AI应用</li>
+                        <li>• 游戏网站</li>
+                        <li>• 医疗健康</li>
+                        <li>• 旅游网站</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 场景标签导航 -->
+        <div class="mb-10 overflow-x-auto">
+            <div class="flex flex-wrap gap-3 justify-center min-w-max p-2">
+                <button class="tab-button active px-6 py-2 text-primary-600" data-target="ecommerce">电商网站</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="corporate">企业官网</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="blog">博客网站</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="social">社交媒体</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="education">教育平台</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="ai">AI应用</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="gaming">游戏网站</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="finance">金融平台</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="healthcare">医疗健康</button>
+                <button class="tab-button px-6 py-2 text-primary-600" data-target="travel">旅游网站</button>
+            </div>
+        </div>
+
+        <!-- 场景内容区域 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <!-- 电商网站场景 -->
+            <div id="ecommerce" class="scenario-content active">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">电商网站设计</h2>
+                
+                <!-- 设计原理说明 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">设计原理</h3>
+                    <p class="text-gray-600 mb-4">电商网站设计需要考虑用户体验流程和视觉层次，以促进产品发现和购买转化。核心设计原则包括：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">视觉层次</h4>
+                            <p class="text-sm text-gray-600">创建清晰的视觉层次结构，引导用户注意力从主要促销内容到产品展示，最后到行动号召按钮。</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">促销设计</h4>
+                            <p class="text-sm text-gray-600">使用对比色和突出的视觉元素来吸引用户对促销商品和特别优惠的注意力，增加销售机会。</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">减少认知负荷</h4>
+                            <p class="text-sm text-gray-600">简化导航和购买流程，确保用户能够轻松找到、选择和购买产品，减少购物车放弃率。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 响应式设计展示 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">响应式设计展示</h3>
+                    <p class="text-gray-600 mb-6">电商网站必须适应不同设备屏幕，确保所有用户都能获得最佳体验。</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- 桌面视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">桌面视图 (1200px+)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-blue-600 text-white p-2 rounded-t-md text-sm">导航栏</div>
+                                <div class="grid grid-cols-4 gap-2 my-2">
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品1</div>
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品2</div>
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品3</div>
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品4</div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-1 mt-3">
+                                    <div class="col-span-2 bg-gray-100 p-2 rounded text-xs">商品展示区占据更大空间</div>
+                                    <div class="bg-gray-100 p-2 rounded text-xs">边栏过滤器</div>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">桌面视图提供丰富的多列产品展示，侧边栏过滤器和详细的产品信息。利用大屏幕空间展示更多商品。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 平板视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">平板视图 (768px - 1199px)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-blue-600 text-white p-2 rounded-t-md text-sm">导航栏</div>
+                                <div class="grid grid-cols-2 gap-2 my-2">
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品1</div>
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品2</div>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded text-xs mt-3">过滤器位于顶部</div>
+                                <div class="bg-gray-100 p-2 rounded text-xs mt-2">产品网格调整为2列</div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">平板视图适当减少列数，放大产品图片和按钮尺寸。过滤器调整为水平布局，位于页面顶部。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 移动视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">移动视图 (&lt; 768px)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-blue-600 text-white p-2 rounded-t-md flex justify-between items-center text-sm">
+                                    <span>Logo</span>
+                                    <span>☰</span>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded text-xs mt-3">搜索栏占据整行</div>
+                                <div class="grid grid-cols-1 gap-2 my-2">
+                                    <div class="bg-gray-200 p-2 text-xs text-center rounded">产品1</div>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded text-xs mt-2">过滤器隐藏在可展开菜单中</div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">移动视图使用单列布局，简化导航菜单为汉堡按钮。优先展示搜索功能和主要产品，将过滤器放入弹出菜单中。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐组件 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">推荐组件</h3>
+                    <p class="text-gray-600 mb-6">电商网站设计中应包含以下核心组件以提供完整的购物体验:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">产品卡片</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-gray-100 aspect-video rounded-md flex items-center justify-center mb-3">
+                                    <span class="text-gray-400 text-sm">产品图片</span>
+                                </div>
+                                <div class="text-sm font-medium text-gray-800 mb-1">产品名称</div>
+                                <div class="text-sm font-bold text-blue-600 mb-2">¥299.00</div>
+                                <button class="w-full bg-blue-600 text-white text-sm py-1 px-4 rounded">加入购物车</button>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-500 mt-2">产品卡片应包含大图片、简短描述、价格和行动按钮，提供足够的信息方便用户做出购买决定。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">搜索过滤器</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex mb-3">
+                                    <input type="text" class="flex-1 border rounded-l-md px-3 py-1 text-sm" placeholder="搜索产品...">
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded-r-md text-sm">搜索</button>
+                                </div>
+                                <div class="text-sm font-medium text-gray-800 mb-2">过滤选项</div>
+                                <div class="flex flex-wrap gap-2 mb-2">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">价格 ▼</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">品牌 ▼</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">评分 ▼</span>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-500 mt-2">有效的搜索和过滤系统帮助用户快速找到所需产品，应包括价格范围、品牌、颜色等常用过滤选项。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">结账流程</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-center mb-3">
+                                    <div class="text-sm font-medium text-gray-800">购物车(3)</div>
+                                    <div class="text-sm font-bold text-blue-600">总计: ¥899.00</div>
+                                </div>
+                                <div class="space-y-2 mb-3">
+                                    <div class="flex justify-between items-center text-xs border-b pb-2">
+                                        <span>产品A</span>
+                                        <span>¥299.00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-xs border-b pb-2">
+                                        <span>产品B</span>
+                                        <span>¥399.00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center text-xs border-b pb-2">
+                                        <span>产品C</span>
+                                        <span>¥201.00</span>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-green-600 text-white text-sm py-1 px-4 rounded">结账</button>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-500 mt-2">设计简洁的结账流程减少购物车放弃率，显示明确的价格概览和较少的表单步骤可提高转化率。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐配色方案 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">推荐配色方案</h3>
+                    <p class="text-gray-600 mb-6">电商网站颜色选择对用户情绪和购买意愿有显著影响，根据不同产品类型可选择以下配色方案:</p>
+                    
+                    <!-- 交互式颜色选择器 -->
+                    <div class="mb-8">
+                        <h4 class="font-semibold text-gray-700 mb-4">交互式颜色选择器</h4>
+                        <p class="text-gray-600 text-sm mb-4">点击下方配色方案预览不同风格的电商界面效果：</p>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
+                            <button class="color-selector w-full p-2 rounded-md border flex flex-col items-center" 
+                                   data-primary="#3b82f6" 
+                                   data-secondary="#f9fafb" 
+                                   data-accent="#ef4444">
+                                <div class="flex w-full h-8 rounded overflow-hidden mb-2">
+                                    <div class="w-1/2 bg-blue-500"></div>
+                                    <div class="w-1/4 bg-gray-50"></div>
+                                    <div class="w-1/4 bg-red-500"></div>
+                                </div>
+                                <span class="text-xs text-gray-600">经典蓝红</span>
+                            </button>
+                            
+                            <button class="color-selector w-full p-2 rounded-md border flex flex-col items-center" 
+                                   data-primary="#10b981" 
+                                   data-secondary="#ecfdf5" 
+                                   data-accent="#8b5cf6">
+                                <div class="flex w-full h-8 rounded overflow-hidden mb-2">
+                                    <div class="w-1/2 bg-green-500"></div>
+                                    <div class="w-1/4 bg-green-50"></div>
+                                    <div class="w-1/4 bg-purple-500"></div>
+                                </div>
+                                <span class="text-xs text-gray-600">自然绿紫</span>
+                            </button>
+                            
+                            <button class="color-selector w-full p-2 rounded-md border flex flex-col items-center" 
+                                   data-primary="#000000" 
+                                   data-secondary="#f3f4f6" 
+                                   data-accent="#f59e0b">
+                                <div class="flex w-full h-8 rounded overflow-hidden mb-2">
+                                    <div class="w-1/2 bg-black"></div>
+                                    <div class="w-1/4 bg-gray-100"></div>
+                                    <div class="w-1/4 bg-amber-500"></div>
+                                </div>
+                                <span class="text-xs text-gray-600">奢华黑金</span>
+                            </button>
+                            
+                            <button class="color-selector w-full p-2 rounded-md border flex flex-col items-center" 
+                                   data-primary="#ec4899" 
+                                   data-secondary="#fdf2f8" 
+                                   data-accent="#06b6d4">
+                                <div class="flex w-full h-8 rounded overflow-hidden mb-2">
+                                    <div class="w-1/2 bg-pink-500"></div>
+                                    <div class="w-1/4 bg-pink-50"></div>
+                                    <div class="w-1/4 bg-cyan-500"></div>
+                                </div>
+                                <span class="text-xs text-gray-600">时尚粉蓝</span>
+                            </button>
+                            
+                            <button class="color-selector w-full p-2 rounded-md border flex flex-col items-center" 
+                                   data-primary="#4f46e5" 
+                                   data-secondary="#f5f3ff" 
+                                   data-accent="#f97316">
+                                <div class="flex w-full h-8 rounded overflow-hidden mb-2">
+                                    <div class="w-1/2 bg-indigo-600"></div>
+                                    <div class="w-1/4 bg-violet-50"></div>
+                                    <div class="w-1/4 bg-orange-500"></div>
+                                </div>
+                                <span class="text-xs text-gray-600">活力靛橙</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 新增：HSL颜色选择器 -->
+                        <div class="mt-8 border rounded-lg p-4">
+                            <h4 class="font-semibold text-gray-800 mb-3">HSL颜色选择器</h4>
+                            <p class="text-sm text-gray-600 mb-4">使用HSL(色相、饱和度、亮度)直观地选择颜色</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <!-- 主色HSL选择器 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">主色调</label>
+                                    <div class="space-y-2">
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">色相 (0-360°)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="primary-hue" min="0" max="360" value="210" class="w-full mr-2">
+                                                <span id="primary-hue-value" class="text-xs text-gray-500 w-8">210</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">饱和度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="primary-saturation" min="0" max="100" value="80" class="w-full mr-2">
+                                                <span id="primary-saturation-value" class="text-xs text-gray-500 w-8">80%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">亮度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="primary-lightness" min="0" max="100" value="50" class="w-full mr-2">
+                                                <span id="primary-lightness-value" class="text-xs text-gray-500 w-8">50%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="primary-color-preview" class="h-8 mt-2 rounded-md" style="background-color: hsl(210, 80%, 50%)"></div>
+                                    <div class="flex justify-between text-xs mt-1">
+                                        <span id="primary-color-code" class="text-gray-500">hsl(210, 80%, 50%)</span>
+                                        <span id="primary-color-hex" class="text-gray-500">#1a71e0</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 背景色HSL选择器 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">背景色</label>
+                                    <div class="space-y-2">
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">色相 (0-360°)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="bg-hue" min="0" max="360" value="210" class="w-full mr-2">
+                                                <span id="bg-hue-value" class="text-xs text-gray-500 w-8">210</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">饱和度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="bg-saturation" min="0" max="100" value="10" class="w-full mr-2">
+                                                <span id="bg-saturation-value" class="text-xs text-gray-500 w-8">10%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">亮度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="bg-lightness" min="0" max="100" value="95" class="w-full mr-2">
+                                                <span id="bg-lightness-value" class="text-xs text-gray-500 w-8">95%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="bg-color-preview" class="h-8 mt-2 rounded-md" style="background-color: hsl(210, 10%, 95%)"></div>
+                                    <div class="flex justify-between text-xs mt-1">
+                                        <span id="bg-color-code" class="text-gray-500">hsl(210, 10%, 95%)</span>
+                                        <span id="bg-color-hex" class="text-gray-500">#f0f2f5</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 强调色HSL选择器 -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">强调色</label>
+                                    <div class="space-y-2">
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">色相 (0-360°)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="accent-hue" min="0" max="360" value="25" class="w-full mr-2">
+                                                <span id="accent-hue-value" class="text-xs text-gray-500 w-8">25</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">饱和度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="accent-saturation" min="0" max="100" value="100" class="w-full mr-2">
+                                                <span id="accent-saturation-value" class="text-xs text-gray-500 w-8">100%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-gray-500 mb-1">亮度 (0-100%)</label>
+                                            <div class="flex items-center">
+                                                <input type="range" id="accent-lightness" min="0" max="100" value="50" class="w-full mr-2">
+                                                <span id="accent-lightness-value" class="text-xs text-gray-500 w-8">50%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="accent-color-preview" class="h-8 mt-2 rounded-md" style="background-color: hsl(25, 100%, 50%)"></div>
+                                    <div class="flex justify-between text-xs mt-1">
+                                        <span id="accent-color-code" class="text-gray-500">hsl(25, 100%, 50%)</span>
+                                        <span id="accent-color-hex" class="text-gray-500">#ff7d1a</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button id="apply-hsl-colors" class="px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors">
+                                    应用HSL颜色
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 颜色预览区域 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div id="previewHeader" class="bg-blue-500 text-white p-3 flex justify-between items-center">
+                                <div class="font-bold">ColorShop</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs">购物车</span>
+                                    <span id="previewBadge" class="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 bg-white">
+                                <div class="flex mb-4">
+                                    <div id="previewSearch" class="flex-1 bg-gray-50 border rounded-l-md flex items-center px-3">
+                                        <span class="text-gray-400 text-sm">搜索产品...</span>
+                                    </div>
+                                    <button id="previewSearchBtn" class="bg-red-500 text-white px-3 py-2 rounded-r-md text-sm">搜索</button>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="border rounded-md overflow-hidden">
+                                        <div class="bg-gray-100 aspect-video"></div>
+                                        <div class="p-2">
+                                            <div class="text-sm mb-1">时尚外套</div>
+                                            <div id="previewPrice" class="text-red-500 font-bold text-sm">¥399.00</div>
+                                            <button id="previewButton" class="mt-2 border border-blue-500 text-blue-500 text-xs rounded w-full py-1">
+                                                加入购物车
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border rounded-md overflow-hidden">
+                                        <div class="bg-gray-100 aspect-video"></div>
+                                        <div class="p-2">
+                                            <div class="text-sm mb-1">休闲鞋</div>
+                                            <div id="previewPrice2" class="text-red-500 font-bold text-sm">¥299.00</div>
+                                            <button class="mt-2 border border-blue-500 text-blue-500 text-xs rounded w-full py-1">
+                                                加入购物车
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 应用示例 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">应用示例</h3>
+                    <p class="text-gray-600 mb-6">以下是不同类型电商网站的设计示例和适用场景：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="aspect-video relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-black flex items-center justify-center">
+                                    <div class="w-full h-full p-6 flex flex-col justify-center items-center">
+                                        <div class="text-yellow-500 text-xl font-serif tracking-wider mb-4">LUXURY</div>
+                                        <div class="w-2/3 h-24 bg-gradient-to-r from-gray-800 to-gray-700 rounded-sm relative mb-4 flex items-center justify-center">
+                                            <div class="absolute -top-1 -bottom-1 -left-1 -right-1 border border-yellow-600/30"></div>
+                                            <div class="text-yellow-500/90 text-xs tracking-widest">奢华精品</div>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <div class="w-12 h-12 bg-gray-800 rounded-sm relative flex items-center justify-center group">
+                                                <div class="absolute inset-0 bg-yellow-600/10 group-hover:bg-yellow-600/20 transition-all duration-300"></div>
+                                                <span class="text-yellow-500 text-xs">腕表</span>
+                                            </div>
+                                            <div class="w-12 h-12 bg-gray-800 rounded-sm relative flex items-center justify-center group">
+                                                <div class="absolute inset-0 bg-yellow-600/10 group-hover:bg-yellow-600/20 transition-all duration-300"></div>
+                                                <span class="text-yellow-500 text-xs">珠宝</span>
+                                            </div>
+                                            <div class="w-12 h-12 bg-gray-800 rounded-sm relative flex items-center justify-center group">
+                                                <div class="absolute inset-0 bg-yellow-600/10 group-hover:bg-yellow-600/20 transition-all duration-300"></div>
+                                                <span class="text-yellow-500 text-xs">皮具</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-semibold text-gray-800 mb-2">奢侈品电商</h4>
+                                <p class="text-sm text-gray-600 mb-3">适合高端品牌和奢侈品展示，强调产品质感和品牌调性，采用黑色、金色等高贵色彩搭配大量留白。</p>
+                                <div class="flex gap-2">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">极简设计</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">大图展示</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">品牌故事</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="aspect-video relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
+                                    <div class="w-full h-full p-4 flex flex-col">
+                                        <div class="bg-white/90 rounded-md py-2 px-3 w-full mb-3 flex justify-between items-center">
+                                            <div class="text-red-600 font-bold text-sm">超值优惠</div>
+                                            <div class="bg-red-600 text-white text-xs px-2 py-1 rounded">全场满减</div>
+                                        </div>
+                                        <div class="grid grid-cols-3 gap-2 flex-1">
+                                            <div class="bg-white rounded-md p-2 flex flex-col relative">
+                                                <div class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-8 h-8 flex items-center justify-center">
+                                                    -40%
+                                                </div>
+                                                <div class="bg-gray-100 h-12 mb-1 rounded"></div>
+                                                <div class="text-xs text-gray-800 line-clamp-1">家用电器</div>
+                                                <div class="text-red-600 text-xs font-bold mt-auto">¥299</div>
+                                            </div>
+                                            <div class="bg-white rounded-md p-2 flex flex-col relative">
+                                                <div class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-8 h-8 flex items-center justify-center">
+                                                    -25%
+                                                </div>
+                                                <div class="bg-gray-100 h-12 mb-1 rounded"></div>
+                                                <div class="text-xs text-gray-800 line-clamp-1">日用百货</div>
+                                                <div class="text-red-600 text-xs font-bold mt-auto">¥59.9</div>
+                                            </div>
+                                            <div class="bg-white rounded-md p-2 flex flex-col relative">
+                                                <div class="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-8 h-8 flex items-center justify-center">
+                                                    热销
+                                                </div>
+                                                <div class="bg-gray-100 h-12 mb-1 rounded"></div>
+                                                <div class="text-xs text-gray-800 line-clamp-1">食品饮料</div>
+                                                <div class="text-red-600 text-xs font-bold mt-auto">¥89.9</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div class="bg-yellow-400 text-xs text-red-700 font-bold text-center py-1 rounded-full">
+                                                立即抢购 - 限时闪购 - 今日特价
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h4 class="font-semibold text-gray-800 mb-2">快消品电商</h4>
+                                <p class="text-sm text-gray-600 mb-3">适合日用品和超市类商品展示，强调优惠和促销，采用鲜明色彩吸引注意力，展示大量商品选择。</p>
+                                <div class="flex gap-2">
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">促销标签</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">对比色彩</span>
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">密集布局</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 企业官网场景 -->
+            <div id="corporate" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">企业官网设计</h2>
+                <p class="text-gray-600 mb-6">企业官网需要展示公司形象、服务和产品，设计应专业、可靠并体现企业文化。</p>
+                
+                <!-- 设计原理说明 -->
+                <div class="mb-10 bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计原理</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-medium mb-2">信任与专业性</h4>
+                            <p class="text-sm text-gray-600 mb-4">企业网站设计重视建立信任感和展示专业能力：</p>
+                            <ul class="text-sm text-gray-600 space-y-1 pl-5 list-disc">
+                                <li>一致性：保持品牌视觉元素一致以增强认知</li>
+                                <li>社会证明：客户案例和评价增强可信度</li>
+                                <li>清晰导航：用户能快速找到所需信息</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">品牌价值传达</h4>
+                            <p class="text-sm text-gray-600 mb-4">通过视觉设计有效传达企业价值观和文化：</p>
+                            <ul class="text-sm text-gray-600 space-y-1 pl-5 list-disc">
+                                <li>情感设计：使用图片和视频传达品牌故事</li>
+                                <li>空间利用：适当留白表达专业和优雅</li>
+                                <li>转化路径：引导访客完成预期行动</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐组件 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">推荐组件</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">英雄区块</h4>
+                            <p class="text-sm text-gray-600">强调公司价值主张的大型标题区域</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">关于我们模块</h4>
+                            <p class="text-sm text-gray-600">展示公司历史和价值观</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">服务/产品展示</h4>
+                            <p class="text-sm text-gray-600">详细介绍公司提供的产品和服务</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">团队介绍</h4>
+                            <p class="text-sm text-gray-600">展示公司核心团队成员</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">客户案例</h4>
+                            <p class="text-sm text-gray-600">成功案例和客户评价</p>
+                        </div>
+                        <div class="bg-gray-100 p-4 rounded-lg">
+                            <h4 class="font-medium mb-2">联系表单</h4>
+                            <p class="text-sm text-gray-600">便于潜在客户与公司取得联系</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 响应式设计展示 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">响应式设计展示</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-800 text-white text-xs py-1 px-3">桌面端</div>
+                            <div class="p-3 bg-white">
+                                <div class="mb-3 h-6 bg-gray-500 rounded"></div>
+                                <div class="h-40 bg-gray-200 rounded mb-3"></div>
+                                <div class="mb-3">
+                                    <div class="h-4 bg-gray-300 w-3/4 rounded mb-1"></div>
+                                    <div class="h-4 bg-gray-300 w-1/2 rounded"></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                </div>
+                            </div>
+                            <div class="p-2 bg-gray-100 text-xs text-gray-600 text-center">
+                                宽屏布局，多列内容，丰富视觉元素
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-800 text-white text-xs py-1 px-3">平板端</div>
+                            <div class="p-3 bg-white">
+                                <div class="mb-3 h-6 bg-gray-500 rounded"></div>
+                                <div class="h-32 bg-gray-200 rounded mb-3"></div>
+                                <div class="mb-3">
+                                    <div class="h-4 bg-gray-300 w-3/4 rounded mb-1"></div>
+                                    <div class="h-4 bg-gray-300 w-2/3 rounded"></div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                </div>
+                            </div>
+                            <div class="p-2 bg-gray-100 text-xs text-gray-600 text-center">
+                                双列内容布局，适中图片尺寸
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-800 text-white text-xs py-1 px-3">手机端</div>
+                            <div class="p-3 bg-white">
+                                <div class="mb-3 h-6 bg-gray-500 rounded"></div>
+                                <div class="h-24 bg-gray-200 rounded mb-3"></div>
+                                <div class="mb-3">
+                                    <div class="h-4 bg-gray-300 w-full rounded mb-1"></div>
+                                    <div class="h-4 bg-gray-300 w-4/5 rounded"></div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                    <div class="bg-gray-200 p-2 rounded aspect-video"></div>
+                                </div>
+                            </div>
+                            <div class="p-2 bg-gray-100 text-xs text-gray-600 text-center">
+                                单列布局，优先重要内容
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐配色方案 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">推荐配色方案</h3>
+                    <p class="mb-4">企业官网常用以下配色方案：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-blue-700 to-blue-900"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">深蓝专业配色</h4>
+                                <p class="text-sm text-gray-600">适合金融、咨询等专业服务企业</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#1d4ed8</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#1e3a8a</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#f8fafc</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-gray-700 to-gray-900"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">优雅黑灰配色</h4>
+                                <p class="text-sm text-gray-600">适合时尚、设计、技术公司</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#374151</span>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#111827</span>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#ffffff</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 应用示例 -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">应用示例</h3>
+                    <div class="border rounded-lg overflow-hidden">
+                        <!-- 模拟浏览器窗口标题栏 -->
+                        <div class="h-8 bg-gray-100 flex items-center px-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div class="mx-auto text-gray-500 text-sm">创新科技 - 引领行业未来</div>
+                        </div>
+
+                        <!-- 企业官网模拟内容 -->
+                        <div class="border-t">
+                            <!-- 头部导航 -->
+                            <div class="bg-gray-900 text-white p-4">
+                                <div class="container mx-auto flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-500 rounded-full mr-2"></div>
+                                        <div class="text-xl font-bold">创新科技</div>
+                                    </div>
+                                    <div class="hidden md:flex space-x-6 text-sm">
+                                        <a href="#" class="hover:text-blue-400">首页</a>
+                                        <a href="#" class="hover:text-blue-400">关于我们</a>
+                                        <a href="#" class="hover:text-blue-400">产品服务</a>
+                                        <a href="#" class="hover:text-blue-400">成功案例</a>
+                                        <a href="#" class="hover:text-blue-400">新闻动态</a>
+                                        <a href="#" class="hover:text-blue-400">联系我们</a>
+                                    </div>
+                                    <div>
+                                        <button class="text-sm bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">咨询服务</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 英雄区块 -->
+                            <div class="relative h-96 bg-gradient-to-r from-gray-900 to-blue-900 flex items-center">
+                                <div class="absolute inset-0 opacity-20 bg-pattern" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+                                <div class="container mx-auto px-6 relative z-10">
+                                    <div class="max-w-2xl">
+                                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">引领创新，<br>驱动未来发展</h1>
+                                        <p class="text-blue-100 text-xl mb-8">我们提供行业领先的技术解决方案，帮助企业实现数字化转型</p>
+                                        <div class="flex space-x-4">
+                                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium">了解解决方案</button>
+                                            <button class="border border-white text-white px-6 py-3 rounded-md font-medium hover:bg-white hover:text-blue-900">联系我们</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 关于我们简介 -->
+                            <div class="bg-white py-16">
+                                <div class="container mx-auto px-6">
+                                    <div class="text-center mb-12">
+                                        <h2 class="text-3xl font-bold text-gray-800 mb-4">关于我们</h2>
+                                        <div class="w-16 h-1 bg-blue-600 mx-auto"></div>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                                        <div>
+                                            <p class="text-gray-600 mb-4 leading-relaxed">创新科技成立于2010年，是一家专注于企业数字化转型的技术服务公司。我们拥有一支经验丰富的专业团队，致力于为客户提供创新的技术解决方案。</p>
+                                            <p class="text-gray-600 mb-6 leading-relaxed">十余年来，我们已成功服务超过500家企业客户，覆盖金融、制造、零售等多个行业，帮助他们实现业务增长和效率提升。</p>
+                                            <div class="flex space-x-8">
+                                                <div class="text-center">
+                                                    <div class="text-3xl font-bold text-blue-600">10+</div>
+                                                    <div class="text-gray-500">行业经验</div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="text-3xl font-bold text-blue-600">500+</div>
+                                                    <div class="text-gray-500">客户案例</div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="text-3xl font-bold text-blue-600">50+</div>
+                                                    <div class="text-gray-500">专业团队</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-gray-200 h-72 rounded-lg"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 服务板块 -->
+                            <div class="bg-gray-100 py-16">
+                                <div class="container mx-auto px-6">
+                                    <div class="text-center mb-12">
+                                        <h2 class="text-3xl font-bold text-gray-800 mb-4">我们的服务</h2>
+                                        <div class="w-16 h-1 bg-blue-600 mx-auto"></div>
+                                    </div>
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path></svg>
+                                            </div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">软件开发</h3>
+                                            <p class="text-gray-600">专业的软件定制开发服务，满足企业特定需求，提供从需求分析到持续维护的全流程支持。</p>
+                                        </div>
+                                        <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M13 7H7v6h6V7z" /><path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z" clip-rule="evenodd" /></svg>
+                                            </div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">AI解决方案</h3>
+                                            <p class="text-gray-600">人工智能技术集成，包括机器学习、数据分析和智能自动化，助力企业提高决策效率。</p>
+                                        </div>
+                                        <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
+                                            </div>
+                                            <h3 class="text-xl font-bold text-gray-800 mb-2">云服务</h3>
+                                            <p class="text-gray-600">提供云计算基础设施和服务，包括云存储、云安全和应用托管，帮助企业降低IT成本。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 博客网站场景 -->
+            <div id="blog" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">博客网站设计</h2>
+                
+                <!-- 设计原理说明 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">设计原理</h3>
+                    <p class="text-gray-600 mb-4">博客网站设计需要关注内容可读性、用户体验和品牌个性。核心设计原则包括：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">优先阅读体验</h4>
+                            <p class="text-sm text-gray-600">选择易于阅读的字体和合适的行高，适当的段落间距和边距，让用户能够长时间舒适阅读内容。</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">内容层次结构</h4>
+                            <p class="text-sm text-gray-600">创建清晰的内容层次，使用标题、副标题和视觉元素引导用户浏览，突出重要信息。</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-gray-800 mb-2">个性化与一致性</h4>
+                            <p class="text-sm text-gray-600">在保持整体一致性的同时，通过特色元素展现博客个性和风格，增强品牌识别度。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 响应式设计展示 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">响应式设计展示</h3>
+                    <p class="text-gray-600 mb-6">博客网站必须适应从大屏幕设备到移动设备的各种浏览环境。</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- 桌面视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">桌面视图 (1200px+)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-purple-600 text-white p-2 rounded-t-md text-sm">博客导航</div>
+                                <div class="grid grid-cols-12 gap-2 my-4">
+                                    <div class="col-span-8 bg-gray-200 p-2 rounded h-40"></div>
+                                    <div class="col-span-4 bg-gray-100 p-2 rounded">
+                                        <div class="h-4 bg-gray-300 w-3/4 rounded mb-2"></div>
+                                        <div class="h-4 bg-gray-300 w-1/2 rounded mb-2"></div>
+                                        <div class="h-4 bg-gray-300 w-4/5 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">桌面视图采用双栏布局，主内容区域占据较大空间，侧边栏包含导航、热门文章和订阅区域等次要内容。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 平板视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">平板视图 (768px - 1199px)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-purple-600 text-white p-2 rounded-t-md text-sm">博客导航</div>
+                                <div class="bg-gray-200 p-2 rounded h-32 my-3"></div>
+                                <div class="grid grid-cols-2 gap-2 my-2">
+                                    <div class="bg-gray-100 p-2 rounded h-20"></div>
+                                    <div class="bg-gray-100 p-2 rounded h-20"></div>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">平板视图调整为更紧凑的布局，主内容区域仍然优先，侧边栏内容可能移至底部或采用折叠展示方式。</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 移动视图 -->
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 p-2 border-b">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <div class="text-xs text-gray-500 ml-2">移动视图 (&lt; 768px)</div>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-purple-600 text-white p-2 rounded-t-md flex justify-between items-center text-sm">
+                                    <span>博客名称</span>
+                                    <span>☰</span>
+                                </div>
+                                <div class="bg-gray-200 p-2 rounded h-24 my-3"></div>
+                                <div class="bg-gray-100 p-2 rounded my-2">
+                                    <div class="h-3 bg-gray-300 w-full rounded mb-1"></div>
+                                    <div class="h-3 bg-gray-300 w-4/5 rounded mb-1"></div>
+                                    <div class="h-3 bg-gray-300 w-2/3 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-gray-600 mt-3">移动视图转为单列布局，导航收起到汉堡菜单中，字体尺寸适当调整，图片自适应屏幕宽度，确保最佳阅读体验。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐组件 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">推荐组件</h3>
+                    <p class="text-gray-600 mb-6">博客网站设计中应包含以下核心组件以提升用户体验：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">文章卡片</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="bg-gray-100 aspect-video rounded-md flex items-center justify-center mb-3">
+                                    <span class="text-gray-400 text-sm">特色图片</span>
+                                </div>
+                                <div class="text-xs text-purple-600 mb-1">设计 • 3天前</div>
+                                <div class="text-base font-medium text-gray-800 mb-2">如何打造高转化率的用户界面</div>
+                                <div class="text-sm text-gray-500 mb-3">探索提高用户体验和转化率的设计技巧，从色彩心理学到微交互设计...</div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-xs text-gray-500">阅读: 1.2k</span>
+                                        <span class="text-xs text-gray-300">•</span>
+                                        <span class="text-xs text-gray-500">评论: 24</span>
+                                    </div>
+                                    <span class="text-xs text-purple-600">阅读全文 →</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">搜索与订阅</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="mb-4">
+                                    <div class="text-sm font-medium text-gray-700 mb-2">搜索文章</div>
+                                    <div class="flex">
+                                        <input type="text" class="flex-1 border rounded-l-md px-3 py-2 text-sm" placeholder="输入关键词...">
+                                        <button class="bg-purple-600 text-white px-3 py-2 rounded-r-md text-sm">搜索</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-700 mb-2">订阅更新</div>
+                                    <div class="flex mb-2">
+                                        <input type="email" class="flex-1 border rounded-l-md px-3 py-2 text-sm" placeholder="您的邮箱地址">
+                                        <button class="bg-purple-600 text-white px-3 py-2 rounded-r-md text-sm">订阅</button>
+                                    </div>
+                                    <p class="text-xs text-gray-500">订阅我们的周刊，获取最新内容和独家资源。</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-gray-50 p-4 border-b">
+                                <h4 class="font-semibold text-gray-800">评论区</h4>
+                            </div>
+                            <div class="p-4">
+                                <div class="border-b pb-3 mb-3">
+                                    <div class="flex items-start mb-2">
+                                        <div class="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-sm font-medium text-gray-800 mr-2">张小明</span>
+                                                <span class="text-xs text-gray-500">2天前</span>
+                                            </div>
+                                            <p class="text-sm text-gray-600 mt-1">这篇文章非常实用，我学到了很多设计技巧！期待更多相关内容。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="text-sm font-medium text-gray-700 mb-2">发表评论</div>
+                                    <textarea class="w-full border rounded-md px-3 py-2 text-sm mb-2" rows="2" placeholder="分享您的想法..."></textarea>
+                                    <button class="bg-purple-600 text-white px-3 py-1 rounded-md text-sm">提交评论</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐配色方案 -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">推荐配色方案</h3>
+                    <p class="text-gray-600 mb-6">博客网站的配色方案应根据内容类型和目标受众选择，以下是几种常见的配色推荐：</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-purple-600 to-purple-900"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">优雅紫色系</h4>
+                                <p class="text-sm text-gray-600">适合创意、设计、生活方式类博客</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded">#8b5cf6</span>
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded">#6d28d9</span>
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded">#f5f3ff</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-gray-700 to-gray-900"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">极简黑白系</h4>
+                                <p class="text-sm text-gray-600">适合摄影、文学、商业类博客</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#1f2937</span>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#4b5563</span>
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">#f9fafb</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-emerald-500 to-green-600"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">自然绿色系</h4>
+                                <p class="text-sm text-gray-600">适合环保、健康、旅行类博客</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">#10b981</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">#059669</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">#ecfdf5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="h-20 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                            <div class="p-4">
+                                <h4 class="font-medium mb-2">科技蓝色系</h4>
+                                <p class="text-sm text-gray-600">适合科技、教育、数字类博客</p>
+                                <div class="mt-2 flex gap-2">
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#3b82f6</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#0ea5e9</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">#eff6ff</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 实际应用示例 -->
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">实际应用示例</h4>
+                        <div class="border rounded-lg overflow-hidden">
+                            <div class="bg-purple-700 text-white p-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="text-xl font-bold">创意博客</div>
+                                    <div class="hidden md:flex space-x-4 text-sm">
+                                        <a href="#" class="hover:text-purple-200">首页</a>
+                                        <a href="#" class="hover:text-purple-200">分类</a>
+                                        <a href="#" class="hover:text-purple-200">关于</a>
+                                        <a href="#" class="hover:text-purple-200">联系</a>
+                                    </div>
+                                    <div class="md:hidden">☰</div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 bg-white">
+                                <div class="max-w-3xl mx-auto">
+                                    <div class="mb-6">
+                                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">设计思维：如何通过用户体验提升产品价值</h1>
+                                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                                            <span>作者：设计师小王</span>
+                                            <span class="mx-2">•</span>
+                                            <span>2023年4月15日</span>
+                                            <span class="mx-2">•</span>
+                                            <span>设计理论</span>
+                                        </div>
+                                        <div class="bg-gray-200 h-64 rounded-lg mb-4"></div>
+                                        <p class="text-gray-600 leading-relaxed">设计思维是一种以人为本的创新方法，通过深入理解用户需求，创造性地解决问题。本文将探讨如何将设计思维应用于产品开发过程，提升用户体验和产品价值...</p>
+                                    </div>
+                                    
+                                    <div class="flex flex-wrap items-center justify-between border-t border-b py-4 my-6">
+                                        <div class="flex items-center space-x-4">
+                                            <span class="text-sm text-gray-500">分享到：</span>
+                                            <a href="#" class="text-purple-600 hover:text-purple-800"><i class="fab fa-twitter"></i></a>
+                                            <a href="#" class="text-purple-600 hover:text-purple-800"><i class="fab fa-facebook"></i></a>
+                                            <a href="#" class="text-purple-600 hover:text-purple-800"><i class="fab fa-linkedin"></i></a>
+                                        </div>
+                                        <div class="mt-2 md:mt-0">
+                                            <span class="text-sm text-gray-500">阅读: 3,542</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-8">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-4">推荐阅读</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="border rounded-lg p-3 hover:shadow-md transition-shadow">
+                                                <div class="text-sm font-medium text-gray-800 mb-1">色彩心理学在UI设计中的应用</div>
+                                                <div class="text-xs text-gray-500">3天前 • 阅读: 1,245</div>
+                                            </div>
+                                            <div class="border rounded-lg p-3 hover:shadow-md transition-shadow">
+                                                <div class="text-sm font-medium text-gray-800 mb-1">如何设计易用的导航系统</div>
+                                                <div class="text-xs text-gray-500">5天前 • 阅读: 2,153</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社交媒体场景 -->
+            <div id="social" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">社交媒体设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-4">社交媒体平台的设计需要注重互动性、内容分享和用户体验，同时保持简洁高效的信息展示。优秀的社交媒体界面应当减少认知负担，突出重要内容，并提供流畅的交互体验。</p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>注重内容流的视觉层次，确保用户可以快速浏览和识别感兴趣的内容</li>
+                        <li>强调用户互动元素的可见性和易用性</li>
+                        <li>提供清晰的反馈机制，增强用户互动体验</li>
+                        <li>平衡信息密度，避免界面过于复杂</li>
+                        <li>设计适应不同类型内容（文本、图片、视频）的展示方式</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">色彩方案</h3>
+                    <p class="text-gray-600 mb-4">社交媒体平台的色彩选择对品牌识别和用户情感连接至关重要。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-blue-500 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-100 rounded mb-2"></div>
+                            <div class="h-10 bg-red-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">活跃型社交平台配色，蓝色传递信任，红色强调重要操作</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-purple-600 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-10 bg-pink-400 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">创意社区配色，紫色代表创意，粉色增添活力</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-gray-800 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-10 bg-green-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">专业型社交网络配色，深色系提供专业感，绿色作为调和</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">内容卡片</h4>
+                            <p class="text-gray-600 mb-3">内容卡片是社交媒体的核心组件，需包含：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>用户头像和名称</li>
+                                <li>内容区域（支持文本、图片、视频）</li>
+                                <li>交互按钮（点赞、评论、分享）</li>
+                                <li>时间戳和可见性指示器</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">导航系统</h4>
+                            <p class="text-gray-600 mb-3">导航设计应简洁直观：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>底部导航栏（移动端）</li>
+                                <li>侧边栏导航（桌面端）</li>
+                                <li>使用图标+文字的组合</li>
+                                <li>提供明确的视觉反馈</li>
+                                <li>将常用功能置于易触及区域</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">响应式设计要点</h3>
+                    <p class="text-gray-600 mb-4">社交媒体平台必须在不同设备上提供一致的体验：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">移动端</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>单列内容流布局</li>
+                                <li>简化交互组件</li>
+                                <li>优化触摸目标大小</li>
+                                <li>底部导航栏</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">平板端</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>双列内容布局</li>
+                                <li>侧边栏可折叠</li>
+                                <li>利用更大屏幕展示更多内容</li>
+                                <li>组合式导航</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">桌面端</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>多列内容布局</li>
+                                <li>固定侧边栏导航</li>
+                                <li>悬浮交互提示</li>
+                                <li>快捷键支持</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教育平台场景 -->
+            <div id="education" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">教育平台设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-4">教育平台设计需要考虑学习体验、内容组织和信息层级，为用户提供直观且有吸引力的学习环境。优秀的教育界面应当减轻认知负担，突出学习内容，同时提供清晰的导航和结构。</p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>清晰的内容组织和导航系统，帮助学习者找到所需内容</li>
+                        <li>减少视觉干扰，让学习者专注于学习内容</li>
+                        <li>设计直观的进度跟踪和反馈机制</li>
+                        <li>考虑不同年龄段和背景的用户需求</li>
+                        <li>提供良好的无障碍设计，确保各类学习者都可使用</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">色彩方案</h3>
+                    <p class="text-gray-600 mb-4">教育平台的色彩选择对学习氛围和专注度有重要影响。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-blue-600 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-50 rounded mb-2"></div>
+                            <div class="h-10 bg-green-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">成人教育配色，蓝色主调传达专业感，绿色用于进度和成功反馈</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-purple-500 rounded mb-2"></div>
+                            <div class="h-10 bg-yellow-100 rounded mb-2"></div>
+                            <div class="h-10 bg-orange-400 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">K12教育配色，紫色和橙色创造活泼氛围，增强学习兴趣</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-teal-600 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-100 rounded mb-2"></div>
+                            <div class="h-10 bg-amber-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">专业培训配色，清爽的蓝绿色调营造专注氛围</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">课程卡片</h4>
+                            <p class="text-gray-600 mb-3">课程卡片是教育平台的关键组件，应包含：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>清晰的课程标题和简介</li>
+                                <li>课程缩略图或图标</li>
+                                <li>课程时长和难度指示</li>
+                                <li>讲师信息和学员评分</li>
+                                <li>学习进度指示器</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">学习界面</h4>
+                            <p class="text-gray-600 mb-3">学习界面设计考虑要点：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>视频/内容区域的突出展示</li>
+                                <li>清晰的章节导航</li>
+                                <li>笔记和书签功能易于访问</li>
+                                <li>简洁的控制面板</li>
+                                <li>讨论区与学习内容的整合</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">学习体验设计</h3>
+                    <p class="text-gray-600 mb-4">优秀的教育平台不仅提供内容，还要考虑整体学习体验：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">进度与激励</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>清晰的进度条和完成指示</li>
+                                <li>成就和徽章系统</li>
+                                <li>学习里程碑庆祝</li>
+                                <li>个性化学习路径</li>
+                                <li>学习数据可视化</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">互动元素</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>交互式测验和练习</li>
+                                <li>讨论和社区互动</li>
+                                <li>实时反馈机制</li>
+                                <li>协作学习工具</li>
+                                <li>模拟和情景练习</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">可访问性</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>高对比度模式选项</li>
+                                <li>文本大小调整</li>
+                                <li>屏幕阅读器兼容性</li>
+                                <li>字幕和文本替代</li>
+                                <li>键盘导航支持</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：学习仪表板</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-50">
+                        <!-- 模拟的学习仪表板界面 -->
+                        <div class="bg-blue-600 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold">学习中心</div>
+                                <div class="flex space-x-3">
+                                    <span>通知</span>
+                                    <span>设置</span>
+                                    <span>个人</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="grid grid-cols-4 gap-4 mb-4">
+                                <div class="col-span-3">
+                                    <div class="bg-white p-3 rounded shadow-sm mb-4">
+                                        <div class="font-semibold mb-2">继续学习</div>
+                                        <div class="flex items-center">
+                                            <div class="w-16 h-12 bg-gray-300 rounded"></div>
+                                            <div class="ml-3">
+                                                <div class="text-sm font-medium">Python数据分析</div>
+                                                <div class="text-xs text-gray-500">完成度: 45%</div>
+                                                <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+                                                    <div class="bg-green-500 h-1.5 rounded-full" style="width: 45%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="bg-white p-3 rounded shadow-sm">
+                                            <div class="font-semibold mb-2">推荐课程</div>
+                                            <div class="space-y-2">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-300 rounded"></div>
+                                                    <div class="ml-2 text-xs">Web前端开发</div>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 bg-gray-300 rounded"></div>
+                                                    <div class="ml-2 text-xs">UI设计基础</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white p-3 rounded shadow-sm">
+                                            <div class="font-semibold mb-2">本周目标</div>
+                                            <div class="text-xs text-gray-700 mb-2">完成3个学习任务</div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-blue-500 h-2 rounded-full" style="width: 67%"></div>
+                                            </div>
+                                            <div class="text-xs text-right mt-1">2/3 完成</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-3 rounded shadow-sm">
+                                    <div class="font-semibold mb-2">学习日历</div>
+                                    <div class="grid grid-cols-7 gap-1 text-xs text-center">
+                                        <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div>
+                                        <div class="p-1">1</div><div class="p-1">2</div>
+                                        <div class="p-1 bg-blue-100 rounded">3</div>
+                                        <div class="p-1 bg-blue-100 rounded">4</div>
+                                        <div class="p-1">5</div><div class="p-1">6</div><div class="p-1">7</div>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-2">点击日期安排学习</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">学习仪表板设计示例，整合了进度跟踪、推荐课程和学习计划，提供清晰的视觉层次和信息组织。</p>
+                </div>
+            </div>
+
+            <!-- AI应用场景 -->
+            <div id="ai" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">AI应用设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-4">AI应用界面设计需要平衡技术复杂性和用户友好性，创造直观且智能的交互体验。优秀的AI界面应当使复杂技术对普通用户也易于理解和使用。</p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>自适应界面，根据用户习惯和偏好调整展示内容和方式</li>
+                        <li>清晰的反馈系统，让用户了解AI正在做什么以及为什么</li>
+                        <li>透明的数据处理过程，建立用户对AI系统的信任</li>
+                        <li>引导式设计，帮助用户理解如何最有效地使用AI功能</li>
+                        <li>错误恢复机制，当AI犯错时提供简单的纠正方式</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">色彩方案</h3>
+                    <p class="text-gray-600 mb-4">AI应用的色彩选择应传达科技感、专业性和可信赖感。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-indigo-600 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-50 rounded mb-2"></div>
+                            <div class="h-10 bg-teal-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">科技型配色，靛蓝代表创新与稳定，青色表示前沿科技</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-slate-800 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-100 rounded mb-2"></div>
+                            <div class="h-10 bg-blue-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">深色主题配色，专业感强，减少视觉疲劳，适合数据分析型AI</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-emerald-600 rounded mb-2"></div>
+                            <div class="h-10 bg-gray-50 rounded mb-2"></div>
+                            <div class="h-10 bg-amber-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">友好型配色，绿色提供安全感，适合面向普通用户的AI助手</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">输入/交互界面</h4>
+                            <p class="text-gray-600 mb-3">用户与AI系统交流的主要途径：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>自然语言输入框（文本/语音）</li>
+                                <li>多模态输入支持（文本/图像/音频）</li>
+                                <li>上下文保持和对话历史</li>
+                                <li>输入建议和自动完成</li>
+                                <li>快捷指令或提示模板</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">输出/展示界面</h4>
+                            <p class="text-gray-600 mb-3">AI响应展示组件设计考虑：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>分段式内容展示，便于阅读</li>
+                                <li>代码块、表格等专用格式支持</li>
+                                <li>加载状态的动态反馈</li>
+                                <li>响应评价和改进选项</li>
+                                <li>分享和导出功能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">特定场景设计</h3>
+                    <p class="text-gray-600 mb-4">根据AI应用的不同用途，设计重点也有所不同：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">AI助手</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>对话式界面设计</li>
+                                <li>友好的拟人化元素</li>
+                                <li>历史对话管理</li>
+                                <li>个性化设置</li>
+                                <li>多任务上下文切换</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">AI创作工具</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>参数控制面板</li>
+                                <li>生成结果展示区</li>
+                                <li>迭代修改界面</li>
+                                <li>创作历史管理</li>
+                                <li>专业与简易模式切换</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">AI分析工具</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>数据可视化展示</li>
+                                <li>复杂分析的简化解释</li>
+                                <li>置信度指示器</li>
+                                <li>数据源透明度</li>
+                                <li>分析结果导出选项</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：AI对话助手</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-50">
+                        <!-- 模拟AI对话助手界面 -->
+                        <div class="bg-indigo-600 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold">AI助手</div>
+                                <div class="flex space-x-3">
+                                    <span>历史</span>
+                                    <span>设置</span>
+                                    <span>帮助</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="bg-white rounded-lg shadow-sm p-3 mb-4 flex">
+                                <div class="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
+                                <div class="ml-3">
+                                    <div class="text-sm text-gray-700">您好！我想了解人工智能在医疗领域的应用。</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-indigo-50 rounded-lg shadow-sm p-3 mb-4 flex">
+                                <div class="w-8 h-8 bg-indigo-200 rounded-full flex-shrink-0 flex items-center justify-center">
+                                    <div class="text-xs text-indigo-600">AI</div>
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-sm text-gray-700">
+                                        <p class="mb-2">人工智能在医疗领域有多种重要应用：</p>
+                                        <ul class="list-disc pl-5 mb-2 space-y-1">
+                                            <li>医学影像分析与疾病诊断</li>
+                                            <li>药物研发与发现</li>
+                                            <li>个性化治疗方案制定</li>
+                                            <li>医疗管理和资源优化</li>
+                                        </ul>
+                                        <p>您想了解其中哪个方面的更多信息？</p>
+                                    </div>
+                                    <div class="flex mt-2 space-x-2">
+                                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded">医学影像</span>
+                                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded">药物研发</span>
+                                        <span class="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded">个性化治疗</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 relative">
+                                <input type="text" placeholder="输入您的问题..." class="w-full border rounded-full px-4 py-2 pr-10 text-sm" />
+                                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center">
+                                    <span>↑</span>
+                                </button>
+                            </div>
+                            
+                            <div class="mt-3 text-xs text-gray-500 flex justify-between">
+                                <div>提示：您可以上传图像或文件以获取更多相关信息</div>
+                                <div>
+                                    <span class="text-indigo-600 cursor-pointer">清除对话</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">AI对话助手界面示例，展示了清晰的对话历史、结构化信息展示、快捷回复选项和简洁的输入区域设计。</p>
+                </div>
+            </div>
+
+            <!-- 游戏网站场景 -->
+            <div id="gaming" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">游戏网站设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-4">游戏网站设计需要传达游戏的特性和氛围，同时提供良好的用户体验。优秀的游戏网站应当吸引玩家注意，并便于他们获取信息和进行互动。</p>
+                    <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                        <li>沉浸感设计，通过视觉和交互元素传达游戏世界观和风格</li>
+                        <li>响应式布局，确保在任何设备上都能良好展示游戏内容</li>
+                        <li>简化导航和操作流程，方便玩家快速找到所需信息</li>
+                        <li>强调社区互动功能，增加玩家粘性和参与度</li>
+                        <li>明确的号召性用语，引导用户下载、购买或注册</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">色彩方案</h3>
+                    <p class="text-gray-600 mb-4">游戏网站的色彩选择通常与游戏类型和目标受众紧密相关。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-slate-900 rounded mb-2"></div>
+                            <div class="h-10 bg-slate-800 rounded mb-2"></div>
+                            <div class="h-10 bg-blue-500 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">科幻/动作游戏配色，深色背景搭配鲜明霓虹色元素，营造未来感</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-amber-800 rounded mb-2"></div>
+                            <div class="h-10 bg-amber-600 rounded mb-2"></div>
+                            <div class="h-10 bg-green-700 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">奇幻/角色扮演游戏配色，温暖的土色和自然色调，营造历史感和冒险氛围</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow">
+                            <div class="h-10 bg-pink-600 rounded mb-2"></div>
+                            <div class="h-10 bg-indigo-300 rounded mb-2"></div>
+                            <div class="h-10 bg-purple-400 rounded mb-2"></div>
+                            <p class="text-sm text-gray-600 mt-2">休闲/移动游戏配色，明亮活泼的色彩，吸引广泛用户群体</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">英雄区</h4>
+                            <p class="text-gray-600 mb-3">游戏网站的核心展示区域：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>高质量游戏视觉和截图</li>
+                                <li>简洁有力的游戏介绍</li>
+                                <li>明确的主要行动按钮（下载/购买）</li>
+                                <li>游戏预告片或演示视频</li>
+                                <li>动态元素展示游戏特性</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">游戏特性展示</h4>
+                            <p class="text-gray-600 mb-3">吸引玩家的内容设计：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>角色/世界观介绍</li>
+                                <li>游戏玩法说明</li>
+                                <li>特色系统展示</li>
+                                <li>图像和视频结合呈现</li>
+                                <li>玩家评价和媒体引述</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">特定区域设计</h3>
+                    <p class="text-gray-600 mb-4">游戏网站通常需要以下功能区：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">社区区域</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>玩家论坛入口</li>
+                                <li>社交媒体整合</li>
+                                <li>用户生成内容展示</li>
+                                <li>玩家活动日历</li>
+                                <li>Discord或聊天功能</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">资讯中心</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>游戏更新公告</li>
+                                <li>开发者博客</li>
+                                <li>游戏指南和教程</li>
+                                <li>电子竞技赛事信息</li>
+                                <li>媒体资源下载</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">支持与商店</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>常见问题解答</li>
+                                <li>技术支持入口</li>
+                                <li>游戏商店/道具购买</li>
+                                <li>账号管理界面</li>
+                                <li>系统要求信息</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：游戏官网首页</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-900">
+                        <!-- 模拟游戏网站界面 -->
+                        <div class="bg-black bg-opacity-50 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold text-blue-400">银河战士</div>
+                                <div class="hidden md:flex space-x-4 text-sm">
+                                    <span class="hover:text-blue-400 cursor-pointer">首页</span>
+                                    <span class="hover:text-blue-400 cursor-pointer">游戏特性</span>
+                                    <span class="hover:text-blue-400 cursor-pointer">新闻</span>
+                                    <span class="hover:text-blue-400 cursor-pointer">社区</span>
+                                    <span class="hover:text-blue-400 cursor-pointer">支持</span>
+                                </div>
+                                <div class="md:hidden">☰</div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative h-48 bg-gradient-to-r from-blue-900 to-purple-900 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                            <div class="relative z-10 text-center">
+                                <h1 class="text-white text-xl font-bold mb-2">星际冒险的终极体验</h1>
+                                <p class="text-blue-200 text-sm mb-4">探索未知宇宙，面对前所未见的挑战</p>
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">立即购买</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-800 p-4">
+                            <div class="text-blue-400 text-lg font-medium mb-3">游戏特性</div>
+                            
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <div class="bg-slate-700 p-2 rounded">
+                                    <div class="h-12 bg-slate-600 rounded mb-2"></div>
+                                    <div class="text-white text-xs">开放世界</div>
+                                </div>
+                                <div class="bg-slate-700 p-2 rounded">
+                                    <div class="h-12 bg-slate-600 rounded mb-2"></div>
+                                    <div class="text-white text-xs">多人模式</div>
+                                </div>
+                                <div class="bg-slate-700 p-2 rounded">
+                                    <div class="h-12 bg-slate-600 rounded mb-2"></div>
+                                    <div class="text-white text-xs">太空战斗</div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-blue-400 text-lg font-medium mb-3">最新动态</div>
+                            <div class="bg-slate-700 p-3 rounded mb-3">
+                                <div class="text-white text-sm font-medium mb-1">新星系探索更新现已上线！</div>
+                                <div class="text-gray-400 text-xs">3天前</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">游戏网站设计示例，采用深色系主题，突出视觉效果和游戏氛围，提供清晰的导航和行动路径。</p>
+                </div>
+            </div>
+
+            <!-- 金融平台场景 -->
+            <div id="finance" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">金融平台设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-6">金融平台设计需要传达安全感、专业性和可靠性，同时确保信息清晰易懂，用户体验顺畅。关键设计原则包括：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">信任与安全</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>使用稳重、可靠的设计语言</li>
+                                <li>显著展示安全认证与合规信息</li>
+                                <li>简洁明晰的用户界面减少混淆</li>
+                                <li>明确的数据保护与隐私政策</li>
+                                <li>在交易流程中提供明确的确认步骤</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">数据可视化</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>直观清晰的图表和数据展示</li>
+                                <li>财务信息的层次化呈现</li>
+                                <li>简化复杂数据，提供上下文解释</li>
+                                <li>响应式设计适应不同设备</li>
+                                <li>关键信息突出，辅助信息弱化</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">配色方案</h3>
+                    <p class="text-gray-600 mb-4">金融平台通常采用以下色彩策略：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">传统金融配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-800"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-700"></div>
+                                <div class="w-8 h-8 rounded-full bg-green-700"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">深蓝色与灰色为主，搭配适当的绿色（增长）和红色（下跌），传达专业性和稳重感。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">现代金融科技配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-purple-600"></div>
+                                <div class="w-8 h-8 rounded-full bg-indigo-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-teal-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-100"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">紫色、靛蓝和青色的组合，突显科技感和创新，同时保持专业形象。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">高对比度功能配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-white border border-gray-300"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-900"></div>
+                                <div class="w-8 h-8 rounded-full bg-green-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-red-500"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">黑白对比突出数据和功能，绿色表示正向变化，红色表示负向变化，提高关键信息辨识度。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <p class="text-gray-600 mb-4">金融平台重要的界面组件：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">账户信息与仪表盘</h4>
+                            <p class="text-gray-600 mb-3">用户核心信息展示：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>余额与资产一览</li>
+                                <li>账户活动时间线</li>
+                                <li>关键财务指标卡片</li>
+                                <li>个性化提醒与建议</li>
+                                <li>快速操作入口</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">交易与转账界面</h4>
+                            <p class="text-gray-600 mb-3">安全且易用的交易流程：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>分步骤引导式表单</li>
+                                <li>交易确认与验证机制</li>
+                                <li>收款人管理与快捷选择</li>
+                                <li>交易历史记录</li>
+                                <li>费用与处理时间透明展示</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">特定区域设计</h3>
+                    <p class="text-gray-600 mb-4">金融平台通常需要以下功能区：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">投资分析区</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>市场行情实时数据</li>
+                                <li>投资组合分析</li>
+                                <li>交互式图表工具</li>
+                                <li>资产配置建议</li>
+                                <li>风险评估指标</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">安全中心</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>多因素认证设置</li>
+                                <li>登录活动监控</li>
+                                <li>安全偏好设置</li>
+                                <li>账户限制管理</li>
+                                <li>隐私设置控制</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">客户支持</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>即时在线客服</li>
+                                <li>常见问题与指南</li>
+                                <li>问题报告工具</li>
+                                <li>服务请求跟踪</li>
+                                <li>反馈与建议渠道</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：金融应用仪表盘</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-50">
+                        <!-- 模拟金融应用界面 -->
+                        <div class="bg-blue-900 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold">财富管家</div>
+                                <div class="flex space-x-3">
+                                    <span class="text-sm">通知</span>
+                                    <span class="text-sm">支持</span>
+                                    <span class="text-sm">设置</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-500">总资产</p>
+                                <h2 class="text-2xl font-bold text-gray-800">¥128,459.65</h2>
+                                <div class="flex items-center text-xs text-green-600">
+                                    <span>↑ 2.4%</span>
+                                    <span class="ml-1 text-gray-500">本月</span>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                                    <p class="text-xs text-gray-500">储蓄账户</p>
+                                    <p class="font-semibold text-gray-800">¥45,230.00</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg border border-gray-200">
+                                    <p class="text-xs text-gray-500">投资组合</p>
+                                    <p class="font-semibold text-gray-800">¥83,229.65</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-3 rounded-lg border border-gray-200 mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <p class="font-medium text-gray-700">近期交易</p>
+                                    <p class="text-xs text-blue-600">查看全部</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+                                                <span class="text-blue-800 text-xs">购</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm text-gray-800">购物消费</p>
+                                                <p class="text-xs text-gray-500">今天</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm font-medium text-red-600">-¥320.50</p>
+                                    </div>
+                                    <div class="flex justify-between items-center py-1 border-b border-gray-100">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                                                <span class="text-green-800 text-xs">薪</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm text-gray-800">工资入账</p>
+                                                <p class="text-xs text-gray-500">昨天</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm font-medium text-green-600">+¥5,800.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="bg-blue-900 text-white rounded-lg p-2 text-sm font-medium">转账</button>
+                                <button class="bg-white border border-blue-900 text-blue-900 rounded-lg p-2 text-sm font-medium">投资</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">金融平台设计示例，采用深蓝色主色调传达专业性与可靠性，清晰展示账户信息与交易数据，提供简洁明了的操作入口。</p>
+                </div>
+            </div>
+            
+            <!-- 医疗健康场景 -->
+            <div id="healthcare" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">医疗健康设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-6">医疗健康平台设计需要传达可靠性、专业性和亲和力，同时确保信息清晰准确，用户体验流畅。关键设计原则包括：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">可信赖与安心</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>清晰易读的布局与排版</li>
+                                <li>明确展示医疗资质和认证</li>
+                                <li>使用专业且准确的医疗术语</li>
+                                <li>保持界面整洁，避免视觉干扰</li>
+                                <li>强调数据安全与隐私保护</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">无障碍与包容性</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>考虑不同年龄段用户需求</li>
+                                <li>提供高对比度文本选项</li>
+                                <li>合理的字体大小与间距</li>
+                                <li>简化操作流程，减少认知负担</li>
+                                <li>兼容辅助技术，支持语音导航</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">配色方案</h3>
+                    <p class="text-gray-600 mb-4">医疗健康平台通常采用以下色彩策略：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">传统医疗配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-teal-600"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-100"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-700"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">蓝色和青绿色为主色调，搭配大量留白，传达专业性、洁净感和信任感。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">健康生活配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-green-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-teal-400"></div>
+                                <div class="w-8 h-8 rounded-full bg-yellow-400"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-100"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">绿色系与暖色调搭配，强调活力、自然和健康生活方式。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">功能性配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-white border border-gray-300"></div>
+                                <div class="w-8 h-8 rounded-full bg-red-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-yellow-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-green-500"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">利用红黄绿色彩系统进行健康状态指示，配合大量白色空间提升清晰度。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <p class="text-gray-600 mb-4">医疗健康平台重要的界面组件：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">用户健康档案</h4>
+                            <p class="text-gray-600 mb-3">个人健康信息管理：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>基本健康信息概览</li>
+                                <li>健康数据可视化图表</li>
+                                <li>医疗记录时间线</li>
+                                <li>药物管理与提醒</li>
+                                <li>健康目标与进度追踪</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">预约与咨询系统</h4>
+                            <p class="text-gray-600 mb-3">便捷的医疗服务接入：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>医生选择与筛选工具</li>
+                                <li>日历式预约界面</li>
+                                <li>视频问诊准备界面</li>
+                                <li>问诊历史与记录</li>
+                                <li>医嘱与处方跟踪</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">特定区域设计</h3>
+                    <p class="text-gray-600 mb-4">医疗健康平台通常需要以下功能区：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">健康教育中心</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>健康知识库与文章</li>
+                                <li>医学术语解释工具</li>
+                                <li>健康视频与图解</li>
+                                <li>疾病预防指南</li>
+                                <li>饮食与运动建议</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">紧急服务区</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>一键急救求助</li>
+                                <li>附近医疗机构地图</li>
+                                <li>急救知识快速查询</li>
+                                <li>紧急联系人设置</li>
+                                <li>常见症状自查工具</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">社区与支持</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>病友支持群组</li>
+                                <li>医患交流平台</li>
+                                <li>健康挑战与活动</li>
+                                <li>专家问答板块</li>
+                                <li>心理健康资源</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：健康应用主页</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-50">
+                        <!-- 模拟健康应用界面 -->
+                        <div class="bg-teal-600 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold">健康伴侣</div>
+                                <div class="flex space-x-3">
+                                    <span class="text-sm">日历</span>
+                                    <span class="text-sm">消息</span>
+                                    <span class="text-sm">我的</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div class="mb-4 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mr-3">
+                                    <span class="text-teal-700">张</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-800">张先生，上午好</p>
+                                    <p class="text-xs text-gray-500">今天是您的体检随访日</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-3 rounded-lg border border-gray-200 mb-4">
+                                <h3 class="font-medium text-gray-700 text-sm mb-2">健康数据</h3>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                                            <span class="text-green-600 text-sm">6.5k</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">步数</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto">
+                                            <span class="text-blue-600 text-sm">72</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">心率</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto">
+                                            <span class="text-purple-600 text-sm">7.2h</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">睡眠</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h3 class="font-medium text-gray-700 text-sm mb-2">今日任务</h3>
+                                <div class="space-y-2">
+                                    <div class="flex items-center p-2 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
+                                            <span class="text-blue-600 text-xs">药</span>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-gray-800">服用降压药</p>
+                                            <p class="text-xs text-gray-500">餐后30分钟</p>
+                                        </div>
+                                        <div>
+                                            <div class="w-5 h-5 border border-gray-300 rounded-md"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-2 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                                            <span class="text-green-600 text-xs">运</span>
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="text-sm text-gray-800">健走30分钟</p>
+                                            <p class="text-xs text-gray-500">16:00提醒</p>
+                                        </div>
+                                        <div>
+                                            <div class="w-5 h-5 border border-gray-300 rounded-md"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="bg-teal-600 text-white rounded-lg p-2 text-sm font-medium">预约问诊</button>
+                                <button class="bg-white border border-teal-600 text-teal-600 rounded-lg p-2 text-sm font-medium">查看报告</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">医疗健康应用设计示例，采用清新的青绿色调传达健康与专业感，简洁的信息层级展示个人健康状况，任务列表提醒用户日常健康管理。</p>
+                </div>
+            </div>
+            
+            <!-- 旅游网站场景 -->
+            <div id="travel" class="scenario-content">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">旅游网站设计</h2>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计特点</h3>
+                    <p class="text-gray-600 mb-6">旅游网站设计需要激发用户的探索欲望，展现目的地魅力，同时提供实用的旅行规划和预订功能。关键设计原则包括：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">视觉吸引力与情感共鸣</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>高质量、沉浸式的目的地图像</li>
+                                <li>引人入胜的视频和360°全景展示</li>
+                                <li>讲述旅行故事的情感化内容</li>
+                                <li>季节性与主题性视觉元素</li>
+                                <li>真实的用户体验分享与照片</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow">
+                            <h4 class="font-medium text-gray-700 mb-3">用户体验与功能性</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                <li>直观的导航与搜索系统</li>
+                                <li>个性化推荐与筛选功能</li>
+                                <li>清晰简洁的预订流程</li>
+                                <li>移动端优先的响应式设计</li>
+                                <li>多语言支持与货币转换</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">配色方案</h3>
+                    <p class="text-gray-600 mb-4">旅游网站通常采用以下色彩策略：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">自然风光配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-sky-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-teal-400"></div>
+                                <div class="w-8 h-8 rounded-full bg-amber-300"></div>
+                                <div class="w-8 h-8 rounded-full bg-white border border-gray-300"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">蓝色调（海洋、天空）与绿色（森林、植被）和黄色（沙滩、阳光）组合，传达自然美景与放松感。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">文化体验配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-red-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-orange-400"></div>
+                                <div class="w-8 h-8 rounded-full bg-purple-500"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-800"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">深沉丰富的色彩如红色、橙色和紫色，展现不同文化的魅力与历史底蕴，适合文化旅游主题。</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">实用导航配色</h4>
+                            <div class="flex space-x-2 mb-3">
+                                <div class="w-8 h-8 rounded-full bg-white border border-gray-300"></div>
+                                <div class="w-8 h-8 rounded-full bg-gray-100"></div>
+                                <div class="w-8 h-8 rounded-full bg-blue-600"></div>
+                                <div class="w-8 h-8 rounded-full bg-orange-500"></div>
+                            </div>
+                            <p class="text-sm text-gray-600">大量白色和浅灰色作为背景，配合明亮的蓝色和橙色作为行动点，提高功能区识别度和操作清晰度。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">核心组件</h3>
+                    <p class="text-gray-600 mb-4">旅游网站关键界面组件：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">目的地展示系统</h4>
+                            <p class="text-gray-600 mb-3">让用户探索和了解目的地：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>沉浸式目的地图库与画廊</li>
+                                <li>交互式地图与位置标记</li>
+                                <li>季节性推荐与活动日历</li>
+                                <li>用户评价与体验分享</li>
+                                <li>当地文化与特色介绍</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">预订与规划工具</h4>
+                            <p class="text-gray-600 mb-3">便捷高效的旅行规划功能：</p>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>多条件搜索与筛选系统</li>
+                                <li>价格比较与最佳时机提示</li>
+                                <li>定制行程规划工具</li>
+                                <li>一键预订与支付流程</li>
+                                <li>旅行清单与提醒功能</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">特定区域设计</h3>
+                    <p class="text-gray-600 mb-4">旅游网站通常需要以下功能区：</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">灵感探索区</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>精选旅行主题与创意</li>
+                                <li>季节性与限时特惠</li>
+                                <li>旅行博客与故事分享</li>
+                                <li>目的地指南与小贴士</li>
+                                <li>视觉探索与虚拟之旅</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">个人中心区</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>行程管理与预订历史</li>
+                                <li>收藏的目的地与愿望清单</li>
+                                <li>个人偏好与旅行习惯</li>
+                                <li>积分与会员权益</li>
+                                <li>旅行提醒与通知中心</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold text-gray-700 mb-2">服务支持区</h4>
+                            <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                <li>旅行常见问题解答</li>
+                                <li>紧急联系与帮助</li>
+                                <li>旅游保险与安全信息</li>
+                                <li>退改签政策与流程</li>
+                                <li>旅行社服务与专家咨询</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow-md mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">设计示例：旅游目的地详情页</h3>
+                    <div class="border rounded-lg overflow-hidden bg-gray-50">
+                        <!-- 模拟旅游网站界面 -->
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-3">
+                            <div class="flex justify-between items-center">
+                                <div class="font-bold">环球旅行</div>
+                                <div class="flex space-x-3">
+                                    <span class="text-sm">目的地</span>
+                                    <span class="text-sm">优惠</span>
+                                    <span class="text-sm">攻略</span>
+                                    <span class="text-sm">我的行程</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <!-- 目的地头图 -->
+                            <div class="relative h-48 bg-gray-300 flex items-end">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div class="relative p-4 text-white z-10">
+                                    <h2 class="text-2xl font-bold">巴厘岛，印尼</h2>
+                                    <p class="text-sm opacity-90">探索热带天堂的神秘风情</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 主要内容 -->
+                            <div class="p-4">
+                                <!-- 快捷导航 -->
+                                <div class="flex overflow-x-auto space-x-2 pb-3 mb-4">
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">景点</button>
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">酒店</button>
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">美食</button>
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">交通</button>
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">购物</button>
+                                    <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm whitespace-nowrap">实用信息</button>
+                                </div>
+                                
+                                <!-- 评分信息 -->
+                                <div class="flex items-center mb-4">
+                                    <div class="flex text-yellow-400">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">4.8 (2,547条评价)</span>
+                                    <span class="ml-auto text-sm text-blue-600">收藏</span>
+                                </div>
+                                
+                                <!-- 主要信息 -->
+                                <div class="bg-white p-3 rounded-lg border border-gray-200 mb-4">
+                                    <h3 class="font-medium text-gray-800 mb-2">最佳旅行时间</h3>
+                                    <div class="grid grid-cols-4 gap-2 mb-3">
+                                        <div class="text-center">
+                                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                                                <span class="text-green-600 text-xs">春</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">宜人</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mx-auto">
+                                                <span class="text-red-600 text-xs">夏</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">旺季</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center mx-auto">
+                                                <span class="text-orange-600 text-xs">秋</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">适宜</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mx-auto">
+                                                <span class="text-blue-600 text-xs">冬</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">雨季</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 热门景点预览 -->
+                                <h3 class="font-medium text-gray-800 mb-2">热门景点</h3>
+                                <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="rounded-lg overflow-hidden border border-gray-200">
+                                        <div class="h-20 bg-gray-300"></div>
+                                        <div class="p-2">
+                                            <p class="text-sm font-medium">乌布皇宫</p>
+                                            <p class="text-xs text-gray-500">历史文化地标</p>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-lg overflow-hidden border border-gray-200">
+                                        <div class="h-20 bg-gray-300"></div>
+                                        <div class="p-2">
+                                            <p class="text-sm font-medium">库塔海滩</p>
+                                            <p class="text-xs text-gray-500">冲浪胜地</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 行动按钮 -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button class="bg-blue-600 text-white rounded-lg p-2 text-sm font-medium">查看行程</button>
+                                    <button class="bg-orange-500 text-white rounded-lg p-2 text-sm font-medium">立即预订</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-3">旅游网站设计示例，采用蓝色系营造海岛氛围，顶部大幅目的地图片提供视觉吸引力，信息分层展示旅行相关信息，快捷导航栏方便用户快速查找所需内容。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-white py-8 border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center text-gray-500 text-sm">
+                <p>UI指导书 &copy; 2023 版权所有</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // 标签页切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.scenario-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // 移除所有活动状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    
+                    // 添加当前活动状态
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.target).classList.add('active');
+                });
+            });
+            
+            // 颜色选择器功能
+            const primaryColorInput = document.getElementById('primary-color');
+            const accentColorInput = document.getElementById('accent-color');
+            const bgColorInput = document.getElementById('bg-color');
+            
+            if (primaryColorInput && accentColorInput && bgColorInput) {
+                const updateColors = () => {
+                    const primaryColor = primaryColorInput.value;
+                    const accentColor = accentColorInput.value;
+                    const bgColor = bgColorInput.value;
+                    
+                    // 更新预览区域元素颜色
+                    document.querySelectorAll('.preview-header').forEach(el => {
+                        el.style.backgroundColor = primaryColor;
+                    });
+                    
+                    document.querySelectorAll('.preview-button').forEach(el => {
+                        el.style.backgroundColor = accentColor;
+                    });
+                    
+                    document.querySelectorAll('.preview-search').forEach(el => {
+                        el.style.borderColor = primaryColor;
+                    });
+                    
+                    document.querySelectorAll('.preview-price').forEach(el => {
+                        el.style.color = accentColor;
+                    });
+                    
+                    document.querySelectorAll('.preview-cta-button').forEach(el => {
+                        el.style.backgroundColor = primaryColor;
+                    });
+                    
+                    document.getElementById('color-preview').style.backgroundColor = bgColor;
+                };
+                
+                // 添加事件监听器
+                primaryColorInput.addEventListener('input', updateColors);
+                accentColorInput.addEventListener('input', updateColors);
+                bgColorInput.addEventListener('input', updateColors);
+            }
+        });
+        
+        // 分享网站功能
+        function shareWebsite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'UI 指导书 - 场景应用',
+                    text: '查看不同类型网站的UI设计方案与应用示例',
+                    url: window.location.href,
+                })
+                .catch(console.error);
+            } else {
+                // 复制链接到剪贴板
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                alert('网址已复制到剪贴板!');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有颜色选择器按钮
+            const colorButtons = document.querySelectorAll('.color-selector');
+            
+            // 为每个按钮添加点击事件
+            colorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有按钮的选中状态
+                    colorButtons.forEach(btn => btn.classList.remove('border-gray-800', 'border-2'));
+                    
+                    // 添加当前按钮的选中状态
+                    this.classList.add('border-gray-800', 'border-2');
+                    
+                    // 获取颜色值
+                    const primaryColor = this.getAttribute('data-primary');
+                    const secondaryColor = this.getAttribute('data-secondary');
+                    const accentColor = this.getAttribute('data-accent');
+                    
+                    // 更新预览界面颜色
+                    document.getElementById('previewHeader').style.backgroundColor = primaryColor;
+                    document.getElementById('previewSearch').style.backgroundColor = secondaryColor;
+                    document.getElementById('previewButton').style.color = primaryColor;
+                    document.getElementById('previewSearchBtn').style.backgroundColor = accentColor;
+                    document.getElementById('previewBadge').style.backgroundColor = accentColor;
+                    document.getElementById('previewPrice').style.color = accentColor;
+                    document.getElementById('previewPrice2').style.color = accentColor;
+                });
+            });
+            
+            // 默认选中第一个颜色
+            if(colorButtons.length > 0) {
+                colorButtons[0].click();
+            }
+            
+            // HSL颜色选择器功能实现
+            const initHslColorPickers = () => {
+                // 主色调HSL滑块
+                const primaryHueInput = document.getElementById('primary-hue');
+                const primarySatInput = document.getElementById('primary-saturation');
+                const primaryLightInput = document.getElementById('primary-lightness');
+                const primaryHueValue = document.getElementById('primary-hue-value');
+                const primarySatValue = document.getElementById('primary-saturation-value');
+                const primaryLightValue = document.getElementById('primary-lightness-value');
+                const primaryColorPreview = document.getElementById('primary-color-preview');
+                const primaryColorCode = document.getElementById('primary-color-code');
+                const primaryColorHex = document.getElementById('primary-color-hex');
+                
+                // 背景色HSL滑块
+                const bgHueInput = document.getElementById('bg-hue');
+                const bgSatInput = document.getElementById('bg-saturation');
+                const bgLightInput = document.getElementById('bg-lightness');
+                const bgHueValue = document.getElementById('bg-hue-value');
+                const bgSatValue = document.getElementById('bg-saturation-value');
+                const bgLightValue = document.getElementById('bg-lightness-value');
+                const bgColorPreview = document.getElementById('bg-color-preview');
+                const bgColorCode = document.getElementById('bg-color-code');
+                const bgColorHex = document.getElementById('bg-color-hex');
+                
+                // 强调色HSL滑块
+                const accentHueInput = document.getElementById('accent-hue');
+                const accentSatInput = document.getElementById('accent-saturation');
+                const accentLightInput = document.getElementById('accent-lightness');
+                const accentHueValue = document.getElementById('accent-hue-value');
+                const accentSatValue = document.getElementById('accent-saturation-value');
+                const accentLightValue = document.getElementById('accent-lightness-value');
+                const accentColorPreview = document.getElementById('accent-color-preview');
+                const accentColorCode = document.getElementById('accent-color-code');
+                const accentColorHex = document.getElementById('accent-color-hex');
+                
+                // 应用按钮
+                const applyHslButton = document.getElementById('apply-hsl-colors');
+                
+                // HSL转HEX函数
+                const hslToHex = (h, s, l) => {
+                    // 将HSL百分比转为小数
+                    s /= 100;
+                    l /= 100;
+                    
+                    // 计算RGB值
+                    let c = (1 - Math.abs(2 * l - 1)) * s;
+                    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                    let m = l - c / 2;
+                    let r = 0, g = 0, b = 0;
+                    
+                    if (0 <= h && h < 60) {
+                        r = c; g = x; b = 0;
+                    } else if (60 <= h && h < 120) {
+                        r = x; g = c; b = 0;
+                    } else if (120 <= h && h < 180) {
+                        r = 0; g = c; b = x;
+                    } else if (180 <= h && h < 240) {
+                        r = 0; g = x; b = c;
+                    } else if (240 <= h && h < 300) {
+                        r = x; g = 0; b = c;
+                    } else if (300 <= h && h < 360) {
+                        r = c; g = 0; b = x;
+                    }
+                    
+                    // 将RGB小数值转为整数 (0-255)
+                    r = Math.round((r + m) * 255);
+                    g = Math.round((g + m) * 255);
+                    b = Math.round((b + m) * 255);
+                    
+                    // 转为十六进制
+                    const toHex = (x) => {
+                        const hex = x.toString(16);
+                        return hex.length === 1 ? '0' + hex : hex;
+                    };
+                    
+                    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+                };
+                
+                // 更新主色调函数
+                const updatePrimaryColor = () => {
+                    const h = parseInt(primaryHueInput.value);
+                    const s = parseInt(primarySatInput.value);
+                    const l = parseInt(primaryLightInput.value);
+                    
+                    primaryHueValue.textContent = h;
+                    primarySatValue.textContent = s + '%';
+                    primaryLightValue.textContent = l + '%';
+                    
+                    const hslColor = `hsl(${h}, ${s}%, ${l}%)`;
+                    const hexColor = hslToHex(h, s, l);
+                    
+                    primaryColorPreview.style.backgroundColor = hslColor;
+                    primaryColorCode.textContent = hslColor;
+                    primaryColorHex.textContent = hexColor;
+                };
+                
+                // 更新背景色函数
+                const updateBgColor = () => {
+                    const h = parseInt(bgHueInput.value);
+                    const s = parseInt(bgSatInput.value);
+                    const l = parseInt(bgLightInput.value);
+                    
+                    bgHueValue.textContent = h;
+                    bgSatValue.textContent = s + '%';
+                    bgLightValue.textContent = l + '%';
+                    
+                    const hslColor = `hsl(${h}, ${s}%, ${l}%)`;
+                    const hexColor = hslToHex(h, s, l);
+                    
+                    bgColorPreview.style.backgroundColor = hslColor;
+                    bgColorCode.textContent = hslColor;
+                    bgColorHex.textContent = hexColor;
+                };
+                
+                // 更新强调色函数
+                const updateAccentColor = () => {
+                    const h = parseInt(accentHueInput.value);
+                    const s = parseInt(accentSatInput.value);
+                    const l = parseInt(accentLightInput.value);
+                    
+                    accentHueValue.textContent = h;
+                    accentSatValue.textContent = s + '%';
+                    accentLightValue.textContent = l + '%';
+                    
+                    const hslColor = `hsl(${h}, ${s}%, ${l}%)`;
+                    const hexColor = hslToHex(h, s, l);
+                    
+                    accentColorPreview.style.backgroundColor = hslColor;
+                    accentColorCode.textContent = hslColor;
+                    accentColorHex.textContent = hexColor;
+                };
+                
+                // 将HSL应用到预览区域
+                const applyHslToPreview = () => {
+                    const primaryHsl = primaryColorPreview.style.backgroundColor;
+                    const bgHsl = bgColorPreview.style.backgroundColor;
+                    const accentHsl = accentColorPreview.style.backgroundColor;
+                    
+                    // 更新预览界面颜色
+                    document.getElementById('previewHeader').style.backgroundColor = primaryHsl;
+                    document.getElementById('previewSearch').style.backgroundColor = bgHsl;
+                    document.getElementById('previewButton').style.color = primaryHsl;
+                    document.getElementById('previewButton').style.borderColor = primaryHsl;
+                    document.getElementById('previewSearchBtn').style.backgroundColor = accentHsl;
+                    document.getElementById('previewBadge').style.backgroundColor = accentHsl;
+                    document.getElementById('previewPrice').style.color = accentHsl;
+                    document.getElementById('previewPrice2').style.color = accentHsl;
+                    
+                    // 移除预设颜色选择器的选中状态
+                    document.querySelectorAll('.color-selector').forEach(btn => {
+                        btn.classList.remove('border-gray-800', 'border-2');
+                    });
+                };
+                
+                // 添加事件监听器 - 主色调
+                if (primaryHueInput) {
+                    primaryHueInput.addEventListener('input', updatePrimaryColor);
+                    primarySatInput.addEventListener('input', updatePrimaryColor);
+                    primaryLightInput.addEventListener('input', updatePrimaryColor);
+                    
+                    // 添加事件监听器 - 背景色
+                    bgHueInput.addEventListener('input', updateBgColor);
+                    bgSatInput.addEventListener('input', updateBgColor);
+                    bgLightInput.addEventListener('input', updateBgColor);
+                    
+                    // 添加事件监听器 - 强调色
+                    accentHueInput.addEventListener('input', updateAccentColor);
+                    accentSatInput.addEventListener('input', updateAccentColor);
+                    accentLightInput.addEventListener('input', updateAccentColor);
+                    
+                    // 应用按钮事件监听器
+                    if (applyHslButton) {
+                        applyHslButton.addEventListener('click', applyHslToPreview);
+                    }
+                    
+                    // 初始化颜色显示
+                    updatePrimaryColor();
+                    updateBgColor();
+                    updateAccentColor();
+                }
+            };
+            
+            // 初始化HSL选择器
+            initHslColorPickers();
+        });
+    </script>
+</body>
+</html> 

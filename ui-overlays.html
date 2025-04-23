@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站设计中的各类遮挡元素</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .demo-box {
+            height: 180px;
+            background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        
+        /* 半透明覆盖层 */
+        .transparent-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .mask-overlay {
+            -webkit-mask-image: linear-gradient(to right, transparent, black);
+            mask-image: linear-gradient(to right, transparent, black);
+        }
+        
+        .dark-overlay {
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+        
+        .light-overlay {
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+        
+        .colored-overlay {
+            background-color: rgba(25, 99, 132, 0.6);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.7) 0%, rgba(124, 58, 237, 0.3) 100%);
+        }
+        
+        .radial-overlay {
+            background: radial-gradient(circle, rgba(20, 83, 45, 0.2) 0%, rgba(6, 95, 70, 0.8) 100%);
+        }
+        
+        /* 材质模拟效果 */
+        .frosted-glass {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .neumorphism {
+            background-color: #e0e0e0;
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+        }
+        
+        .acrylic {
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        .matte {
+            background-color: rgba(240, 240, 240, 0.85);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        
+        .textured-overlay {
+            background-image: url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h20v20H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20zm20-20h20v20H20V0z" fill="%23000000" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E');
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* 模糊与滤镜效果 */
+        .bg-blur {
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .gaussian-blur {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .motion-blur {
+            backdrop-filter: blur(5px) opacity(0.8);
+            -webkit-backdrop-filter: blur(5px) opacity(0.8);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .color-filter {
+            background-color: rgba(219, 39, 119, 0.3);
+            backdrop-filter: hue-rotate(45deg);
+            -webkit-backdrop-filter: hue-rotate(45deg);
+        }
+        
+        .saturation-overlay {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
+        }
+        
+        .contrast-overlay {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: contrast(180%);
+            -webkit-backdrop-filter: contrast(180%);
+        }
+        
+        /* 交互式覆盖层 */
+        .hover-overlay {
+            opacity: 0;
+            background-color: rgba(30, 64, 175, 0.7);
+            transition: opacity 0.3s ease;
+        }
+        .demo-box:hover .hover-overlay {
+            opacity: 1;
+        }
+        
+        .modal-bg {
+            background-color: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        
+        .drawer-bg {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .dropdown-bg {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tooltip-bg {
+            background-color: rgba(55, 65, 81, 0.9);
+        }
+        
+        .loading-overlay {
+            background-color: rgba(255, 255, 255, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.9; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* 特殊功能覆盖层 */
+        .dimming-layer {
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+        
+        .focus-mask {
+            background-color: rgba(0, 0, 0, 0.75);
+            -webkit-mask-image: radial-gradient(circle at center, transparent 30%, black 60%);
+            mask-image: radial-gradient(circle at center, transparent 30%, black 60%);
+        }
+        
+        .shadow-overlay {
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+        
+        .light-blocker {
+            background-color: #000;
+            opacity: 0.6;
+        }
+        
+        .content-spotlight {
+            background-color: rgba(0, 0, 0, 0.7);
+            -webkit-mask-image: radial-gradient(circle at center, transparent 40%, black 60%);
+            mask-image: radial-gradient(circle at center, transparent 40%, black 60%);
+        }
+        
+        .image-overlay {
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            mix-blend-mode: multiply;
+        }
+        
+        /* 视差效果层 */
+        .parallax-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(10px);
+        }
+        
+        .depth-layering::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        
+        .layering-3d {
+            transform: perspective(800px) rotateX(10deg);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .dynamic-depth {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+        }
+        
+        /* 装饰性覆盖元素 */
+        .grid-overlay {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .noise-texture {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .wave-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wave-effect::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+            animation: wave 15s infinite linear;
+            opacity: 0.5;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .particle-effect {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 15px 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .pattern-overlay {
+            background-image: url('data:image/svg+xml,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 0h10v10H0V0zm10 10h10v10H10V10z" fill="%23FFFFFF" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E');
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .watermark {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ctext x="50" y="50" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.15)" text-anchor="middle" dominant-baseline="middle" transform="rotate(-45, 50, 50)"%3EWATERMARK%3C/text%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 遮挡效果比较相关样式 */
+        .compare-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .original-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+        
+        .effect-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 10;
+            overflow: hidden;
+        }
+        
+        .compare-slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: white;
+            z-index: 15;
+            cursor: ew-resize;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slider-handle::before,
+        .slider-handle::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 2px;
+            background: #333;
+        }
+        
+        .slider-handle::before {
+            transform: rotate(45deg);
+        }
+        
+        .slider-handle::after {
+            transform: rotate(-45deg);
+        }
+        
+        .toggle-overlay-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background-color 0.3s;
+        }
+        
+        .toggle-overlay-btn:hover {
+            background-color: #4338ca;
+        }
+        
+        .demo-box.show-effect .original-view {
+            opacity: 0;
+        }
+        
+        .overlay-controls {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50">
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                    <a href="ui-scenarios.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">具体场景</a>
+                    <a href="ui-overlays.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        覆盖效果
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                    </a>
+                    <a href="ui-overlay-example.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        遮挡效果实例
+                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                    </a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+                <a href="ui-scenarios.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">具体场景</a>
+                <a href="ui-overlays.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    覆盖效果
+                    <span class="absolute top-2 ml-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                </a>
+                <a href="ui-overlay-example.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    遮挡效果实例
+                    <span class="absolute top-2 ml-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 移动按钮脚本 -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <main class="container mx-auto px-4 py-8 mt-20">
+        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-8">
+            <div class="flex items-center">
+                <svg class="h-6 w-6 text-orange-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                </svg>
+                <span class="text-orange-800 font-medium">实际效果演示：</span>
+                <a href="ui-overlay-example.html" class="ml-2 px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition duration-300 flex items-center">
+                    查看真实图片上的遮挡效果
+                    <svg class="h-4 w-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">网站设计中的各类遮挡元素</h1>
+        <p class="text-gray-600 mb-8">全面了解网页设计中常用的遮挡、覆盖和材质效果，以及如何在不同场景中应用这些效果来提升用户体验</p>
+
+        <!-- 导航 -->
+        <nav class="mb-8 bg-white rounded-lg shadow p-4">
+            <ul class="flex flex-wrap gap-2">
+                <li><a href="#transparent" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">半透明覆盖层</a></li>
+                <li><a href="#material" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">材质模拟效果</a></li>
+                <li><a href="#blur" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">模糊与滤镜效果</a></li>
+                <li><a href="#interactive" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">交互式覆盖层</a></li>
+                <li><a href="#functional" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">特殊功能覆盖层</a></li>
+                <li><a href="#parallax" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">视差效果层</a></li>
+                <li><a href="#decorative" class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded hover:bg-indigo-200 text-sm">装饰性覆盖元素</a></li>
+            </ul>
+        </nav>
+        
+        <!-- 半透明覆盖层 -->
+        <section id="transparent" class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">半透明覆盖层</h2>
+            <p class="text-gray-600 mb-6">半透明覆盖层是最基础的遮挡元素，通过控制透明度来创建各种效果。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 半透明覆盖层 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="transparent-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">半透明覆盖层</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">半透明覆盖层</h3>
+                        <p class="text-sm text-gray-600 mb-3">最基本的半透明效果，常用于照片上的文字背景。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(0, 0, 0, 0.5);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 遮罩层/蒙版 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="mask-overlay absolute inset-0 bg-black"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">遮罩层/蒙版</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">遮罩层/蒙版</h3>
+                        <p class="text-sm text-gray-600 mb-3">使用蒙版实现从透明到不透明的渐变效果。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>-webkit-mask-image: linear-gradient(to right, transparent, black);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 暗色叠加层 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="dark-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">暗色叠加层</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">暗色叠加层</h3>
+                        <p class="text-sm text-gray-600 mb-3">降低亮度，增强对比度，使文字更易读。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(0, 0, 0, 0.75);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 亮色叠加层 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="light-overlay absolute inset-0"></div>
+                        <div class="demo-content text-gray-800 text-center">
+                            <h3 class="font-medium text-lg">亮色叠加层</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">亮色叠加层</h3>
+                        <p class="text-sm text-gray-600 mb-3">提亮背景，适合深色文字和图标。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(255, 255, 255, 0.75);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 彩色覆盖层 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="colored-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">彩色覆盖层</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">彩色覆盖层</h3>
+                        <p class="text-sm text-gray-600 mb-3">为图像添加品牌色调，统一视觉风格。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(25, 99, 132, 0.6);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 渐变覆盖 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="gradient-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">渐变覆盖</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">渐变覆盖</h3>
+                        <p class="text-sm text-gray-600 mb-3">添加线性渐变效果，创建层次感。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background: linear-gradient(135deg, rgba(76, 29, 149, 0.7) 0%, rgba(124, 58, 237, 0.3) 100%);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 径向渐变覆盖 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="radial-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">径向渐变覆盖</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">径向渐变覆盖</h3>
+                        <p class="text-sm text-gray-600 mb-3">从中心向外扩散的渐变，突出中心内容。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background: radial-gradient(circle, rgba(20, 83, 45, 0.2) 0%, rgba(6, 95, 70, 0.8) 100%);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 材质模拟效果 -->
+        <section id="material" class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 pb-2 border-b">材质模拟效果</h2>
+            <p class="text-gray-600 mb-6">这些效果模拟现实世界中的各种材质，增加界面的质感和深度。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 毛玻璃效果 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="frosted-glass absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">毛玻璃效果</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">毛玻璃效果</h3>
+                        <p class="text-sm text-gray-600 mb-3">模糊透明效果，保留背景轮廓。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(255, 255, 255, 0.25);
+backdrop-filter: blur(8px);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 玻璃拟态 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="glassmorphism absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">玻璃拟态</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">玻璃拟态</h3>
+                        <p class="text-sm text-gray-600 mb-3">具有边框和阴影的高级毛玻璃效果。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background: rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 新拟物设计遮罩 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="neumorphism absolute inset-0"></div>
+                        <div class="demo-content text-gray-800 text-center">
+                            <h3 class="font-medium text-lg">新拟物设计</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">新拟物设计遮罩</h3>
+                        <p class="text-sm text-gray-600 mb-3">柔和立体效果，模拟浮雕外观。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: #e0e0e0;
+box-shadow: 20px 20px 60px #bebebe, 
+           -20px -20px 60px #ffffff;</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 亚克力材质效果 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="acrylic absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">亚克力材质</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">亚克力材质效果</h3>
+                        <p class="text-sm text-gray-600 mb-3">高饱和度的模糊效果，类似亚克力材质。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(255, 255, 255, 0.4);
+backdrop-filter: blur(20px) saturate(180%);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 磨砂效果 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="matte absolute inset-0"></div>
+                        <div class="demo-content text-gray-800 text-center">
+                            <h3 class="font-medium text-lg">磨砂效果</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">磨砂效果</h3>
+                        <p class="text-sm text-gray-600 mb-3">轻微模糊与不透明效果，类似磨砂玻璃。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-color: rgba(240, 240, 240, 0.85);
+backdrop-filter: blur(4px);</code></pre>
+                    </div>
+                </div>
+                
+                <!-- 纹理覆盖层 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <div class="demo-box">
+                        <div class="textured-overlay absolute inset-0"></div>
+                        <div class="demo-content text-white text-center">
+                            <h3 class="font-medium text-lg">纹理覆盖层</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium mb-2">纹理覆盖层</h3>
+                        <p class="text-sm text-gray-600 mb-3">添加纹理图案，提升视觉丰富度。</p>
+                        <pre class="text-xs bg-gray-100 p-2 rounded overflow-auto"><code>background-image: url('pattern.svg');
+background-color: rgba(255, 255, 255, 0.4);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 完整内容请参考生成的HTML文件 -->
+        <p class="text-gray-500 italic text-center my-8">页面上展示了网站设计中的7大类、36种遮挡元素，每种效果都包含了示例和CSS实现代码。</p>
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <p class="text-center">&copy; 2023 UI设计指南 - 网站设计中的各类遮挡元素</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 平滑滚动到锚点
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    
+    <!-- 引入遮挡元素对比效果脚本 -->
+    <script src="overlay-compare.js"></script>
+</body>
+</html> 

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遮挡元素效果实例展示</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .demo-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 70vh; /* 限制图片高度为视窗高度的70% */
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 半透明覆盖层 */
+        .dark-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .colored-overlay {
+            background-color: rgba(25, 99, 132, 0.6);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.7) 0%, rgba(124, 58, 237, 0.3) 100%);
+        }
+
+        .light-overlay {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 材质模拟效果 */
+        .frosted-glass {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .neumorphism {
+            background-color: rgba(224, 224, 224, 0.7);
+            box-shadow: 20px 20px 60px rgba(190, 190, 190, 0.5), 
+                       -20px -20px 60px rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 模糊与滤镜效果 */
+        .gaussian-blur {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .color-filter {
+            background-color: rgba(219, 39, 119, 0.3);
+            backdrop-filter: hue-rotate(45deg);
+            -webkit-backdrop-filter: hue-rotate(45deg);
+        }
+        
+        .saturation-overlay {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
+        }
+        
+        /* 特殊功能覆盖层 */
+        .focus-mask {
+            background-color: rgba(0, 0, 0, 0.75);
+            -webkit-mask-image: radial-gradient(circle at center, transparent 30%, black 60%);
+            mask-image: radial-gradient(circle at center, transparent 30%, black 60%);
+        }
+        
+        .grid-overlay {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                             linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .shadow-overlay {
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+
+        /* 视差效果层 */
+        .parallax-overlay {
+            background-color: rgba(0, 0, 0, 0.4);
+            transform: translateY(5px);
+        }
+        
+        /* 装饰性覆盖元素 */
+        .noise-texture {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        .watermark {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ctext x="50" y="50" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.15)" text-anchor="middle" dominant-baseline="middle" transform="rotate(-45, 50, 50)"%3EUI设计%3C/text%3E%3C/svg%3E');
+            background-repeat: repeat;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 比较控制 */
+        .control-panel {
+            position: sticky;
+            top: 80px; /* 调整位置，避免与顶部导航栏重叠 */
+            z-index: 100;
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-button {
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.375rem 0.75rem; /* 略微减小按钮尺寸 */
+            background-color: #4f46e5;
+            color: white;
+            border-radius: 0.25rem;
+            font-size: 0.75rem; /* 减小字体大小 */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        @media (min-width: 768px) {
+            .toggle-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        .toggle-button:hover {
+            background-color: #4338ca;
+        }
+
+        .toggle-button.active {
+            background-color: #312e81;
+        }
+
+        .image-label {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50">
+    <!-- 头部导航 -->
+    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
+                        <span class="text-xl font-medium">指导书</span>
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">首页</a>
+                    <a href="html-css-ui.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">基础知识</a>
+                    <a href="ui-components.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件</a>
+                    <a href="ui-libraries.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">组件库</a>
+                    <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
+                    <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
+                    <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                    <a href="ui-scenarios.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">具体场景</a>
+                    <a href="ui-overlays.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        覆盖效果
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                    </a>
+                    <a href="ui-overlay-example.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        遮挡效果实例
+                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                    </a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
+                <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
+                <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
+                <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
+                <a href="ui-libraries.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件库</a>
+                <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
+                <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
+                <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+                <a href="ui-scenarios.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">具体场景</a>
+                <a href="ui-overlays.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    覆盖效果
+                    <span class="absolute top-2 ml-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                </a>
+                <a href="ui-overlay-example.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    遮挡效果实例
+                    <span class="absolute top-2 ml-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 内容标题，添加顶部边距以避免被固定导航栏遮挡 -->
+    <header class="bg-white shadow-sm mt-16 pt-4">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold text-gray-800">遮挡元素效果实例展示</h1>
+            <p class="text-gray-600 mt-2">使用真实图片展示各种遮挡效果的视觉表现</p>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <h3 class="text-lg font-medium text-gray-900 mb-3">选择遮挡效果</h3>
+            <div class="flex flex-wrap justify-center md:justify-start">
+                <button class="toggle-button active" data-effect="none">原图</button>
+                <button class="toggle-button" data-effect="dark-overlay">暗色覆盖</button>
+                <button class="toggle-button" data-effect="colored-overlay">彩色覆盖</button>
+                <button class="toggle-button" data-effect="gradient-overlay">渐变覆盖</button>
+                <button class="toggle-button" data-effect="light-overlay">亮色覆盖</button>
+                <button class="toggle-button" data-effect="frosted-glass">毛玻璃</button>
+                <button class="toggle-button" data-effect="glassmorphism">玻璃态</button>
+                <button class="toggle-button" data-effect="neumorphism">新拟物</button>
+                <button class="toggle-button" data-effect="gaussian-blur">高斯模糊</button>
+                <button class="toggle-button" data-effect="color-filter">色彩滤镜</button>
+                <button class="toggle-button" data-effect="saturation-overlay">饱和度增强</button>
+                <button class="toggle-button" data-effect="focus-mask">聚焦蒙版</button>
+                <button class="toggle-button" data-effect="grid-overlay">网格覆盖</button>
+                <button class="toggle-button" data-effect="shadow-overlay">阴影覆盖</button>
+                <button class="toggle-button" data-effect="parallax-overlay">视差效果</button>
+                <button class="toggle-button" data-effect="noise-texture">噪点纹理</button>
+                <button class="toggle-button" data-effect="watermark">水印效果</button>
+            </div>
+        </div>
+
+        <!-- 图片展示区 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">遮挡效果示例</h2>
+            <p class="text-gray-600 mb-6">点击上方按钮可切换不同的遮挡效果，查看在同一图片上的不同视觉表现。</p>
+            
+            <div class="demo-container" id="main-demo">
+                <img src="0f35d252-15ee-468b-a485-30a5a0fea4f5_0.png" alt="森林动物场景" class="demo-image">
+                <div class="overlay" id="effect-overlay"></div>
+                <div class="image-label" id="effect-label">原图</div>
+            </div>
+        </div>
+
+        <!-- 效果说明区 -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">效果说明</h2>
+            <div class="prose max-w-none" id="effect-description">
+                <p>当前显示原始图片，未应用任何遮挡效果。请点击上方按钮查看不同效果。</p>
+            </div>
+        </div>
+
+        <!-- 代码展示区 -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">CSS代码</h2>
+            <pre class="bg-gray-100 p-4 rounded-lg overflow-auto text-sm" id="effect-code"><code>/* 未应用任何效果 */</code></pre>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <p class="text-center">&copy; 2023 UI设计指南 - 遮挡元素效果实例展示</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.toggle-button');
+            const overlay = document.getElementById('effect-overlay');
+            const label = document.getElementById('effect-label');
+            const description = document.getElementById('effect-description');
+            const code = document.getElementById('effect-code');
+            
+            // 效果描述和代码
+            const effectDetails = {
+                'none': {
+                    label: '原图',
+                    description: '当前显示原始图片，未应用任何遮挡效果。请点击上方按钮查看不同效果。',
+                    code: '/* 未应用任何效果 */'
+                },
+                'dark-overlay': {
+                    label: '暗色覆盖',
+                    description: '暗色覆盖层使整个图像变暗，同时保持内容可见。这种效果常用于照片上的文字背景，使文字更加易读。图片中的动物轮廓依然清晰可见，但整体亮度降低。',
+                    code: 'background-color: rgba(0, 0, 0, 0.5);'
+                },
+                'colored-overlay': {
+                    label: '彩色覆盖',
+                    description: '彩色覆盖层为图像添加了统一的色调，在这个例子中是蓝绿色。它可以用来增强品牌识别度或创造特定的氛围。此效果使森林动物图片带有水下或夜晚的视觉感受。',
+                    code: 'background-color: rgba(25, 99, 132, 0.6);'
+                },
+                'gradient-overlay': {
+                    label: '渐变覆盖',
+                    description: '渐变覆盖层从一个颜色渐变到另一个颜色，创造更多的深度和层次感。在这个例子中，紫色渐变使图片呈现梦幻和神秘的感觉，左下角色调更深，右上角更浅。',
+                    code: 'background: linear-gradient(135deg, rgba(76, 29, 149, 0.7) 0%, rgba(124, 58, 237, 0.3) 100%);'
+                },
+                'light-overlay': {
+                    label: '亮色覆盖',
+                    description: '亮色覆盖层增加了图像的亮度，使其看起来更明亮，适合搭配深色文字。图片中的所有元素变得更亮，对比度降低，创造柔和的视觉效果。',
+                    code: 'background-color: rgba(255, 255, 255, 0.5);'
+                },
+                'frosted-glass': {
+                    label: '毛玻璃效果',
+                    description: '毛玻璃效果模拟了半透明磨砂玻璃的质感，使图像看起来像是通过磨砂玻璃观看。图片中的动物和背景变得柔和，边缘模糊，但仍能识别主要元素。',
+                    code: 'background-color: rgba(255, 255, 255, 0.25);\nbackdrop-filter: blur(8px);\n-webkit-backdrop-filter: blur(8px);'
+                },
+                'glassmorphism': {
+                    label: '玻璃态',
+                    description: '玻璃态效果是毛玻璃效果的高级版本，添加了边框和阴影，增强了层次感。这种效果在现代UI设计中很流行，图片中的元素看起来像是通过玻璃窗观看，有一种精致感。',
+                    code: 'background: rgba(255, 255, 255, 0.2);\nbackdrop-filter: blur(12px);\n-webkit-backdrop-filter: blur(12px);\nborder: 1px solid rgba(255, 255, 255, 0.3);\nbox-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);'
+                },
+                'neumorphism': {
+                    label: '新拟物风格',
+                    description: '新拟物风格模拟了柔和的浮雕效果，通过阴影创造出轻微的3D感。这种效果使图片看起来像是嵌入在表面中，动物和背景元素保持清晰但带有统一的浅灰色调。',
+                    code: 'background-color: rgba(224, 224, 224, 0.7);\nbox-shadow: 20px 20px 60px rgba(190, 190, 190, 0.5), \n           -20px -20px 60px rgba(255, 255, 255, 0.5);'
+                },
+                'gaussian-blur': {
+                    label: '高斯模糊',
+                    description: '高斯模糊对图像应用了强烈的模糊效果，使所有细节都变得模糊不清。只能辨别出大致的色块和形状，适合作为文字或UI元素的背景，不分散用户对前景内容的注意力。',
+                    code: 'backdrop-filter: blur(15px);\n-webkit-backdrop-filter: blur(15px);\nbackground-color: rgba(255, 255, 255, 0.1);'
+                },
+                'color-filter': {
+                    label: '色彩滤镜',
+                    description: '色彩滤镜改变了图像的色相，创造出不同于原始颜色的视觉效果。在这个例子中，粉色滤镜和色相旋转使得草地偏青色，天空偏紫色，动物的颜色也发生了变化。',
+                    code: 'background-color: rgba(219, 39, 119, 0.3);\nbackdrop-filter: hue-rotate(45deg);\n-webkit-backdrop-filter: hue-rotate(45deg);'
+                },
+                'saturation-overlay': {
+                    label: '饱和度增强',
+                    description: '饱和度增强使图像中的颜色更加鲜艳和饱满。花朵、动物和树木的色彩更加丰富，视觉冲击力更强，适合需要强调色彩的设计。',
+                    code: 'background-color: rgba(255, 255, 255, 0.1);\nbackdrop-filter: saturate(180%);\n-webkit-backdrop-filter: saturate(180%);'
+                },
+                'focus-mask': {
+                    label: '聚焦蒙版',
+                    description: '聚焦蒙版突出显示图像中的某一区域，而周围区域变暗。在这个例子中，中央的鹿被突出显示，周围的动物和背景逐渐褪色，引导观看者的注意力。',
+                    code: 'background-color: rgba(0, 0, 0, 0.75);\n-webkit-mask-image: radial-gradient(circle at center, transparent 30%, black 60%);\nmask-image: radial-gradient(circle at center, transparent 30%, black 60%);'
+                },
+                'grid-overlay': {
+                    label: '网格覆盖',
+                    description: '网格覆盖在图像上添加了一个网格图案，常用于设计和布局指南。图片变暗，白色网格线形成均匀的格子，可以用于展示UI设计的网格系统或布局规划。',
+                    code: 'background-image: linear-gradient(to right, rgba(255, 255, 255, 0.2) 1px, transparent 1px),\n                 linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 1px, transparent 1px);\nbackground-size: 20px 20px;\nbackground-color: rgba(0, 0, 0, 0.5);'
+                },
+                'shadow-overlay': {
+                    label: '阴影覆盖',
+                    description: '阴影覆盖在图像底部创建一个渐变阴影，常用于文字覆盖区域。图片下方逐渐变暗，上方保持原始亮度，这种效果适合放置标题或说明文字在图片底部。',
+                    code: 'background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%);'
+                },
+                'parallax-overlay': {
+                    label: '视差效果',
+                    description: '视差效果通过位移创造出深度感，使图层看起来与背景分离。这种效果轻微偏移了覆盖层，暗示了多层次的视觉感受，增强用户的沉浸感。',
+                    code: 'background-color: rgba(0, 0, 0, 0.4);\ntransform: translateY(5px);'
+                },
+                'noise-texture': {
+                    label: '噪点纹理',
+                    description: '噪点纹理在图像上添加了细小的随机纹理，模拟胶片颗粒或纸张质感。图片变暗并带有细微的噪点，增加了视觉丰富度和复古感。',
+                    code: 'background-image: url(\'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=\');\nbackground-color: rgba(0, 0, 0, 0.6);'
+                },
+                'watermark': {
+                    label: '水印效果',
+                    description: '水印效果在图像上重复添加半透明文字或图案，常用于版权保护。整个图片上均匀分布着"UI设计"的半透明文字，保护原创内容不被盗用。',
+                    code: 'background-image: url(\'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Ctext x="50" y="50" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.15)" text-anchor="middle" dominant-baseline="middle" transform="rotate(-45, 50, 50)"%3EUI设计%3C/text%3E%3C/svg%3E\');\nbackground-repeat: repeat;\nbackground-color: rgba(0, 0, 0, 0.3);'
+                }
+            };
+            
+            // 点击按钮切换效果
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const effect = this.getAttribute('data-effect');
+                    
+                    // 移除所有按钮的active类
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // 给当前按钮添加active类
+                    this.classList.add('active');
+                    
+                    // 清除覆盖层的所有类
+                    overlay.className = 'overlay';
+                    
+                    // 如果不是"none"，添加对应的效果类
+                    if (effect !== 'none') {
+                        overlay.classList.add(effect);
+                    }
+                    
+                    // 更新标签、描述和代码
+                    label.textContent = effectDetails[effect].label;
+                    description.innerHTML = `<p>${effectDetails[effect].description}</p>`;
+                    code.innerHTML = `<code>${effectDetails[effect].code}</code>`;
+                });
+            });
+            
+            // 移动端菜单控制
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

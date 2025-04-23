@@ -41,7 +41,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="font-sans text-gray-800 bg-gray-50">
     <!-- 分享按钮 -->
     <div class="share-button">
         <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
@@ -69,6 +69,15 @@
                     <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
                     <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
                     <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                    <a href="ui-scenarios.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">具体场景</a>
+                    <a href="ui-overlays.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        覆盖效果
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                    </a>
+                    <a href="ui-overlay-example.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        遮挡效果实例
+                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                    </a>
                 </nav>
                 
                 <!-- 移动端菜单按钮 -->
@@ -90,9 +99,28 @@
                 <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
                 <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
                 <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+                <a href="ui-scenarios.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">具体场景</a>
+                <a href="ui-overlays.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    覆盖效果
+                    <span class="absolute top-2 ml-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                </a>
+                <a href="ui-overlay-example.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    遮挡效果实例
+                    <span class="absolute top-2 ml-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                </a>
             </div>
         </div>
     </header>
+
+    <!-- 移动按钮脚本 -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 
     <div class="container mx-auto px-4 py-10 mt-16">
         <!-- 页面标题 -->

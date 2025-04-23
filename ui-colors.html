@@ -63,7 +63,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="font-sans text-gray-800 bg-gray-50">
     <!-- 分享按钮 -->
     <div class="share-button">
         <button onclick="shareWebsite()" class="glass-effect rounded-full p-4 text-primary-600 hover:text-primary-800 hover:shadow-elegant transition duration-300">
@@ -75,7 +75,6 @@
     <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- 修改logo链接 -->
                 <div class="flex items-center">
                     <a href="index.html" class="flex items-center">
                         <span class="text-2xl font-bold text-primary-600 mr-2">UI</span>
@@ -92,6 +91,15 @@
                     <a href="ui-attributes.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">通用属性</a>
                     <a href="ui-color-categories.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色分类</a>
                     <a href="ui-colors.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">颜色大全</a>
+                    <a href="ui-scenarios.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150">具体场景</a>
+                    <a href="ui-overlays.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        覆盖效果
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                    </a>
+                    <a href="ui-overlay-example.html" class="text-gray-700 hover:text-primary-600 font-medium transition duration-150 relative">
+                        遮挡效果实例
+                        <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                    </a>
                 </nav>
                 
                 <!-- 移动端菜单按钮 -->
@@ -106,7 +114,6 @@
             
             <!-- 移动端导航菜单 -->
             <div id="mobile-menu" class="md:hidden hidden bg-white py-2 shadow-md rounded-b-lg">
-                <!-- 修改移动端导航菜单链接 -->
                 <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">首页</a>
                 <a href="html-css-ui.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">基础知识</a>
                 <a href="ui-components.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">组件</a>
@@ -114,9 +121,28 @@
                 <a href="ui-attributes.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">通用属性</a>
                 <a href="ui-color-categories.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色分类</a>
                 <a href="ui-colors.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">颜色大全</a>
+                <a href="ui-scenarios.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">具体场景</a>
+                <a href="ui-overlays.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    覆盖效果
+                    <span class="absolute top-2 ml-2 bg-red-500 text-white text-xs px-1 rounded-full">新</span>
+                </a>
+                <a href="ui-overlay-example.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
+                    遮挡效果实例
+                    <span class="absolute top-2 ml-2 bg-orange-500 text-white text-xs px-1 rounded-full">示例</span>
+                </a>
             </div>
         </div>
     </header>
+
+    <!-- 移动按钮脚本 -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
 
     <!-- 增加页面内容顶部边距 -->
     <div class="container mx-auto px-4 py-12 mt-24">
@@ -805,6 +831,70 @@
                         <p>从左到右：#a0d911 → #13c2c2</p>
                     </div>
                 </div>
+                
+                <!-- 黑金渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">黑金渐变 (Black Gold)</h4>
+                    <p class="text-sm text-gray-600 mb-3">奢华高贵的色调，适合高端产品和豪华品牌</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #000000 0%, #bfa34d 75%, #ffd700 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#000000 → #bfa34d → #ffd700</p>
+                    </div>
+                </div>
+                
+                <!-- 午夜蓝金 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">午夜蓝金 (Midnight Blue Gold)</h4>
+                    <p class="text-sm text-gray-600 mb-3">高级沉稳的色调，适合金融和商务应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #191970 0%, #4169E1 60%, #D4AF37 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#191970 → #4169E1 → #D4AF37</p>
+                    </div>
+                </div>
+                
+                <!-- 红宝石钻石 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">红宝石钻石 (Ruby Diamond)</h4>
+                    <p class="text-sm text-gray-600 mb-3">闪耀华丽的色调，适合珠宝和奢侈品应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(135deg, #E0115F 0%, #fafafa 50%, #E0115F 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>对角线：#E0115F → #fafafa → #E0115F</p>
+                    </div>
+                </div>
+                
+                <!-- 玫瑰金 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">玫瑰金 (Rose Gold)</h4>
+                    <p class="text-sm text-gray-600 mb-3">温暖优雅的色调，适合时尚和女性用户</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, #B76E79 0%, #EACDC2 50%, #F8C3A3 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：#B76E79 → #EACDC2 → #F8C3A3</p>
+                    </div>
+                </div>
+                
+                <!-- 北极光 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">北极光 (Northern Lights)</h4>
+                    <p class="text-sm text-gray-600 mb-3">神秘梦幻的色调，适合自然和旅游应用</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(135deg, #042940 0%, #005C53 25%, #9FC131 50%, #DBF227 75%, #D6D58E 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>多色渐变：深蓝→墨绿→亮绿→黄绿→浅黄</p>
+                    </div>
+                </div>
+                
+                <!-- 大理石质感 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">大理石质感 (Marble)</h4>
+                    <p class="text-sm text-gray-600 mb-3">优雅高贵的色调，适合高端产品和装饰</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden">
+                        <div class="absolute inset-0" style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #f5f5f5 100%);"></div>
+                        <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 30% 30%, transparent, #e0e0e0), radial-gradient(circle at 70% 70%, transparent, #e0e0e0);"></div>
+                        <div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj4KICA8ZmlsdGVyIGlkPSJub2lzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+CiAgICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4wMSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIgcmVzdWx0PSJub2lzZSI+PC9mZVR1cmJ1bGVuY2U+CiAgICA8ZmVCbGVuZCBpbj0ibm9pc2UiIGluMj0iU291cmNlR3JhcGhpYyIgbW9kZT0ic29mdC1saWdodCIgcmVzdWx0PSJibGVuZGVkTm9pc2UiPjwvZmVCbGVuZD4KICA8L2ZpbHRlcj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjQiIGZpbGw9IiNhMGEwYTAiPjwvcmVjdD4KPC9zdmc+');"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>灰白渐变 + 径向阴影 + 大理石纹理</p>
+                    </div>
+                </div>
             </div>
             
             <div class="grid grid-cols-2 gap-8 mb-8">
@@ -1166,6 +1256,41 @@
                     </div>
                 </div>
                 
+                <!-- 高级黑金效果 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">高级黑金效果 (Luxury Black Gold)</h4>
+                    <p class="text-sm text-gray-600 mb-3">模拟金属和光泽感的奢华效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden bg-black">
+                        <div class="absolute inset-0 opacity-70" style="background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.8) 40%, rgba(175,151,78,0.6) 70%, rgba(212,175,55,0.9) 100%);"></div>
+                        <div class="absolute inset-0 opacity-30" style="background: linear-gradient(45deg, transparent 0%, rgba(255,215,0,0.5) 50%, transparent 100%);"></div>
+                        <div class="absolute inset-0 opacity-40" style="background: radial-gradient(circle at 75% 25%, rgba(255,223,0,0.6) 0%, transparent 35%);"></div>
+                    </div>
+                    <div class="text-sm text-gray-700">
+                        <p>黑金对角渐变 + 黄金高光 + 圆形光晕</p>
+                    </div>
+                </div>
+                
+                <!-- 液态金属效果 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">液态金属效果 (Liquid Metal)</h4>
+                    <p class="text-sm text-gray-600 mb-3">模拟金属液体流动的高级效果</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden liquid-metal">
+                        <div class="absolute inset-0" style="background: linear-gradient(135deg, #888, #eee, #888, #eee); background-size: 300% 300%; animation: liquidFlow 7s ease infinite;"></div>
+                        <div class="absolute inset-0 opacity-40" style="background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.8) 0%, transparent 60%);"></div>
+                        <div class="absolute inset-0 opacity-30" style="background: radial-gradient(ellipse at 70% 60%, rgba(255,255,255,0.8) 0%, transparent 60%);"></div>
+                    </div>
+                    <style>
+                        @keyframes liquidFlow {
+                            0% { background-position: 0% 50% }
+                            50% { background-position: 100% 50% }
+                            100% { background-position: 0% 50% }
+                        }
+                    </style>
+                    <div class="text-sm text-gray-700">
+                        <p>动态银色渐变 + 多重高光反射</p>
+                    </div>
+                </div>
+                
                 <!-- 全息效果 -->
                 <div>
                     <h4 class="text-md font-medium text-gray-800 mb-2">全息效果 (Holographic)</h4>
@@ -1196,9 +1321,62 @@
                     </div>
                 </div>
                 
+                <!-- 宇宙星空 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">宇宙星空 (Cosmic Space)</h4>
+                    <p class="text-sm text-gray-600 mb-3">深邃浩瀚的星空效果，适合科幻和探索主题</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden" style="background: linear-gradient(135deg, #000428 0%, #004e92 100%);">
+                        <div class="absolute inset-0 cosmic-stars"></div>
+                    </div>
+                    <style>
+                        .cosmic-stars {
+                            background-image: 
+                                radial-gradient(1px 1px at 25% 15%, white, transparent),
+                                radial-gradient(1px 1px at 50% 40%, white, transparent),
+                                radial-gradient(2px 2px at 15% 55%, white, transparent),
+                                radial-gradient(1.5px 1.5px at 60% 70%, white, transparent),
+                                radial-gradient(1px 1px at 70% 25%, white, transparent),
+                                radial-gradient(1.5px 1.5px at 85% 45%, white, transparent),
+                                radial-gradient(1px 1px at 35% 65%, white, transparent),
+                                radial-gradient(1.5px 1.5px at 45% 85%, white, transparent),
+                                radial-gradient(2px 2px at 80% 10%, white, transparent),
+                                radial-gradient(1px 1px at 10% 30%, white, transparent);
+                            background-size: 100% 100%;
+                        }
+                    </style>
+                    <div class="text-sm text-gray-700">
+                        <p>深蓝渐变 + 点状星光效果</p>
+                    </div>
+                </div>
+                
+                <!-- 霓虹赛博朋克 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">霓虹赛博朋克 (Neon Cyberpunk)</h4>
+                    <p class="text-sm text-gray-600 mb-3">未来感十足的霓虹效果，适合科技和游戏界面</p>
+                    <div class="h-24 rounded-lg mb-2 relative overflow-hidden bg-gray-900">
+                        <div class="absolute h-1 w-full top-1/2 transform -translate-y-1/2 left-0 bg-fuchsia-500 neon-glow"></div>
+                        <div class="absolute h-full w-1 left-1/3 top-0 bg-cyan-500 neon-glow"></div>
+                        <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-sm font-bold text-white cyberpunk-text">CYBER·2077</div>
+                    </div>
+                    <style>
+                        .neon-glow {
+                            box-shadow: 0 0 10px 2px currentColor;
+                        }
+                        .cyberpunk-text {
+                            text-shadow: 
+                                0 0 5px rgba(255,255,255,0.8),
+                                0 0 10px currentColor;
+                            letter-spacing: 3px;
+                        }
+                    </style>
+                    <div class="text-sm text-gray-700">
+                        <p>暗色背景 + 霓虹线条 + 发光文字</p>
+                    </div>
+                </div>
+                
                 <!-- 动态互动渐变 -->
                 <div>
-                    <h4 class="text-md font-medium text-gray-800 mb-2">光影互动 (Interactive Light)</h4>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">动态互动渐变 (Interactive Light)</h4>
                     <p class="text-sm text-gray-600 mb-3">模拟光照效果的动态渐变</p>
                     <div class="h-24 rounded-lg mb-2 relative overflow-hidden" id="interactive-gradient" style="background: #13c2c2;">
                         <div class="absolute inset-0" id="light-effect" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8), transparent 70%); pointer-events: none;"></div>
@@ -1232,6 +1410,256 @@
             </div>
         </div>
 
+        <!-- 页脚 -->
+        <footer class="mt-20 pb-10 text-center text-gray-600">
+            <p>© 2023 UI色彩系统展示</p>
+        </footer>
+    </div>
+
+    <!-- HSL颜色模型 -->
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">HSL颜色模型</h2>
+        <p class="text-gray-600 mb-6">HSL（色相、饱和度、亮度）是一种直观的颜色表示方法，方便设计师调整色彩。色相（H）表示颜色类型，饱和度（S）表示颜色鲜艳程度，亮度（L）表示颜色明暗程度。</p>
+        
+        <!-- 色相环展示 -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">色相环 (Hue Wheel)</h3>
+            <p class="text-gray-600 mb-6">色相值从0°到360°，代表色环上的位置</p>
+            
+            <div class="grid grid-cols-6 gap-4 mb-8">
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">红色 0°</p>
+                    <p class="text-xs text-gray-500">hsl(0, 100%, 50%)</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(60, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">黄色 60°</p>
+                    <p class="text-xs text-gray-500">hsl(60, 100%, 50%)</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">绿色 120°</p>
+                    <p class="text-xs text-gray-500">hsl(120, 100%, 50%)</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(180, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">青色 180°</p>
+                    <p class="text-xs text-gray-500">hsl(180, 100%, 50%)</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">蓝色 240°</p>
+                    <p class="text-xs text-gray-500">hsl(240, 100%, 50%)</p>
+                </div>
+                <div>
+                    <div class="h-16 rounded-lg mb-1" style="background-color: hsl(300, 100%, 50%);"></div>
+                    <p class="text-xs text-gray-700">紫色 300°</p>
+                    <p class="text-xs text-gray-500">hsl(300, 100%, 50%)</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 饱和度展示 -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">饱和度变化 (Saturation)</h3>
+            <p class="text-gray-600 mb-6">饱和度从0%（灰色）到100%（全色），固定色相和亮度</p>
+            
+            <div class="mb-8">
+                <h4 class="text-md font-medium text-gray-800 mb-2">红色饱和度变化 (色相: 0°, 亮度: 50%)</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 0%, 50%);"></div>
+                        <p class="text-xs text-gray-700">0% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(0, 0%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 25%, 50%);"></div>
+                        <p class="text-xs text-gray-700">25% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(0, 25%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 50%, 50%);"></div>
+                        <p class="text-xs text-gray-700">50% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(0, 50%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 75%, 50%);"></div>
+                        <p class="text-xs text-gray-700">75% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(0, 75%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(0, 100%, 50%);"></div>
+                        <p class="text-xs text-gray-700">100% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(0, 100%, 50%)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-8">
+                <h4 class="text-md font-medium text-gray-800 mb-2">蓝色饱和度变化 (色相: 240°, 亮度: 50%)</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 0%, 50%);"></div>
+                        <p class="text-xs text-gray-700">0% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(240, 0%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 25%, 50%);"></div>
+                        <p class="text-xs text-gray-700">25% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(240, 25%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 50%, 50%);"></div>
+                        <p class="text-xs text-gray-700">50% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(240, 50%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 75%, 50%);"></div>
+                        <p class="text-xs text-gray-700">75% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(240, 75%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(240, 100%, 50%);"></div>
+                        <p class="text-xs text-gray-700">100% 饱和度</p>
+                        <p class="text-xs text-gray-500">hsl(240, 100%, 50%)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 亮度展示 -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">亮度变化 (Lightness)</h3>
+            <p class="text-gray-600 mb-6">亮度从0%（黑色）到100%（白色），固定色相和饱和度</p>
+            
+            <div class="mb-8">
+                <h4 class="text-md font-medium text-gray-800 mb-2">绿色亮度变化 (色相: 120°, 饱和度: 100%)</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 0%);"></div>
+                        <p class="text-xs text-gray-700">0% 亮度</p>
+                        <p class="text-xs text-gray-500">hsl(120, 100%, 0%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 25%);"></div>
+                        <p class="text-xs text-gray-700">25% 亮度</p>
+                        <p class="text-xs text-gray-500">hsl(120, 100%, 25%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 50%);"></div>
+                        <p class="text-xs text-gray-700">50% 亮度</p>
+                        <p class="text-xs text-gray-500">hsl(120, 100%, 50%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 75%);"></div>
+                        <p class="text-xs text-gray-700">75% 亮度</p>
+                        <p class="text-xs text-gray-500">hsl(120, 100%, 75%)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1" style="background-color: hsl(120, 100%, 100%);"></div>
+                        <p class="text-xs text-gray-700">100% 亮度</p>
+                        <p class="text-xs text-gray-500">hsl(120, 100%, 100%)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- HSL透明度(HSLA) -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">HSLA透明度</h3>
+            <p class="text-gray-600 mb-6">HSLA在HSL基础上添加Alpha透明通道，值从0（完全透明）到1（完全不透明）</p>
+            
+            <div class="mb-8">
+                <h4 class="text-md font-medium text-gray-800 mb-2">紫色透明度变化 (色相: 300°, 饱和度: 100%, 亮度: 50%)</h4>
+                <div class="grid grid-cols-5 gap-4">
+                    <div>
+                        <div class="h-16 rounded-lg mb-1 bg-gray-200" style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+                            <div class="w-full h-full" style="background-color: hsla(300, 100%, 50%, 0.2);"></div>
+                        </div>
+                        <p class="text-xs text-gray-700">0.2 透明度</p>
+                        <p class="text-xs text-gray-500">hsla(300, 100%, 50%, 0.2)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1 bg-gray-200" style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+                            <div class="w-full h-full" style="background-color: hsla(300, 100%, 50%, 0.4);"></div>
+                        </div>
+                        <p class="text-xs text-gray-700">0.4 透明度</p>
+                        <p class="text-xs text-gray-500">hsla(300, 100%, 50%, 0.4)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1 bg-gray-200" style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+                            <div class="w-full h-full" style="background-color: hsla(300, 100%, 50%, 0.6);"></div>
+                        </div>
+                        <p class="text-xs text-gray-700">0.6 透明度</p>
+                        <p class="text-xs text-gray-500">hsla(300, 100%, 50%, 0.6)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1 bg-gray-200" style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+                            <div class="w-full h-full" style="background-color: hsla(300, 100%, 50%, 0.8);"></div>
+                        </div>
+                        <p class="text-xs text-gray-700">0.8 透明度</p>
+                        <p class="text-xs text-gray-500">hsla(300, 100%, 50%, 0.8)</p>
+                    </div>
+                    <div>
+                        <div class="h-16 rounded-lg mb-1 bg-gray-200" style="background-image: linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+                            <div class="w-full h-full" style="background-color: hsla(300, 100%, 50%, 1);"></div>
+                        </div>
+                        <p class="text-xs text-gray-700">1.0 透明度</p>
+                        <p class="text-xs text-gray-500">hsla(300, 100%, 50%, 1)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- HSL渐变 -->
+        <div class="mb-12">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">HSL渐变</h3>
+            <p class="text-gray-600 mb-6">使用HSL创建渐变效果，提供更直观的色彩控制</p>
+            
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <!-- 色相渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">色相渐变 (Hue Gradient)</h4>
+                    <p class="text-sm text-gray-600 mb-3">固定饱和度和亮度，仅改变色相值</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, hsl(0, 100%, 50%) 0%, hsl(60, 100%, 50%) 20%, hsl(120, 100%, 50%) 40%, hsl(180, 100%, 50%) 60%, hsl(240, 100%, 50%) 80%, hsl(300, 100%, 50%) 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：色相值从0°到300°变化</p>
+                    </div>
+                </div>
+                
+                <!-- 饱和度渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">饱和度渐变 (Saturation Gradient)</h4>
+                    <p class="text-sm text-gray-600 mb-3">固定色相和亮度，仅改变饱和度值</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, hsl(210, 0%, 50%) 0%, hsl(210, 25%, 50%) 25%, hsl(210, 50%, 50%) 50%, hsl(210, 75%, 50%) 75%, hsl(210, 100%, 50%) 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：饱和度从0%到100%变化</p>
+                    </div>
+                </div>
+                
+                <!-- 亮度渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">亮度渐变 (Lightness Gradient)</h4>
+                    <p class="text-sm text-gray-600 mb-3">固定色相和饱和度，仅改变亮度值</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, hsl(30, 100%, 0%) 0%, hsl(30, 100%, 25%) 25%, hsl(30, 100%, 50%) 50%, hsl(30, 100%, 75%) 75%, hsl(30, 100%, 100%) 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：亮度从0%到100%变化</p>
+                    </div>
+                </div>
+                
+                <!-- 复合HSL渐变 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-800 mb-2">复合HSL渐变 (Combined HSL)</h4>
+                    <p class="text-sm text-gray-600 mb-3">同时变化多个HSL参数</p>
+                    <div class="h-24 rounded-lg mb-2" style="background: linear-gradient(90deg, hsl(0, 80%, 35%) 0%, hsl(120, 90%, 45%) 50%, hsl(240, 100%, 55%) 100%);"></div>
+                    <div class="text-sm text-gray-700">
+                        <p>从左到右：色相、饱和度和亮度同时变化</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- 页脚 -->
         <footer class="mt-20 pb-10 text-center text-gray-600">
             <p>© 2023 UI色彩系统展示</p>
